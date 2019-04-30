@@ -4,7 +4,7 @@
 
 要努力！要加油呀~
 
-- ## book1：《Python编程从入门到实践》
+- ## Book1：《Python编程从入门到实践》
 
 - ## Book2：《TensorFlow实战Google深度学习框架（第二版）》
 
