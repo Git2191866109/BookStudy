@@ -4,9 +4,9 @@
 
 要努力！要加油呀~
 
-- book1：《Python编程从入门到实践》
+- ## book1：《Python编程从入门到实践》
 
-- Book2：《TensorFlow实战Google深度学习框架（第二版）》
+- ## Book2：《TensorFlow实战Google深度学习框架（第二版）》
 
   [TensorFlow图像处理函数学习总结](https://blog.csdn.net/qq_21579045/article/details/86569934)
 
@@ -36,5 +36,5 @@
 
   [自然语言处理（五）——实现机器翻译Seq2Seq完整经过](https://blog.csdn.net/qq_21579045/article/details/88657013)
 
-- Book3：《Python数据科学手册》
+- ## Book3：《Python数据科学手册》
 
