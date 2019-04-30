@@ -1,0 +1,16 @@
+*.pyc
+
+/book2/language_deal/simple-examples
+/book2/LeNet_5/MNIST_data
+/book2/LeNet_5/model
+/book2/MNIST_data
+/book2/model
+/book2/Models
+/book2/my_net
+/book2/Seq2SeqLearning/data
+/book2/Seq2SeqLearning/en-zh
+/book2/Seq2SeqLearning/model
+/book2/tfr_test
+/book2/transfer_learning/flower_photos
+/book2/transfer_learning/flower_photos_test
+/book2/transfer_learning/model
