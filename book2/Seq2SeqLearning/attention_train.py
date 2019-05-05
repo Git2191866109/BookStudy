@@ -12,7 +12,7 @@
 """
 
 import tensorflow as tf
-from Seq2SeqLearning.statistic_word3 import MakeSrcTrgDataset
+from statistic_word3 import MakeSrcTrgDataset
 
 
 root_path = "D:/Python3Space/Seq2SeqLearning/"
