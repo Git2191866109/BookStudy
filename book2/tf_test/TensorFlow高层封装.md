@@ -591,7 +591,7 @@ model = Model(inputs=input_img, outputs=predictions)
 model.compile(loss=keras.losses.categorical_crossentropy, optimizer=keras.optimizers.SGD(), metrics=['accuracy'])
 
 # 使用与前面类似的方法训练模型。
-model.fit(trainX, trainY, batch_size=128, epochs=10, validation_data=(testX, testY))
+model.fit(trainX, trainY, batch_size=128, epochs=20, validation_data=(testX, testY))
 
 # 在测试数据上评测模型。
 score = model.evaluate(testX, testY, batch_size=128)
@@ -607,9 +607,9 @@ print('Test accuracy: ', score[1])
 
 对了，如果有杠精问我，人家只是抛砖引玉，让读者举一反三。。。那我没什么好说的。。。
 
+又花了一晚上跑完。。。
 
-
-
+![img](https://img-blog.csdnimg.cn/20190507104546607.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70)
 
 
 

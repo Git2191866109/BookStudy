@@ -79,7 +79,7 @@ model = Model(inputs=input_img, outputs=predictions)
 model.compile(loss=keras.losses.categorical_crossentropy, optimizer=keras.optimizers.SGD(), metrics=['accuracy'])
 
 # 使用与前面类似的方法训练模型。
-model.fit(trainX, trainY, batch_size=128, epochs=10, validation_data=(testX, testY))
+model.fit(trainX, trainY, batch_size=128, epochs=20, validation_data=(testX, testY))
 
 # 在测试数据上评测模型。
 score = model.evaluate(testX, testY, batch_size=128)
