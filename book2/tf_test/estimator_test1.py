@@ -35,3 +35,32 @@ estimator = tf.estimator.DNNClassifier(
     optimizer=tf.train.AdamOptimizer(),
     model_dir="./log"
 )
+
+# 定义数据输入。这里x中需要给出所有的输入数据。因为上面feature_columns只定义了一组
+# 输入，所以这里只需要制定一个就好。如果feature_columns中指定了多个，那么这里也需要
+# 对每一个指定的输入提供数据。y中需要提供每一个x对应的正确答案，这里要求分类的结果
+# 是一个正整数。num_epochs指定了数据循环使用的轮数。比如在测试时可以将这个参数指定为1.
+# batch_size指定了一个batch的大小。shuffle指定了是否需要对数据进行随机打乱。
+train_input_fn = tf.estimator.inputs.numpy_input_fn(
+    x={"image": mnist.train.images},
+    y=mnist.train.labels.astype(np.int32),
+    num_epochs=None,
+    batch_size=128,
+    shuffle=True
+)
+
+# 训练模型。注意这里没有指定损失函数，通过DNNClassifier定义的模型会使用交叉熵作为损失函数。
+estimator.train(input_fn=train_input_fn, steps=10000)
+
+# 定义测试时的数据输入。指定的形式和训练时的数据输入基本一致。
+test_input_fn = tf.estimator.inputs.numpy_input_fn(
+    x={"image": mnist.test.images},
+    y=mnist.test.labels.astype(np.int32),
+    num_epochs=1,
+    batch_size=128,
+    shuffle=False
+)
+
+# 通过evaluate评测训练好的模型的效果。
+accuracy_score = estimator.evaluate(input_fn=test_input_fn)["accuracy"]
+print("\nTest accuracy: %g %%" % (accuracy_score*100))
