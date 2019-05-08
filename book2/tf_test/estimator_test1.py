@@ -18,7 +18,7 @@ from tensorflow.examples.tutorials.mnist import input_data
 
 # 将TensorFlow日志信息输出到屏幕
 tf.logging.set_verbosity(tf.logging.INFO)
-mnist = input_data.read_data_sets('D:/Python3Space/BookStudy/book2/MNIST_data', one_hot=True)
+mnist = input_data.read_data_sets('D:/Python3Space/BookStudy/book2/MNIST_data', one_hot=False)
 
 # 指定神经网络的输入层，所有这里指定的输入都会拼接在一起作为整个神经网络的输入。
 feature_columns = [tf.feature_column.numeric_column("image", shape=[784])]

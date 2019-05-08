@@ -841,6 +841,34 @@ print("\nTest accuracy: %g %%" % (accuracy_score*100))
 
 运行可得：
 
+![img](https://img-blog.csdnimg.cn/20190508101302997.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70)
+
+使用下面的命令开启tensorboard之旅：（我又要喷了，书里根本没说怎么开启tensorboard，我完全靠自行百度摸索的。。。）
+
+`tensorboard --logdir=""`
+
+引号里面填自己的log所在的地址。然后运行：
+
+![img](https://img-blog.csdnimg.cn/20190508102705931.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70)
+
+复制最下面的那个地址，在浏览器（我是谷歌浏览器）粘贴并转到。
+
+记住！是**粘贴并转到**，不是ctrl+v，是**右键，粘贴并转到**。
+
+别问！问就是吃了好多亏。。。
+
+反正我的电脑是粘贴并转到之后，卡了一会儿，就出现了这个界面：
+
+![img](https://img-blog.csdnimg.cn/20190508103012475.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70)
+
+虽然跟书上的图的布局不一样，下面折叠的指标，展开也有图就是了。。。
+
+当然GRAPHS也是有的嘿嘿。。。
+
+![img](https://img-blog.csdnimg.cn/20190508103746144.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70)
+
+### 3.2 Estimator自定义模型
+
 
 
 
