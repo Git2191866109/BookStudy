@@ -1,5 +1,7 @@
 # TensorFlow高层封装：从入门到喷这本书
 
+[TOC]
+
 ## 0. 写在前面
 
 **参考书**
@@ -1075,15 +1077,9 @@ print("\nTest accuracy: %g %%" % (test_results["accuracy"]*100))
 
 头就很疼。。。
 
+## 4. 总结
 
-
-
-
-
-
-
-
-未完待续。。。
+要什么总结，不就是几种常见的TensorFlow高层封装嘛！包括TensorFlow-Slim、TFLearn、Keras和Estimator。反正就是结合起来，反正就是头疼。
 
 ---
 
