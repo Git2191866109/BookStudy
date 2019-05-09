@@ -1038,7 +1038,7 @@ def my_input_fn(file_path, perform_shuffle=False, repeat_count=1):
         dataset = dataset.shuffle(buffer_size=256)
 
     dataset = dataset.repeat(repeat_count)
-    dataset = dataset.batch(32)
+    dataset = dataset.batch(12)
     iterator = dataset.make_one_shot_iterator()
     # 通过定义的数据集得到一个batch的输入数据。这就是整个自定义的输入过程的返回结果。
     batch_features, batch_labels = iterator.get_next()
@@ -1055,11 +1055,11 @@ classifier = tf.estimator.DNNClassifier(
 )
 
 # 使用lambda表达式将训练相关的信息传入自定义输入数据处理函数并生成Estimator需要的输入函数
-classifier.train(input_fn=lambda: my_input_fn("D:/Python3Space/BookStudy/book2/iris_data/iris_training(1).csv", True, 10))
+classifier.train(input_fn=lambda: my_input_fn("./iris_data/iris_training (1).csv", True, 10))
 
 # 使用lambda表达式将测试相关的信息传入自定义输入数据处理函数并生成Estimator需要的输入函数。
 # 通过lambda表达式的方式可以大大减少冗余代码。
-test_results = classifier.evaluate(input_fn=lambda: my_input_fn("D:/Python3Space/BookStudy/book2/iris_data/iris_test(1).csv", False, 1))
+test_results = classifier.evaluate(input_fn=lambda: my_input_fn("./iris_data/iris_test (1).csv", False, 1))
 print("\nTest accuracy: %g %%" % (test_results["accuracy"]*100))
 ```
 
@@ -1068,6 +1068,16 @@ print("\nTest accuracy: %g %%" % (test_results["accuracy"]*100))
 ![img](https://img-blog.csdnimg.cn/20190509153122189.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70)
 
 我佛了，查了一万种方法，也解决不了玄学报错。。。
+
+然后，我换了个机器，macbook。。。就正常运行了。。。
+
+![img](https://img-blog.csdnimg.cn/20190509171842260.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70)
+
+头就很疼。。。
+
+
+
+
 
 
 
