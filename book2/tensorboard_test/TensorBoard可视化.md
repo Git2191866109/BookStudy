@@ -408,6 +408,27 @@ if __name__ == '__main__':
 
 TensorBoard左侧的Color栏中Compute和Memory这两个选项将可以被选择。
 
+![img](https://img-blog.csdnimg.cn/20190510224605105.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70)
+
+![img](https://img-blog.csdnimg.cn/20190510224650152.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70)
+
+**颜色越深的节点，时间和空间的消耗越大。**
+
+![img](https://img-blog.csdnimg.cn/20190510225421473.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70)
+
+1. 空心的小椭圆对应了TensorFlow计算图上的一个计算节点。
+2. 一个矩形对应了计算图上的一个命名空间。
+
+## 3. 监控指标可视化
+
+
+
+
+
+
+
+
+
 
 
 
