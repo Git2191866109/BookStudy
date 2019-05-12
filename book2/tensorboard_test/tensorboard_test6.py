@@ -73,7 +73,7 @@ def nn_layer(input_tensor, input_dim, output_dim, layer_name, act=tf.nn.relu):
         return activations
 
 
-def main():
+def main(_):
     mnist = input_data.read_data_sets('D:/Python3Space/BookStudy/book2/MNIST_data', one_hot=True)
     # 定义输出
     with tf.name_scope('input'):
@@ -95,3 +95,38 @@ def main():
 
     with tf.name_scope('train'):
         train_step = tf.train.AdamOptimizer(0.001).minimize(cross_entropy)
+
+    # 计算模型在当前给定数据上的正确率，并定义生成正确率监控日志的操作。如果在sess.run时
+    # 给定的数据是训练batch，那么得到的正确率就是在这个训练batch上的正确率；如果给定的
+    # 数据为验证或者测试数据，那么得到的正确率就是在当前模型在验证或者测试数据上的正确率。
+    with tf.name_scope('accuracy'):
+        with tf.name_scope('correct_prediction'):
+            correct_prediction = tf.equal(tf.arg_max(y, 1), tf.arg_max(y_, 1))
+        with tf.name_scope('accuracy'):
+            accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+        tf.summary.scalar('accuracy', accuracy)
+
+    # 和其他TensorFlow中其他操作类似，tf.summary.scalar、tf.summary.histogram和
+    # tf.summary.image函数都不会立即执行，需要通过sess.run来明确调用这些函数。
+    # 因为程序中定义的写日志操作比较多，一一调用非常麻烦，所以TensorFlow提供了
+    # tf.summary.merge_all函数来整理所有的日志生成操作。在TensorFlow程序执行的
+    # 过程中只需要运行这个操作就可以将代码中定义的所有日志生成操作执行一次，从而将所有日志写入文件。
+    merged = tf.summary.merge_all()
+
+    with tf.Session() as sess:
+        # 初始化写日志的writer，并将当前TensorFlow计算图写入日志
+        summary_writer = tf.summary.FileWriter(SUMMARY_DIR, sess.graph)
+        tf.global_variables_initializer().run()
+
+        for i in range(TRAIN_STEPS):
+            xs, ys = mnist.train.next_batch(BATCH_SIZE)
+            # 运行训练步骤以及所有的日志生成操作，得到这次运行的日志。
+            summary, _ = sess.run([merged, train_step], feed_dict={x: xs, y_: ys})
+            # 将所有日志写入文件，TensorBoard程序就可以拿到这次运行所对应的运行信息。
+            summary_writer.add_summary(summary, i)
+
+    summary_writer.close()
+
+
+if __name__ == '__main__':
+    tf.app.run()
