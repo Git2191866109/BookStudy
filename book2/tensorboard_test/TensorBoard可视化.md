@@ -848,6 +848,14 @@ if __name__ == '__main__':
 
 还是三围旋转的。。。旋转~ 跳跃~
 
+然后我把tensorflow和numpy的包升级之后，终于不卡了。。。
+
+可是：
+
+![img](https://img-blog.csdnimg.cn/20190513213945890.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70)
+
+这一片空白白是什么。。。你看我脸上是不是写满了快乐。。。
+
 ------
 
 我的CSDN：https://blog.csdn.net/qq_21579045
