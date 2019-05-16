@@ -302,6 +302,8 @@ if __name__ == '__main__':
 
 ## 4. 分布式TensorFlow
 
+### 4.1 分布式TensorFlow原理
+
 1. 创建一个最简单的TensorFlow集群。
 
 ```python
@@ -334,11 +336,108 @@ print(sess.run(c))
 
 2. 在本地运行有两个任务的TensorFlow集群。
 
+**第一个任务代码：**
+
+```python
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+# coding=utf-8 
+
+"""
+@author: Li Tian
+@contact: 694317828@qq.com
+@software: pycharm
+@file: gpu_test5.py
+@time: 2019/5/15 22:27
+@desc: 在本地运行有两个任务的TensorFlow集群。第一个任务的代码。
+"""
+
+import tensorflow as tf
+c = tf.constant("Hello from server1!")
+
+# 生成一个有两个任务的集群，一个任务跑在本地2222端口，另外一个跑在本地2223端口。
+cluster = tf.train.ClusterSpec({"local": ["localhost: 2222", "localhost: 2223"]})
+# 通过上面生成的集群配置生成Server，并通过job_name和task_index指定当前所启动的任务。
+# 因为该任务是第一个任务，所以task_index为0.
+server = tf.train.Server(cluster, job_name="local", task_index=0)
+
+# 通过server.target生成会话来使用TensorFlow集群中的资源。通过设置
+# log_device_placement可以看到执行每一个操作的任务。
+sess = tf.Session(server.target, config=tf.ConfigProto(log_device_placement=True))
+print(sess.run(c))
+server.join()
+```
+
+**第二个任务代码：**
+
+```python
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+# coding=utf-8 
+
+"""
+@author: Li Tian
+@contact: 694317828@qq.com
+@software: pycharm
+@file: gpu_test6.py
+@time: 2019/5/16 10:14
+@desc: 在本地运行有两个任务的TensorFlow集群。第二个任务的代码。
+"""
+
+import tensorflow as tf
+c = tf.constant("Hello from server2!")
+
+# 和第一个程序一样的集群配置。集群中的每一个任务需要采用相同的配置。
+cluster = tf.train.ClusterSpec({"local": ["localhost: 2222", "localhost: 2223"]})
+# 指定task_index为1，所以这个程序将在localhost: 2223启动服务。
+server = tf.train.Server(cluster, job_name="local", task_index=1)
+
+# 剩下的代码都和第一个任务的代码一致。
+# 通过server.target生成会话来使用TensorFlow集群中的资源。通过设置
+# log_device_placement可以看到执行每一个操作的任务。
+sess = tf.Session(server.target, config=tf.ConfigProto(log_device_placement=True))
+print(sess.run(c))
+server.join()
+```
+
+启动第一个任务后，可以得到类似下面的输出：
+
+![img](https://img-blog.csdnimg.cn/20190516102455193.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70)
+
+从第一个任务的输出中可以看到，当只启动第一个任务时，程序会停下来等待第二个任务启动。当第二个任务启动后，可以得到如下输出：
+
+![img](https://img-blog.csdnimg.cn/20190516102623527.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70)
+
+![img](https://img-blog.csdnimg.cn/20190516102647735.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70)
+
+值得注意的是：第二个任务中定义的计算也被放在了同一个设备上，也就是说这个计算将由第一个任务来执行。
+
+> 使用分布式TensorFlow训练深度学习模型一般有两种方式：
+>
+> 1. 一种方式叫做计算图内分布式（in-graph replication）。优点：同步更新参数比较容易控制。缺点：当数据量太大时，中心节点容易造成性能瓶颈。
+> 2. 另外一种叫做计算图之间分布式（between-graph replication）。优点：并行程度更高。缺点：同步更新困难。
+
+### 4.2 分布式TensorFlow模型训练
 
 
 
+要启动一个拥有一个参数服务器、两个计算服务器的集群，需要现在运行参数服务器的机器上启动以下命令。
 
+```
+python gpu_test7.py --job_name='ps' --taske_id=0 --ps_hosts='localhost:2222' --worker_hosts='localhost:2223, localhost:2224'
+```
 
+然后再运行第一个计算服务器的机器上启动以下命令：
+
+```
+python gpu_test7.py --job_name='worker' --taske_id=0 --ps_hosts='localhost:2222' --worker_hosts='localhost:2223, localhost:2224'
+```
+
+最后再运行第二个计算服务器的机器上启动以下命令：
+
+```
+python gpu_test7.py --job_name='worker' --taske_id=1 --ps_hosts='localhost:2222' --worker_hosts='localhost:2223, localhost:2224'
+```
 
 
 
