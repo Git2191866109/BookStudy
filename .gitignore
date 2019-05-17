@@ -19,3 +19,5 @@
 /book2/tensorboard_test/model
 /book2/tensorboard_test/log2
 /book2/tensorboard_test/log3
+/book2/tf_gpu/log1
+/book2/tf_gpu/log2

@@ -424,19 +424,19 @@ server.join()
 要启动一个拥有一个参数服务器、两个计算服务器的集群，需要现在运行参数服务器的机器上启动以下命令。
 
 ```
-python gpu_test7.py --job_name='ps' --taske_id=0 --ps_hosts='localhost:2222' --worker_hosts='localhost:2223, localhost:2224'
+python gpu_test7.py --job_name=ps --task_id=0 --ps_hosts=localhost:2222 --worker_hosts=localhost:2223,localhost:2224
 ```
 
 然后再运行第一个计算服务器的机器上启动以下命令：
 
 ```
-python gpu_test7.py --job_name='worker' --taske_id=0 --ps_hosts='localhost:2222' --worker_hosts='localhost:2223, localhost:2224'
+python gpu_test7.py --job_name=worker --task_id=0 --ps_hosts=localhost:2222 --worker_hosts=localhost:2223,localhost:2224
 ```
 
 最后再运行第二个计算服务器的机器上启动以下命令：
 
 ```
-python gpu_test7.py --job_name='worker' --taske_id=1 --ps_hosts='localhost:2222' --worker_hosts='localhost:2223, localhost:2224'
+python gpu_test7.py --job_name=worker --task_id=1 --ps_hosts=localhost:2222 --worker_hosts=localhost:2223,localhost:2224
 ```
 
 
