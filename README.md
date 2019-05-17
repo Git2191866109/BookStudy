@@ -6,43 +6,43 @@
 
 - ## Book1：《Python编程从入门到实践》
 
-  1. 抱歉这本书并没有留下书评和学习笔记，只有代码。
+1. 抱歉这本书并没有留下书评和学习笔记，只有代码。
 
 - ## Book2：《TensorFlow实战Google深度学习框架（第二版）》
 
-  1. [TensorFlow图像处理函数学习总结](https://blog.csdn.net/qq_21579045/article/details/86569934)
+1. [TensorFlow图像处理函数学习总结](https://blog.csdn.net/qq_21579045/article/details/86569934)
 
-  2. [TensorFlow图像预处理完整样例](https://blog.csdn.net/qq_21579045/article/details/86708656)
+2. [TensorFlow图像预处理完整样例](https://blog.csdn.net/qq_21579045/article/details/86708656)
 
-  3. [TensorFlow多线程输入数据处理框架（一）——队列与多线程](https://blog.csdn.net/qq_21579045/article/details/86758536)
+3. [TensorFlow多线程输入数据处理框架（一）——队列与多线程](https://blog.csdn.net/qq_21579045/article/details/86758536)
 
-  4. [TensorFlow多线程输入数据处理框架（二）——输入文件队列](https://blog.csdn.net/qq_21579045/article/details/86762578)
+4. [TensorFlow多线程输入数据处理框架（二）——输入文件队列](https://blog.csdn.net/qq_21579045/article/details/86762578)
 
-  5. [TensorFlow多线程输入数据处理框架（三）——组合训练数据](https://blog.csdn.net/qq_21579045/article/details/86772832)
+5. [TensorFlow多线程输入数据处理框架（三）——组合训练数据](https://blog.csdn.net/qq_21579045/article/details/86772832)
 
-  6. [TensorFlow多线程输入数据处理框架（四）——输入数据处理框架](https://blog.csdn.net/qq_21579045/article/details/86776887)
+6. [TensorFlow多线程输入数据处理框架（四）——输入数据处理框架](https://blog.csdn.net/qq_21579045/article/details/86776887)
 
-  7. [TensorFlow数据集（一）——数据集的基本使用方法](https://blog.csdn.net/qq_21579045/article/details/86904202)
+7. [TensorFlow数据集（一）——数据集的基本使用方法](https://blog.csdn.net/qq_21579045/article/details/86904202)
 
-  8. [TensorFlow数据集（二）——数据集的高层操作](https://blog.csdn.net/qq_21579045/article/details/87092969)
+8. [TensorFlow数据集（二）——数据集的高层操作](https://blog.csdn.net/qq_21579045/article/details/87092969)
 
-  9. [自然语言处理（一）——语言模型评价方法](https://blog.csdn.net/qq_21579045/article/details/87689562)
+9. [自然语言处理（一）——语言模型评价方法](https://blog.csdn.net/qq_21579045/article/details/87689562)
 
-  10. [自然语言处理（二）——PTB数据集的预处理](https://blog.csdn.net/qq_21579045/article/details/87782302)
+10. [自然语言处理（二）——PTB数据集的预处理](https://blog.csdn.net/qq_21579045/article/details/87782302)
 
-  11. [自然语言处理（三）——PTB数据的batching方法](https://blog.csdn.net/qq_21579045/article/details/87894986)
+11. [自然语言处理（三）——PTB数据的batching方法](https://blog.csdn.net/qq_21579045/article/details/87894986)
 
-  12. [自然语言处理（四）——一个完整的训练程序](https://blog.csdn.net/qq_21579045/article/details/87937488)
+12. [自然语言处理（四）——一个完整的训练程序](https://blog.csdn.net/qq_21579045/article/details/87937488)
 
-  13. [【书评】【不推荐】《TensorFlow：实战Google深度学习框架》（第2版）](https://blog.csdn.net/qq_21579045/article/details/88388665)
+13. [【书评】【不推荐】《TensorFlow：实战Google深度学习框架》（第2版）](https://blog.csdn.net/qq_21579045/article/details/88388665)
 
-  14. [自然语言处理（五）——实现机器翻译Seq2Seq完整经过](https://blog.csdn.net/qq_21579045/article/details/88657013)
+14. [自然语言处理（五）——实现机器翻译Seq2Seq完整经过](https://blog.csdn.net/qq_21579045/article/details/88657013)
 
-  15. [TensorFlow高层封装：从入门到喷这本书](https://blog.csdn.net/qq_21579045/article/details/89848142)
+15. [TensorFlow高层封装：从入门到喷这本书](https://blog.csdn.net/qq_21579045/article/details/89848142)
 
-  16. [TensorBoard可视化](https://blog.csdn.net/qq_21579045/article/details/90173916)
+16. [TensorBoard可视化](https://blog.csdn.net/qq_21579045/article/details/90173916)
 
-  17. [TensorBoard计算加速](https://blog.csdn.net/qq_21579045/article/details/90298107)
+17. [TensorBoard计算加速](https://blog.csdn.net/qq_21579045/article/details/90298107)
 
 - ## Book3：《Python数据科学手册》
 
