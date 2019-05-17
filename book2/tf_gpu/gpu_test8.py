@@ -34,12 +34,12 @@ FLAGS = tf.app.flags.FLAGS
 
 tf.app.flags.DEFINE_string('job_name', 'worker', ' "ps" or "worker" ')
 tf.app.flags.DEFINE_string(
-    'ps_hosts', ' tf-ps0:2222, tf-ps1:1111',
+    'ps_hosts', ' tf-ps0:2222,tf-ps1:1111',
     'Comma-separated list of hostname:port for the parameter server jobs.'
     ' e.g. "tf-ps0:2222,tf-ps1:1111" '
 )
 tf.app.flags.DEFINE_string(
-    'worker_hosts', ' tf-worker0:2222, tf-worker1:1111',
+    'worker_hosts', ' tf-worker0:2222,tf-worker1:1111',
     'Comma-separated list of hostname:port for the worker jobs. '
     'e.g. "tf-worker0:2222,tf-worker1:1111" '
 )

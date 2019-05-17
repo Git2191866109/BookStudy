@@ -76,7 +76,7 @@ print(sess.run(c))
 
 由于我并没有GPU，所以只是尬码代码。。。
 
-**3. 不是所有的操作都可以被放在GPU上，如果强行将无法放在GPU上的操作指定到GPU上，呢么程序将会报错。**
+**3. 不是所有的操作都可以被放在GPU上，如果强行将无法放在GPU上的操作指定到GPU上，那么程序将会报错。**
 
 **4. 为了避免这个问题，TensorFlow在生成会话时，可以指定allow_soft_placement参数，当这个参数为True时，如果运算无法由GPU执行，那么TensorFlow会自动将它放到CPU上执行。**
 
@@ -419,7 +419,183 @@ server.join()
 
 ### 4.2 分布式TensorFlow模型训练
 
+**异步模式样例程序**
 
+```python
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+# coding=utf-8 
+
+"""
+@author: Li Tian
+@contact: 694317828@qq.com
+@software: pycharm
+@file: gpu_test7.py
+@time: 2019/5/16 14:01
+@desc: 实现异步模式的分布式神经网络训练过程。
+"""
+
+import time
+import tensorflow as tf
+from tensorflow.examples.tutorials.mnist import input_data
+import mnist_inference
+
+
+# 配置神经网络的参数。
+BATCH_SIZE = 100
+LEARNING_RATE_BASE = 0.001
+LEARNING_RATE_DECAY = 0.99
+REGULARAZTION_RATE = 0.0001
+TRAINING_STEPS = 20000
+MOVING_AVERAGE_DECAY = 0.99
+
+# 模型保存的路径。
+MODEL_SAVE_PATH = "./log1"
+# MNIST数据路径。
+DATA_PATH = "D:/Python3Space/BookStudy/book2/MNIST_data"
+
+# 通过flags指定运行的参数。在前面对于不同的任务（task）给出了不同的程序。
+# 但这不是一种可扩展的方式。在这一节中将使用运行程序时给出的参数来配置在
+# 不同任务中运行的程序。
+FLAGS = tf.app.flags.FLAGS
+
+# 指定当前运行的是参数服务器还是计算服务器。参数服务器只负责TensorFlow中变量的维护
+# 和管理，计算服务器负责每一轮迭代时运行反向传播过程。
+tf.app.flags.DEFINE_string('job_name', 'worker', ' "ps" or "worker" ')
+# 指定集群中的参数服务器地址。
+tf.app.flags.DEFINE_string(
+    'ps_hosts', ' tf-ps0:2222,tf-ps1:1111',
+    'Comma-separated list of hostname:port for the parameter server jobs.'
+    ' e.g. "tf-ps0:2222,tf-ps1:1111" '
+)
+
+# 指定集群中的计算服务器地址。
+tf.app.flags.DEFINE_string(
+    'worker_hosts', ' tf-worker0:2222, tf-worker1:1111',
+    'Comma-separated list of hostname:port for the worker jobs. '
+    'e.g. "tf-worker0:2222,tf-worker1:1111" '
+)
+
+# 指定当前程序的任务ID。TensorFlow会自动根据参数服务器/计算服务器列表中的端口号来启动服务。
+# 注意参数服务器和计算服务器的编号都是从0开始的。
+tf.app.flags.DEFINE_integer(
+    'task_id', 0, 'Task ID of the worker/replica running the training.'
+)
+
+
+# 定义TensorFlow的计算图，并返回每一轮迭代时需要运行的操作。这个过程和前面的主函数基本一致，
+# 但为了使处理分布式计算的部分更加突出，这里将此过程整理为一个函数。
+def build_model(x, y_, is_chief):
+    regularizer = tf.contrib.layers.l2_regularizer(REGULARAZTION_RATE)
+    # 通过前面给出的mnist_inference计算神经网络前向传播的结果。
+    y = mnist_inference.inference(x, regularizer)
+    global_step = tf.train.get_or_create_global_step()
+
+    # 计算损失函数并定义反向传播的过程。
+    cross_entropy = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=y, labels=tf.argmax(y_, 1))
+    cross_entropy_mean = tf.reduce_mean(cross_entropy)
+    loss = cross_entropy_mean + tf.add_n(tf.get_collection('losses'))
+    learning_rate = tf.train.exponential_decay(
+        LEARNING_RATE_BASE,
+        global_step,
+        60000 / BATCH_SIZE,
+        LEARNING_RATE_DECAY
+    )
+
+    train_op = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss, global_step=global_step)
+
+    # 定义每一轮迭代需要运行的操作。
+    if is_chief:
+        # 计算变量的滑动平均值。
+        variable_averages = tf.train.ExponentialMovingAverage(MOVING_AVERAGE_DECAY, global_step)
+        variable_averages_op = variable_averages.apply(tf.trainable_variables())
+        with tf.control_dependencies([variable_averages_op, train_op]):
+            train_op = tf.no_op()
+    return global_step, loss, train_op
+
+
+def main(argv=None):
+    # 解析flags并通过tf.train.ClusterSpe配置TensorFlow集群。
+    ps_hosts = FLAGS.ps_hosts.split(',')
+    worker_hosts = FLAGS.worker_hosts.split(',')
+    cluster = tf.train.ClusterSpec({'ps': ps_hosts, 'worker': worker_hosts})
+    # 通过tf.train.ClusterSpec以及当前任务创建tf.train.Server。
+    server = tf.train.Server(cluster, job_name=FLAGS.job_name, task_index=FLAGS.task_id)
+
+    # 参数服务器只需要管理TensorFlow中的变量，不需要执行训练的过程。server.join()会一直停在这条语句上。
+    if FLAGS.job_name == 'ps':
+        with tf.device("/cpu:0"):
+            server.join()
+
+    # 定义计算服务器需要运行的操作。
+    is_chief = (FLAGS.task_id == 0)
+    mnist = input_data.read_data_sets(DATA_PATH, one_hot=True)
+
+    # 通过tf.train.replica_device_setter函数来指定执行每一个运算的设备。
+    # tf.train.replica_device_setter函数会自动将所有的参数分配到参数服务器上，将
+    # 计算分配到当前的计算服务器上。
+    device_setter = tf.train.replica_device_setter(
+        worker_device="/job:worker/task:%d" % FLAGS.task_id,
+        cluster=cluster
+    )
+
+    with tf.device(device_setter):
+        # 定义输入并得到每一轮迭代需要运行的操作。
+        x = tf.placeholder(
+            tf.float32,
+            [None, mnist_inference.INPUT_NODE],
+            name='x-input'
+        )
+        y_ = tf.placeholder(
+            tf.float32,
+            [None, mnist_inference.OUTPUT_NODE],
+            name='y-input'
+        )
+        global_step, loss, train_op = build_model(x, y_, is_chief)
+
+        hooks = [tf.train.StopAtStepHook(last_step=TRAINING_STEPS)]
+        sess_config = tf.ConfigProto(allow_soft_placement=True, log_device_placement=False)
+
+        # 通过tf.train.MonitoredTrainingSession管理训练深度学习模型的通用功能。
+        with tf.train.MonitoredTrainingSession(
+            master=server.target,
+            is_chief=is_chief,
+            checkpoint_dir=MODEL_SAVE_PATH,
+            hooks=hooks,
+            save_checkpoint_secs=60,
+            config=sess_config
+        ) as mon_sess:
+            print("session started.")
+            step = 0
+            start_time = time.time()
+
+            # 执行迭代过程。在迭代过程中tf.train.MonitoredTrainingSession会帮助完成初始化、
+            # 从checkpoint中加载训练过的模型、输出日志并保存模型，所以以下程序中不需要再调用
+            # 这些过程。tf.train.StopAtStepHook会帮忙判断是否需要退出。
+            while not mon_sess.should_stop():
+                xs, ys = mnist.train.next_batch(BATCH_SIZE)
+                _, loss_value, global_step_value = mon_sess.run(
+                    [train_op, loss, global_step],
+                    feed_dict={x: xs, y_: ys}
+                )
+
+                # 每隔一段时间输出训练信息，不同的计算服务器都会更新全局的训练轮数，
+                # 所以这里使用global_step_value得到在训练中使用过的batch的总数。
+                if step > 0 and step % 100 == 0:
+                    duration = time.time() - start_time
+                    sec_per_batch = duration / global_step_value
+                    format_str = "After %d training steps (%d global steps), loss on training batch is %g. (%.3f sec/batch)"
+                    print(format_str % (step, global_step_value, loss_value, sec_per_batch))
+
+                step += 1
+
+
+if __name__ == '__main__':
+    try:
+        tf.app.run()
+    except Exception as e:
+        print(e)
+```
 
 要启动一个拥有一个参数服务器、两个计算服务器的集群，需要现在运行参数服务器的机器上启动以下命令。
 
@@ -439,9 +615,206 @@ python gpu_test7.py --job_name=worker --task_id=0 --ps_hosts=localhost:2222 --wo
 python gpu_test7.py --job_name=worker --task_id=1 --ps_hosts=localhost:2222 --worker_hosts=localhost:2223,localhost:2224
 ```
 
+**注意：如果你报错了：**
+
+**1. UnknownError: Could not start gRPC server**
+
+一定是你的参数问题！检查你的task_id有没有写成taske_id等等，类似的，一定是这样！！！一定要跟程序中的参数名保持一致！！！
+
+**2. 跑的过程中python搞不清楚崩了，两个计算服务器都会崩，跟时间无关，随机的那种。。。直接弹出python已停止的那种**
+
+听我的换台电脑或者重装系统。
+
+**3. 报错‘ps’不存在的，没定义的注意了！**
+
+在cmd（windows系统）中启动上面三个命令的时候，**参数的内容不要加引号！！！**书上面加引号真的是坑死了好吗！
+
+**我就是解决了上述三个问题，换了台macbook，才总算功德圆满了跑出了结果。**
+
+![img](https://img-blog.csdnimg.cn/20190517162020552.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70)
+
+左上：参数服务器
+
+右上：计算服务器0
+
+左下：计算服务器1
+
+右下：运行tensorboard，结果如下：
+
+![img](https://img-blog.csdnimg.cn/20190517162443226.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70)
+
+**同步模式样例程序**
+
+```python
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+# coding=utf-8 
+
+"""
+@author: Li Tian
+@contact: 694317828@qq.com
+@software: pycharm
+@file: gpu_test8.py
+@time: 2019/5/17 13:52
+@desc: 实现同步模式的分布式神经网络训练过程。
+"""
+
+import time
+import tensorflow as tf
+from tensorflow.examples.tutorials.mnist import input_data
+import mnist_inference
+
+# 配置神经网络的参数。
+BATCH_SIZE = 100
+LEARNING_RATE_BASE = 0.001
+LEARNING_RATE_DECAY = 0.99
+REGULARAZTION_RATE = 0.0001
+TRAINING_STEPS = 20000
+MOVING_AVERAGE_DECAY = 0.99
+
+# 模型保存的路径。
+MODEL_SAVE_PATH = "./log2"
+# MNIST数据路径。
+DATA_PATH = "D:/Python3Space/BookStudy/book2/MNIST_data"
+
+# 和异步模式类似的设置flags。
+FLAGS = tf.app.flags.FLAGS
+
+tf.app.flags.DEFINE_string('job_name', 'worker', ' "ps" or "worker" ')
+tf.app.flags.DEFINE_string(
+    'ps_hosts', ' tf-ps0:2222, tf-ps1:1111',
+    'Comma-separated list of hostname:port for the parameter server jobs.'
+    ' e.g. "tf-ps0:2222,tf-ps1:1111" '
+)
+tf.app.flags.DEFINE_string(
+    'worker_hosts', ' tf-worker0:2222, tf-worker1:1111',
+    'Comma-separated list of hostname:port for the worker jobs. '
+    'e.g. "tf-worker0:2222,tf-worker1:1111" '
+)
+tf.app.flags.DEFINE_integer(
+    'task_id', 0, 'Task ID of the worker/replica running the training.'
+)
 
 
+# 和异步模式类似的定义TensorFlow的计算图。唯一的区别在于使用。
+# tf.train.SyncReplicasOptimizer函数处理同步更新。
+def build_model(x, y_, n_workers,  is_chief):
+    regularizer = tf.contrib.layers.l2_regularizer(REGULARAZTION_RATE)
+    y = mnist_inference.inference(x, regularizer)
+    global_step = tf.train.get_or_create_global_step()
 
+    cross_entropy = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=y, labels=tf.argmax(y_, 1))
+    cross_entropy_mean = tf.reduce_mean(cross_entropy)
+    loss = cross_entropy_mean + tf.add_n(tf.get_collection('losses'))
+    learning_rate = tf.train.exponential_decay(
+        LEARNING_RATE_BASE,
+        global_step,
+        60000 / BATCH_SIZE,
+        LEARNING_RATE_DECAY
+    )
+
+    # 通过tf.train.SyncReplicasOptimizer函数实现同步更新。
+    opt = tf.train.SyncReplicasOptimizer(
+        tf.train.GradientDescentOptimizer(learning_rate),
+        replicas_to_aggregate=n_workers,
+        total_num_replicas=n_workers
+    )
+    sync_replicas_hook = opt.make_session_run_hook(is_chief)
+    train_op = opt.minimize(loss, global_step=global_step)
+
+    if is_chief:
+        variable_averages = tf.train.ExponentialMovingAverage(MOVING_AVERAGE_DECAY, global_step)
+        variable_averages_op = variable_averages.apply(tf.trainable_variables())
+        with tf.control_dependencies([variable_averages_op, train_op]):
+            train_op = tf.no_op()
+    return global_step, loss, train_op, sync_replicas_hook
+
+
+def main(argv=None):
+    # 和异步模式类似地创建TensorFlow集群。
+    ps_hosts = FLAGS.ps_hosts.split(',')
+    worker_hosts = FLAGS.worker_hosts.split(',')
+    n_workers = len(worker_hosts)
+    cluster = tf.train.ClusterSpec({"ps": ps_hosts, "worker": worker_hosts})
+
+    server = tf.train.Server(cluster,
+                             job_name=FLAGS.job_name,
+                             task_index=FLAGS.task_id)
+
+    if FLAGS.job_name == 'ps':
+        with tf.device("/cpu:0"):
+            server.join()
+
+    is_chief = (FLAGS.task_id == 0)
+    mnist = input_data.read_data_sets(DATA_PATH, one_hot=True)
+
+    device_setter = tf.train.replica_device_setter(
+        worker_device="/job:worker/task:%d" % FLAGS.task_id,
+        cluster=cluster
+    )
+
+    with tf.device(device_setter):
+        # 定义输入并得到每一轮迭代需要运行的操作。
+        x = tf.placeholder(
+            tf.float32,
+            [None, mnist_inference.INPUT_NODE],
+            name='x-input'
+        )
+        y_ = tf.placeholder(
+            tf.float32,
+            [None, mnist_inference.OUTPUT_NODE],
+            name='y-input'
+        )
+        global_step, loss, train_op, sync_replicas_hook = build_model(x, y_, n_workers, is_chief)
+
+        # 把处理同步更新的hook也加进来
+        hooks = [sync_replicas_hook, tf.train.StopAtStepHook(last_step=TRAINING_STEPS)]
+        sess_config = tf.ConfigProto(allow_soft_placement=True, log_device_placement=False)
+
+        # 训练过程和异步一致。
+        with tf.train.MonitoredTrainingSession(
+            master=server.target,
+            is_chief=is_chief,
+            checkpoint_dir=MODEL_SAVE_PATH,
+            hooks=hooks,
+            save_checkpoint_secs=60,
+            config=sess_config
+        ) as mon_sess:
+            print("session started.")
+            step = 0
+            start_time = time.time()
+
+            while not mon_sess.should_stop():
+                xs, ys = mnist.train.next_batch(BATCH_SIZE)
+                _, loss_value, global_step_value = mon_sess.run(
+                    [train_op, loss, global_step],
+                    feed_dict={x: xs, y_: ys}
+                )
+
+                if step > 0 and step % 100 == 0:
+                    duration = time.time() - start_time
+                    sec_per_batch = duration / global_step_value
+                    format_str = "After %d training steps (%d global steps), loss on training batch is %g. (%.3f sec/batch)"
+                    print(format_str % (step, global_step_value, loss_value, sec_per_batch))
+
+                step += 1
+
+
+if __name__ == '__main__':
+    tf.app.run()
+```
+
+同上运行出来得到：
+
+![img](https://img-blog.csdnimg.cn/20190517173749917.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70)
+
+![img](https://img-blog.csdnimg.cn/20190517173808803.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70)
+
+和异步模式不同，在同步模式下，global_step差不多是两个计算服务器local_step的平均值。比如在第二个计算服务器还没有开始之前，global_step是第一个服务器local_step的一般。这是因为同步模式要求收集replicas_to_average份梯度才会开始更新（注意这里TensorFlow不要求每一份梯度来自不同的计算服务器）。同步模式不仅仅是一次使用多份梯度，tf.train.SyncReplicasOptimizer的实现同时也保证了不会出现陈旧变量的问题，该函数会记录每一份梯度是不是由最新的变量值计算得到的，如果不是，那么这一份梯度将会被丢弃。
+
+## 5. 写在最后
+
+总算是把这本书一步一步的实现，一步一步的修改，从头认认真真的刷了一遍。取其精华，弃其糟粕。学习TensorFlow真的是一件不容易，也是一件很有成就感的过程。还有黑皮书《TensorFlow实战》和圣经花书《深度学习》要学，希望后面的书不会让我失望吧。
 
 ---
 

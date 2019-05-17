@@ -37,8 +37,10 @@
   [自然语言处理（五）——实现机器翻译Seq2Seq完整经过](https://blog.csdn.net/qq_21579045/article/details/88657013)
 
   [TensorFlow高层封装：从入门到喷这本书](https://blog.csdn.net/qq_21579045/article/details/89848142)
-  
+
   [TensorBoard可视化](https://blog.csdn.net/qq_21579045/article/details/90173916)
+
+  [TensorBoard计算加速](https://blog.csdn.net/qq_21579045/article/details/90298107)
 
 - ## Book3：《Python数据科学手册》
 

@@ -47,7 +47,7 @@ tf.app.flags.DEFINE_string(
 
 # 指定集群中的计算服务器地址。
 tf.app.flags.DEFINE_string(
-    'worker_hosts', ' tf-worker0:2222, tf-worker1:1111',
+    'worker_hosts', ' tf-worker0:2222,tf-worker1:1111',
     'Comma-separated list of hostname:port for the worker jobs. '
     'e.g. "tf-worker0:2222,tf-worker1:1111" '
 )
@@ -167,4 +167,7 @@ def main(argv=None):
 
 
 if __name__ == '__main__':
-    tf.app.run()
+    try:
+        tf.app.run()
+    except Exception as e:
+        print(e)
