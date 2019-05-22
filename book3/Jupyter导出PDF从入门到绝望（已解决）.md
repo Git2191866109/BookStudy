@@ -1,4 +1,4 @@
-# Pandoc安装大法
+# Jupyter导出PDF从入门到绝望（已解决）
 
 ## 问题描述
 
@@ -64,5 +64,30 @@
 
    ![img](https://img-blog.csdnimg.cn/20190522153316641.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70)
 
-7. [参考链接](<https://blog.csdn.net/csdnsevenn/article/details/81091523>)
+7. 然后依然报同样的错误。。。于是我怀疑，是不是MikTex有错，于是在官网上下了一个exe安装的那种，一路确认下去。。。[参考链接](<https://blog.csdn.net/csdnsevenn/article/details/81091523>)、[下载链接](https://miktex.org/)
 
+   果然，在点了导出pdf的时候，报错缺少的文件就弹出来安装程序了。。。
+
+   ![img](https://img-blog.csdnimg.cn/20190522161935621.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70)
+   
+   然后就成功保存pdf啦！
+
+![img](https://img-blog.csdnimg.cn/20190522162225837.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70)
+
+## 另辟蹊径
+
+说实话，这样导出来的pdf并不好看，还有一种方法，直接导出html，里面保留了插入的图片的那种，更能还原jupyter原来的排版。[参考链接](<https://www.jianshu.com/p/49a0c9f74d59>)
+
+------
+
+我的CSDN：https://blog.csdn.net/qq_21579045
+
+我的博客园：https://www.cnblogs.com/lyjun/
+
+我的Github：https://github.com/TinyHandsome
+
+纸上得来终觉浅，绝知此事要躬行~
+
+欢迎大家过来OB~
+
+by 李英俊小朋友
