@@ -48,6 +48,7 @@
 
   - [食谱数据库数据找不到的问题](https://blog.csdn.net/qq_21579045/article/details/90404382)
   - [Jupyter导出PDF从入门到绝望（已解决）](<https://blog.csdn.net/qq_21579045/article/details/90451576>)
+  - [Python数据科学手册Seaborn马拉松可视化里时分秒转化为秒数的问题]([https://github.com/TinyHandsome/BookStudy/blob/master/book3/Python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6%E6%89%8B%E5%86%8CSeaborn%E9%A9%AC%E6%8B%89%E6%9D%BE%E5%8F%AF%E8%A7%86%E5%8C%96%E9%87%8C%E6%97%B6%E5%88%86%E7%A7%92%E8%BD%AC%E5%8C%96%E4%B8%BA%E7%A7%92%E6%95%B0%E7%9A%84%E9%97%AE%E9%A2%98.md](https://github.com/TinyHandsome/BookStudy/blob/master/book3/Python数据科学手册Seaborn马拉松可视化里时分秒转化为秒数的问题.md))
 
 
 
