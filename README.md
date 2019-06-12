@@ -33,8 +33,9 @@
   - [食谱数据库数据找不到的问题](https://blog.csdn.net/qq_21579045/article/details/90404382)
   - [Jupyter导出PDF从入门到绝望（已解决）](https://blog.csdn.net/qq_21579045/article/details/90451576)
   - [Python数据科学手册Seaborn马拉松可视化里时分秒转化为秒数的问题](https://blog.csdn.net/qq_21579045/article/details/90692003)
-
-
+  - [scikit-learn使用fetch_mldata无法下载MNIST数据集的问题](<https://blog.csdn.net/qq_21579045/article/details/91347382>)
+  - [GridSearchCV.grid_scores_和mean_validation_score报错](<https://blog.csdn.net/qq_21579045/article/details/91435570>)
+  - [《Python数据科学手册》第五章机器学习的笔记](<https://blog.csdn.net/qq_21579045/article/details/91533128>)
 
 ------
 
