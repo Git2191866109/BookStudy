@@ -37,6 +37,10 @@
   - [GridSearchCV.grid_scores_和mean_validation_score报错](<https://blog.csdn.net/qq_21579045/article/details/91435570>)
   - [《Python数据科学手册》第五章机器学习的笔记](<https://blog.csdn.net/qq_21579045/article/details/91533128>)
 
+- ## Book4：《机器学习实战——基于Scikit-Learn和TensorFlow》
+
+  - 
+
 ------
 
 我的CSDN：https://blog.csdn.net/qq_21579045
