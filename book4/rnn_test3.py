@@ -6,9 +6,9 @@
 @author: Li Tian
 @contact: 694317828@qq.com
 @software: pycharm
-@file: rnn_test2.py
-@time: 2019/6/18 10:11
-@desc: 训练预测时间序列
+@file: rnn_test3.py
+@time: 2019/6/19 8:47
+@desc: 创造性RNN
 """
 
 import tensorflow as tf
@@ -22,12 +22,12 @@ import seaborn as sns
 sns.set()
 
 
-n_steps = 100
+n_steps = 20
 n_inputs = 1
 n_neurous = 100
 n_outputs = 1
 
-learning_rate = 4e-4
+learning_rate = 0.001
 
 n_iterations = 10000
 batch_size = 50
@@ -52,30 +52,25 @@ training_op = optimizer.minimize(loss)
 
 init = tf.global_variables_initializer()
 
-X_data = np.linspace(0, 15, 101)
-X_batch = X_data[:-1][np.newaxis, :, np.newaxis]
-# y_batch = X_batch * np.sin(X_batch) / 3 + 2 * np.sin(5 * X_batch)
-y_batch = np.sin(X_batch)
-
+X_data = np.linspace(0, 19, 20)
 with tf.Session() as sess:
     init.run()
     for iteration in range(n_iterations):
+        X_batch = X_data[np.newaxis, :, np.newaxis]
+        y_batch = X_batch * np.sin(X_batch) / 3 + 2 * np.sin(5 * X_batch)
         sess.run(training_op, feed_dict={X: X_batch, y: y_batch})
         if iteration % 100 == 0:
             mse = loss.eval(feed_dict={X: X_batch, y: y_batch})
             print(iteration, "\tMSE", mse)
 
-    X_new = X_data[1:][np.newaxis, :, np.newaxis]
-    # y_true = X_new * np.sin(X_new) / 3 + 2 * np.sin(5 * X_new)
-    y_true = np.sin(X_new)
-    y_pred = sess.run(outputs, feed_dict={X: X_new})
-
-print(X_new.flatten())
-print('真实结果：', y_true.flatten())
-print('预测结果：', y_pred.flatten())
+    # sequence = [0.] * n_steps
+    sequence = list(y_batch.flatten())
+    for iteration in range(300):
+        XX_batch = np.array(sequence[-n_steps:]).reshape(1, n_steps, 1)
+        y_pred = sess.run(outputs, feed_dict={X: XX_batch})
+        sequence.append(y_pred[0, -1, 0])
 
 fig = plt.figure(dpi=150)
-plt.plot(X_new.flatten(), y_true.flatten(), 'r', label='y_true')
-plt.plot(X_new.flatten(), y_pred.flatten(), 'b', label='y_pred')
+plt.plot(sequence)
 plt.legend()
 plt.show()
