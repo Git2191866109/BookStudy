@@ -40,6 +40,8 @@
 - ## Book4：《机器学习实战——基于Scikit-Learn和TensorFlow》
 
   - 
+  - [第14章 循环神经网络](<https://blog.csdn.net/qq_21579045/article/details/92986126>)
+  - 
 
 ------
 
