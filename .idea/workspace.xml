@@ -2,7 +2,29 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="326146e7-bb12-4447-a1c1-73b14a61c93b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/book2/tensorboard_test/TensorBoard可视化.md" afterPath="$PROJECT_DIR$/book2/tensorboard_test/TensorBoard可视化.md" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/book4/chapter 14/dynamic_rnn1.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/book4/chapter 14/dynamic_rnn2.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/book4/chapter 14/gru_test1.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/book4/chapter 14/lstm_test1.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/book4/chapter 14/lstm_test2.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/book4/chapter 14/rnn_gpu.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/book4/chapter 14/rnn_test1.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/book4/chapter 14/rnn_test2.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/book4/chapter 14/rnn_test3.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/book4/chapter 14/rnn_test4.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/book4/chapter 14/rnn_test5.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/book4/chapter 14/simple_rnn.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/book4/chapter 14/simple_rnn2.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/book4/chapter 14/simple_rnn3.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/book4/chapter 14/第14章 循环神经网络.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/book4/chapter 15/autoencoder_1.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/book4/chapter 15/autoencoder_2.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/book4/chapter 15/autoencoder_3.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/book4/chapter 15/autoencoder_4.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/book4/chapter 15/autoencoder_5.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/book4/chapter 15/autoencoder_6.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/book4/chapter 15/第15章 自动编码器.md" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -15,6 +37,7 @@
     <SUITE FILE_PATH="coverage/BookStudy$estimator_test3.coverage" NAME="estimator_test3 Coverage Results" MODIFIED="1557393324005" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/book2/tf_test" />
     <SUITE FILE_PATH="coverage/BookStudy$keras_inception2.coverage" NAME="keras_inception2 Coverage Results" MODIFIED="1557138704585" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/book2/tf_test" />
     <SUITE FILE_PATH="coverage/BookStudy$tensorboard_test6.coverage" NAME="tensorboard_test6 Coverage Results" MODIFIED="1557647238637" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/book2/tensorboard_test" />
+    <SUITE FILE_PATH="coverage/BookStudy$autoencoder_6.coverage" NAME="autoencoder_6 Coverage Results" MODIFIED="1561388317168" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/book4/chapter15" />
     <SUITE FILE_PATH="coverage/BookStudy$estimator_test1.coverage" NAME="estimator_test1 Coverage Results" MODIFIED="1557241593852" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/book2/tf_test" />
     <SUITE FILE_PATH="coverage/BookStudy$keras_learn.coverage" NAME="keras_learn Coverage Results" MODIFIED="1557064473615" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/book2/tf_test" />
   </component>
@@ -50,21 +73,41 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="tensorboard_test6.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/book2/tensorboard_test/tensorboard_test6.py">
+      <file leaf-file-name="autoencoder_5.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/book4/chapter15/autoencoder_5.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="319">
-              <caret line="76" column="81" lean-forward="false" selection-start-line="76" selection-start-column="39" selection-end-line="76" selection-end-column="81" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tensorboard_test7.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/book2/tensorboard_test/tensorboard_test7.py">
+      <file leaf-file-name="autoencoder_4.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/book4/chapter15/autoencoder_4.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-5">
-              <caret line="43" column="27" lean-forward="true" selection-start-line="43" selection-start-column="27" selection-end-line="43" selection-end-column="27" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="autoencoder_3.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/book4/chapter15/autoencoder_3.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="254">
+              <caret line="26" column="30" lean-forward="false" selection-start-line="26" selection-start-column="30" selection-end-line="26" selection-end-column="30" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="autoencoder_6.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/book4/chapter15/autoencoder_6.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="193">
+              <caret line="89" column="56" lean-forward="true" selection-start-line="89" selection-start-column="56" selection-end-line="89" selection-end-column="56" />
               <folding />
             </state>
           </provider>
@@ -82,7 +125,12 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>pre_actions</find>
+      <find>\</find>
+      <find>saver</find>
     </findStrings>
+    <replaceStrings>
+      <replace>/</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -96,6 +144,8 @@
         <option value="$PROJECT_DIR$/book2/tf_test/estimator_test3.py" />
         <option value="$PROJECT_DIR$/book2/tensorboard_test/tensorboard_test6.py" />
         <option value="$PROJECT_DIR$/book2/tensorboard_test/tensorboard_test7.py" />
+        <option value="$PROJECT_DIR$/book4/chapter 15/autoencoder_6.py" />
+        <option value="$PROJECT_DIR$/book4/chapter15/autoencoder_6.py" />
       </list>
     </option>
   </component>
@@ -127,7 +177,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -138,18 +187,19 @@
             <path>
               <item name="BookStudy" type="b2602c69:ProjectViewProjectNode" />
               <item name="BookStudy" type="462c0819:PsiDirectoryNode" />
-              <item name="book2" type="462c0819:PsiDirectoryNode" />
+              <item name="book4" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="BookStudy" type="b2602c69:ProjectViewProjectNode" />
               <item name="BookStudy" type="462c0819:PsiDirectoryNode" />
-              <item name="book2" type="462c0819:PsiDirectoryNode" />
-              <item name="tensorboard_test" type="462c0819:PsiDirectoryNode" />
+              <item name="book4" type="462c0819:PsiDirectoryNode" />
+              <item name="chapter15" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -170,7 +220,25 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.tensorboard_test6">
+  <component name="RunManager" selected="Python.autoencoder_6">
+    <configuration name="autoencoder_6" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/book4/chapter15" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="BookStudy" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/book4/chapter15/autoencoder_6.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+    </configuration>
     <configuration name="estimator_test1" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -225,24 +293,6 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
-    <configuration name="keras_learn" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/book2/tf_test" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="BookStudy" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/book2/tf_test/keras_learn.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-    </configuration>
     <configuration name="tensorboard_test6" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -262,19 +312,19 @@
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.keras_learn" />
-      <item index="1" class="java.lang.String" itemvalue="Python.keras_inception2" />
-      <item index="2" class="java.lang.String" itemvalue="Python.estimator_test1" />
-      <item index="3" class="java.lang.String" itemvalue="Python.estimator_test3" />
-      <item index="4" class="java.lang.String" itemvalue="Python.tensorboard_test6" />
+      <item index="0" class="java.lang.String" itemvalue="Python.keras_inception2" />
+      <item index="1" class="java.lang.String" itemvalue="Python.estimator_test1" />
+      <item index="2" class="java.lang.String" itemvalue="Python.estimator_test3" />
+      <item index="3" class="java.lang.String" itemvalue="Python.tensorboard_test6" />
+      <item index="4" class="java.lang.String" itemvalue="Python.autoencoder_6" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.tensorboard_test6" />
-        <item index="1" class="java.lang.String" itemvalue="Python.estimator_test3" />
-        <item index="2" class="java.lang.String" itemvalue="Python.estimator_test1" />
-        <item index="3" class="java.lang.String" itemvalue="Python.keras_inception2" />
-        <item index="4" class="java.lang.String" itemvalue="Python.keras_learn" />
+        <item index="0" class="java.lang.String" itemvalue="Python.autoencoder_6" />
+        <item index="1" class="java.lang.String" itemvalue="Python.tensorboard_test6" />
+        <item index="2" class="java.lang.String" itemvalue="Python.estimator_test3" />
+        <item index="3" class="java.lang.String" itemvalue="Python.estimator_test1" />
+        <item index="4" class="java.lang.String" itemvalue="Python.keras_inception2" />
       </list>
     </recent_temporary>
   </component>
@@ -307,24 +357,24 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19259657" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16791846" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295964" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="0.3299356" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" x="652" y="74" width="1119" height="892" />
-      <window_info id="Run" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="false" show_stripe_button="true" weight="0.48819742" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" x="-952" y="30" width="944" height="1042" />
+      <window_info id="Python Console" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="false" show_stripe_button="true" weight="0.3299356" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" x="652" y="74" width="1119" height="892" />
+      <window_info id="Run" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="false" show_stripe_button="true" weight="0.48819742" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" x="8" y="30" width="944" height="1002" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -391,16 +441,66 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/book4/handson-ml" />
+    </ignored-roots>
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/book4/chapter 15/autoencoder_4.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2160">
+          <caret line="80" column="77" lean-forward="false" selection-start-line="80" selection-start-column="77" selection-end-line="80" selection-end-column="77" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/book4/chapter 15/autoencoder_3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="702">
+          <caret line="26" column="29" lean-forward="false" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/book4/chapter 15/autoencoder_5.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1728">
+          <caret line="64" column="11" lean-forward="false" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/book4/chapter 15/autoencoder_6.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="513">
+          <caret line="19" column="26" lean-forward="true" selection-start-line="19" selection-start-column="26" selection-end-line="19" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/book2/tensorboard_test/tensorboard_test6.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2052">
+          <caret line="76" column="81" lean-forward="false" selection-start-line="76" selection-start-column="39" selection-end-line="76" selection-end-column="81" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/book2/tensorboard_test/tensorboard_test7.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1161">
+          <caret line="43" column="27" lean-forward="true" selection-start-line="43" selection-start-column="27" selection-end-line="43" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/book2/tf_test/keras_learn.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="999">
           <caret line="37" column="22" lean-forward="false" selection-start-line="37" selection-start-column="22" selection-end-line="37" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -408,7 +508,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1863">
           <caret line="69" column="15" lean-forward="false" selection-start-line="69" selection-start-column="15" selection-end-line="69" selection-end-column="15" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -416,7 +515,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1269">
           <caret line="47" column="65" lean-forward="false" selection-start-line="47" selection-start-column="65" selection-end-line="47" selection-end-column="65" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -424,10 +522,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1485">
           <caret line="55" column="46" lean-forward="false" selection-start-line="55" selection-start-column="46" selection-end-line="55" selection-end-column="46" />
-          <folding>
-            <marker date="1557637652678" expanded="true" signature="606:861" ph="..." />
-            <marker date="1557637652678" expanded="true" signature="1046:1293" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -435,7 +529,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1242">
           <caret line="46" column="37" lean-forward="true" selection-start-line="46" selection-start-column="37" selection-end-line="46" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -450,7 +543,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="999">
           <caret line="37" column="22" lean-forward="false" selection-start-line="37" selection-start-column="22" selection-end-line="37" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -458,7 +550,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1863">
           <caret line="69" column="15" lean-forward="false" selection-start-line="69" selection-start-column="15" selection-end-line="69" selection-end-column="15" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -466,7 +557,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1269">
           <caret line="47" column="65" lean-forward="false" selection-start-line="47" selection-start-column="65" selection-end-line="47" selection-end-column="65" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -474,10 +564,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1485">
           <caret line="55" column="46" lean-forward="false" selection-start-line="55" selection-start-column="46" selection-end-line="55" selection-end-column="46" />
-          <folding>
-            <marker date="1557637652678" expanded="true" signature="606:861" ph="..." />
-            <marker date="1557637652678" expanded="true" signature="1046:1293" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -485,7 +571,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="560">
           <caret line="46" column="37" lean-forward="false" selection-start-line="46" selection-start-column="37" selection-end-line="46" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -494,7 +579,6 @@
         <state relative-caret-position="-21">
           <caret line="101" column="15" lean-forward="false" selection-start-line="101" selection-start-column="15" selection-end-line="101" selection-end-column="15" />
           <caret line="100" column="0" lean-forward="true" selection-start-line="100" selection-start-column="0" selection-end-line="100" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -502,22 +586,83 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-12684">
           <caret line="107" column="19" lean-forward="true" selection-start-line="107" selection-start-column="19" selection-end-line="107" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/book2/tensorboard_test/tensorboard_test6.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="76" column="81" lean-forward="false" selection-start-line="76" selection-start-column="39" selection-end-line="76" selection-end-column="81" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/book2/tensorboard_test/tensorboard_test7.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5">
-          <caret line="43" column="27" lean-forward="true" selection-start-line="43" selection-start-column="27" selection-end-line="43" selection-end-column="27" />
+        <state relative-caret-position="265">
+          <caret line="53" column="0" lean-forward="true" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/book2/tensorboard_test/tensorboard_test6.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="27">
+          <caret line="76" column="81" lean-forward="false" selection-start-line="76" selection-start-column="39" selection-end-line="76" selection-end-column="81" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/book4/chapter 15/autoencoder_5.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1728">
+          <caret line="64" column="11" lean-forward="false" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/book4/chapter 15/autoencoder_4.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2160">
+          <caret line="80" column="77" lean-forward="false" selection-start-line="80" selection-start-column="77" selection-end-line="80" selection-end-column="77" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/book4/chapter 15/autoencoder_3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="702">
+          <caret line="26" column="29" lean-forward="false" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/book4/chapter 15/autoencoder_6.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="454">
+          <caret line="19" column="26" lean-forward="true" selection-start-line="19" selection-start-column="26" selection-end-line="19" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/book4/chapter15/autoencoder_5.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/book4/chapter15/autoencoder_4.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/book4/chapter15/autoencoder_3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="254">
+          <caret line="26" column="30" lean-forward="false" selection-start-line="26" selection-start-column="30" selection-end-line="26" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/book4/chapter15/autoencoder_6.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="193">
+          <caret line="89" column="56" lean-forward="true" selection-start-line="89" selection-start-column="56" selection-end-line="89" selection-end-column="56" />
           <folding />
         </state>
       </provider>
