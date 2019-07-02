@@ -4,11 +4,11 @@
 
 要努力！要加油呀~
 
-- ## Book1：《Python编程从入门到实践》
+## Book1：《Python编程从入门到实践》
 
   - 抱歉这本书并没有留下书评和学习笔记，只有代码。
 
-- ## Book2：《TensorFlow实战Google深度学习框架（第二版）》
+## Book2：《TensorFlow实战Google深度学习框架（第二版）》
 
   - [TensorFlow图像处理函数学习总结](https://blog.csdn.net/qq_21579045/article/details/86569934)
   - [TensorFlow图像预处理完整样例](https://blog.csdn.net/qq_21579045/article/details/86708656)
@@ -28,7 +28,7 @@
   - [TensorBoard可视化](https://blog.csdn.net/qq_21579045/article/details/90173916)
   - [TensorBoard计算加速](https://blog.csdn.net/qq_21579045/article/details/90298107)
 
-- ## Book3：《Python数据科学手册》
+## Book3：《Python数据科学手册》
 
   - [食谱数据库数据找不到的问题](https://blog.csdn.net/qq_21579045/article/details/90404382)
   - [Jupyter导出PDF从入门到绝望（已解决）](https://blog.csdn.net/qq_21579045/article/details/90451576)
@@ -37,11 +37,21 @@
   - [GridSearchCV.grid_scores_和mean_validation_score报错](<https://blog.csdn.net/qq_21579045/article/details/91435570>)
   - [《Python数据科学手册》第五章机器学习的笔记](<https://blog.csdn.net/qq_21579045/article/details/91533128>)
 
-- ## Book4：《机器学习实战——基于Scikit-Learn和TensorFlow》
+## Book4：《机器学习实战——基于Scikit-Learn和TensorFlow》
 
   - 
   - [第14章 循环神经网络](<https://blog.csdn.net/qq_21579045/article/details/92986126>)
-  - 
+
+
+
+## Book5：《Hadoop权威指南》
+
+
+
+## else
+
+- Linux学习从入门到放弃
+- 机器学习算法工程师面试考点笔记
 
 ------
 
