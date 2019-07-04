@@ -380,9 +380,21 @@
   - Linux硬盘分IDE硬盘和SCSI硬盘，目前基本上是SCSI硬盘
   - lsblk -f：查看当前系统的分区和挂载情况。（list block）
 
+- 挂载的经典案例
 
+  - 需求是给我们的Linux系统增加一个新的硬盘，并且挂载到/home/newdisk
 
+  1. 虚拟机添加硬盘
+  2. 分区：fdsk /dev/sdb
+  3. 格式化：mkfs -t ext4 /dev/sdb1
+  4. 挂载：新建目录：mkdir /home/newdisk；挂载：mount /dev/sdb1 /home/newdisk
+  5. 设置可以自动挂载（永久挂载）：重启系统后，仍然可以挂载。vim etc/fstab 增加挂载信息。mount -a：生效
 
+  - 取消挂载：unmount /dev/sdb1
+
+- 磁盘情况查询：df -h / df -l
+
+- 
 
 
 
