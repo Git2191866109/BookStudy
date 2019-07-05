@@ -399,7 +399,27 @@
   - -s：指定目录占用大小汇总
   - -h：带计量单位
   - -a：含文件
-  - -max-depth=1：子目录深度
+  - --max-depth=1：子目录深度
+  - -c：列出明细的同时，增加汇总值
+
+- 磁盘情况-工作实用指令
+
+  1. 统计/home文件夹下文件的个数：`ls -l /home | grep "^-" | wc -l`
+  2. 统计/home文件夹下目录的个数：`ls -l /home | grep "^d" | wc -l`
+  3. 统计/home文件夹下文件的个数，包括子文件夹里的：`ls -lR /home | grep "^-" | wc -l`
+  4. 统计文件夹下目录的个数，包括子文件夹里的：`ls -lR /home | grep "^d" | wc -l`
+  5. 以树状显示目录结构：<u>首先安装tree指令：yum install tree</u>，tree
+
+## 网络配置
+
+- 指定固定IP：直接修改配置文件来指定IP，并可以连接到外网，编辑：vim  /etc/sysconfig/network-scripts/ifcfg-eth0
+- 重启网络服务：service network restart
+
+## 进程管理
+
+- 
+
+
 
 
 
