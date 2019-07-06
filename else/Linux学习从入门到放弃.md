@@ -463,6 +463,62 @@
   - 查看服务的状态：chkconfig 服务名 --list
   - 给服务的运行级别设置自启动：chkconfig –level 5 服务名 on/off
   - 要所有运行级别关闭或开启：chkconfig 服务名 on/off
+- 动态监控进程
+  - top [选项]
+  - top和ps命令很相似。它们都用来显示正在执行的进程。top和ps最大的不同之处在于top在执行一段时间可以更新正在运行的进程。
+  - -d 秒数：指定top命令每隔几秒更新。默认是3秒。
+  - -i：使top不显示任何闲置或者僵死进程。
+  - -p：通过指定监控进程ID来仅仅监控某个进程的状态。
+  - 案例1：监控特定用户：top查看进程；u输入用户名。
+  - 案例2：终止指定的进程：top查看进程；k输入要结束的进程。
+  - 案例3：指定系统状态更新的时间（每隔10秒自动更新，默认是3秒）：top -d 10
+  - 交互操作说明：
+    - P：以CPU使用率排序，默认就是此项
+    - M：以内存的使用率排序
+    - N：以PID排序
+    - q：退出top
+- 监控网络状态
+  - netstat [选项]
+  - -an：按一定顺序排列输出
+  - -p：显示哪个进程在调用
+
+## RPM
+
+- RPM：RedHat Package Manager，红帽软件包管理工具。
+- RPM查询已安装的rpm列表：rpm -qa | grep xx
+- rpm包的其它查询指令：
+  - rpm -qa：查询所安装的所有rpm软件包
+  - rpm -qa | more
+  - rpm -qa | grep xx
+  - rpm -q xx：查询xx软件包是否安装
+  - rpm -qi xx：查询软件包信息
+  - rpm -ql xx：查询软件包中的文件
+  - rpm -qf 文件全路径名：查询文件所属的软件包
+- 卸载rpm包：rpm -e 软件包名称
+- 删除时可能会发生依赖错误，忽视依赖强制删除的方法：rpm -e --nodeps 软件包名称
+- 安装rpm包：rpm -ivh 软件包全路径名称
+  - i=install：安装
+  - v=verbose：提示
+  - h=hash：进度条
+
+## YUM
+
+- YUM：是一个shell前端软件包管理器。基于RPM包管理，能够从指定的服务器自动下载RPM包并安装，可以**自动处理依赖性关系**，并且一次安装所有依赖的软件包。使用yum的前提是联网。
+- yum list | grep xx：查询yum服务器是否有需要安装的软件
+- yum install xx：安装指定的yum包
+- yum -y remove xx：卸载指定的yum包
+
+## 搭建JAVAEE环境
+
+1. 将软件上传到/opt下
+2. 解压缩
+3. 配置环境变量的配置文件vim /etc/profile
+   - JAVA_HOME=/opt/jdk1.7.0_79
+   - PATH=/opt/jdk1.7.0_79/bin:$PATH
+   - export JAVA_HOME PATH
+   - 保存然后source /etc/profile生效
+
+
 
 
 
