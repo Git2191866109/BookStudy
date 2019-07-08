@@ -576,11 +576,15 @@
      scripts/mysql_install_db --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data
      --user=mysql
 
+     如果报错：`Can't locate Data/Dumper.pm`，则运行：`yum install 'perl(Data::Dumper)'`，参考链接：https://www.cnblogs.com/yanghongfei/p/7118072.html
+
    - 删除之前mysql的配置文件：mv /etc/my.cnf /etc/my.cnf.bak
 
 9. 启动MySQL
 
    - 添加服务，拷贝服务脚本到init.d目录，并设置开机启动
+
+   - [注意在 /usr/local/mysql 下执行]
 
      cp support-files/mysql.server /etc/init.d/mysql
 
@@ -588,9 +592,13 @@
 
      service mysql start
 
-   - 如果报错PID，则：
+   - 执行下面的命令修改root密码
 
-     mv /usr/local/mysql/data/localhost.localdomain.err /usr/local/mysql/data/localhost.localdomain.pid
+     cd /usr/local/mysql/bin
+
+     ./mysql -u root -p
+
+     set password = password('root');（quit退出mysql）
 
 ## Shell编程
 
