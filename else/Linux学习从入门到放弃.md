@@ -518,6 +518,95 @@
    - export JAVA_HOME PATH
    - 保存然后source /etc/profile生效
 
+## 安装Tomcat
+
+1. 解压缩到/opt：tar -zxvf apache-tomcat-7.0.70.tar.gz
+2. 进入tomcat的bin目录，启动tomcat  ./startup.sh：./startup.sh
+3. 开放端口  vim /etc/sysconfig/iptables
+   - firewall-cmd --zone=public --add-port=8080/tcp --permanent（Centos7）
+   - systemctl restart firewalld.service
+   - firewall-cmd --reload
+   - 重启防火墙生效
+4. 测试是否安装成功：在windows和Linux下访问http://linuxip:8080
+
+## 安装Eclipse
+
+1. 解压缩到/opt：tar -zxvf eclipse-jee-mars-2-linux-gtk-x86_64.tar.gz
+2. 启动eclipse，配置jre和server：./eclipse
+3. 编写Hello world程序并测试成功
+4. 编写jsp页面，并测试成功
+
+## 安装mysql
+
+1. 查看是否有mysql：rpm -qa | grep mysql
+
+2. 删除旧mysql：rpm -e –nopdeps mysql（强制删除）
+
+3. 安装环境：yum -y install make gcc-c++ cmake bison-devel ncurses-devel
+
+4. 解压mysql：tar -zxvf mysql-5.6.14.tar.gz
+
+5. 进入mysql目录
+
+6. 编译安装：
+
+   cmake -DCMAKE_INSTALL_PREFIX=/usr/local/mysql
+   -DMYSQL_DATADIR=/usr/local/mysql/data -DSYSCONFDIR=/etc
+   -DWITH_MYISAM_STORAGE_ENGINE=1 -DWITH_INNOBASE_STORAGE_ENGINE=1
+   -DWITH_MEMORY_STORAGE_ENGINE=1 -DWITH_READLINE=1
+   -DMYSQL_UNIX_ADDR=/var/lib/mysql/mysql.sock -DMYSQL_TCP_PORT=3306
+   -DENABLED_LOCAL_INFILE=1 -DWITH_PARTITION_STORAGE_ENHINE=1
+   -DEXTRA_CHARSETS=all -DDEFAULT_CHARSET=utf8
+   -DDEFAULT_COLLATION=utf8_general_ci
+   
+7. 编译并安装：make && make install
+
+8. 配置mysql，设置权限
+
+   - 查看是否有mysql用户和组：cat /etc/passwd，cat /etc/group
+
+   - 添加mysql组：groupadd mysql
+
+   - 添加mysql用户并放在mysql组中：useradd -g mysql mysql
+
+   - 修改/usr/local/mysql权限：chown -R mysql:mysql /usr/local/mysql/
+
+   - 初始化mysql：
+
+     scripts/mysql_install_db --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data
+     --user=mysql
+
+   - 删除之前mysql的配置文件：mv /etc/my.cnf /etc/my.cnf.bak
+
+9. 启动MySQL
+
+   - 添加服务，拷贝服务脚本到init.d目录，并设置开机启动
+
+     cp support-files/mysql.server /etc/init.d/mysql
+
+     chkconfig mysql on
+
+     service mysql start
+
+   - 如果报错PID，则：
+
+     mv /usr/local/mysql/data/localhost.localdomain.err /usr/local/mysql/data/localhost.localdomain.pid
+
+## Shell编程
+
+- Shell是一个命令行解释器，它为用户提供了一个向Linux内核发送请求以便裕兴程序的界面系统级程序，用户可以用Shell来启动、挂起、停止甚至是编写一些程序。
+- Shell脚本的执行方式：
+  - 脚本格式要求：
+    - 脚本以#!/bin/bash 开头
+    - 脚本需要有可执行权限
+  - 脚本的常用执行方式：
+    - 方式1（输入脚本的绝对路径或相对路径）
+      - 首先要赋予xx.sh脚本的+x权限：chmod 744 myShell.sh
+      - 执行脚本：./myShell.sh
+    - 方式2（sh+脚本）：
+      - 说明：不用赋予+x权限，直接执行即可
+      - sh ./myShell.sh
+
 
 
 

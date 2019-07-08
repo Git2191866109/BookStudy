@@ -50,6 +50,8 @@
 
 ## else
 
+- 学习顺序参考链接：https://blog.csdn.net/u010965287/article/details/93875495
+- 别人的计划：https://www.cnblogs.com/cznczai/p/11148054.html
 - Linux学习从入门到放弃
 - 机器学习算法工程师面试考点笔记
 
