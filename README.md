@@ -41,6 +41,7 @@
 
   - 
   - [第14章 循环神经网络](<https://blog.csdn.net/qq_21579045/article/details/92986126>)
+  - [第15章 自动编码器](https://blog.csdn.net/qq_21579045/article/details/94593920)
 
 
 
