@@ -836,6 +836,28 @@
 
 ## Shell编程综合案例
 
+- 需求分析
+  1. 每天凌晨2：10备份数据库atguiguDB到/data/backup/db
+  2. 备份开始和备份结束能够给出相应的提示信息
+  3. 备份后的文件要求以备份时间为文件名，并打包成.tar.gz的形式，比如：2018-03-12_230201.tar.gz
+  4. 在备份的同时，检查是否有10天前备份的数据库文件，如果有就将其删除。
+
+- 如果报错：mysqldump: command not found
+
+  解决方案：
+
+  1. 先找到mysqldump的位置：find  / -name mysqldump -print
+  2. 然后建立一个链接：ln -fs /usr/local/mysql/bin/mysql /usr/bin
+
+- crontab -e
+- 10 2 * * * /usr/sbin/mysql_backup_db.sh
+
+## Python定制篇 开发平台Ubuntu
+
+- 设置Ubuntu支持中文
+- su root显示认证失败：是因为我们还没有对root用户设置密码
+- 给root用户设密码：sudo passwd
+- 如果ubuntu没有vim：apt install vim
 - 
 
 
