@@ -855,18 +855,58 @@
 ## Python定制篇 开发平台Ubuntu
 
 - 设置Ubuntu支持中文
+
 - su root显示认证失败：是因为我们还没有对root用户设置密码
+
 - 给root用户设密码：sudo passwd
+
 - 如果ubuntu没有vim：apt install vim
-- 
 
+- apt软件管理和远程登录
 
+  - apt：Advanced Packaging Tool，是一款安装包管理工具。在Ubuntu下，我们可以使用apt命令进行软件包的安装、删除、清理等。
 
+  - 常用命令：
 
+    sudo apt-get update
+    更新源
+    sudo apt-get install package 安装包
+    sudo apt-get remove package 删除包
+    sudo apt-cache search package 搜索软件包
+    sudo apt-cache show package
+    获取包的相关信息,如说明、大小、版本等
+    sudo apt-get install package --reinstall
+    重新安装包
 
+    sudo apt-get -f install
+    修复安装
+    sudo apt-get remove package --purge 删除包,包括配置文件等
+    sudo apt-get build-dep package 安装相关的编译环境
 
+    sudo apt-get upgrade 更新已安装的包
+    sudo apt-get dist-upgrade 升级系统
+    sudo apt-cache depends package 了解使用该包依赖那些包
+    sudo apt-cache rdepends package 查看该包被哪些包依赖
+    sudo apt-get source package
+    下载该包的源代码
 
+  - 更新Ubuntu软件下载地址
 
+    - 查看Ubuntu版本：cat /proc/version
+    - 需要修改的文件位置：/etc/apt/source.list
+
+- Windows使用SSH远程登录Ubuntu
+
+  - 安装SSH：sudo apt-get install openssh-server
+  - 启用SSH：service sshd start
+
+- Linux使用SSH远程登录Ubuntu
+
+  - 同上
+  - 基本语法：ssh 用户名@IP
+  - 例如：ssh atguigu@192.168.188.130
+  - 使用shh访问，如访问出现错误。可查看是否有该文件 ~/.ssh/known_ssh，尝试删除该文件解决。
+  - 登出：exit或者logout
 
 ------
 
