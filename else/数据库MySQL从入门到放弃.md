@@ -84,7 +84,116 @@
    - 单行注释：-- 注释文字（要有空格）
    - 多行注释：/* 注释文字 */
 
+## DQL（Data Query Language）数据查询语言
 
+- 基础查询
+
+  - 语法：
+
+    select 查询列表
+
+    from 表名;
+
+  - 特点：
+
+    - 查询列表可以是：表中的字段、常量、表达式、函数
+    - 查询的结果是一个虚拟的表格
+
+  - **注意：在进行查询操作之前要指定所有的库**：use myemployees;
+
+  - 查询表中的单个字段：select last_name from employees;
+
+  - 查询表中的多个字段：select last_name, salary, email from employees;
+
+  - 查询表中的所有字段：select * from employees;
+
+  - **按F12进行格式化**
+
+  - 着重号`用来区分是否是关键字或者字段
+
+  - 选中语句进行执行或F9
+
+  - 查询常量值：
+
+    select 100;
+
+    select ‘john’;
+
+  - 查询表达式：select 100*98；
+
+  - 查询函数：select version();
+
+  - 起别名：
+
+    - 便于理解
+    - 如果查询的字段有重名的情况，使用别名可以区分开来
+
+    方式1：
+
+    select 100%98 as 结果;
+
+    select last_name as 姓, first_name as 名 from employees;
+
+    方式2：
+
+    select last_name 姓, first_name 名 from employees;
+
+    如果别名有特殊符号要加双引号：
+
+    select salary as "out put" from employees;
+
+  - 去重：
+
+    查询员工表中涉及到的所有部门编号：select distinct department_id from employees;
+
+  - +号的作用：
+
+    - 两个操作数为数值型，则做加法运算
+    - 只要其中一方为字符型，试图将字符型数值转换成数值型，如果转换成功，则继续做加法运算；如果转换失败，则将字符型数值转换成0
+    - 只要其中一方为null，则结果肯定为null
+
+  - 使用concat连接字符串：
+
+    查询员工的名和姓连接成一个字段，并显示为姓名：select concat(last_name,first_name) as 姓名 from employees;
+
+  - ifnull函数检测是否为空：
+
+    select ifnull(commission_pct, 0) as 奖金率, commission_pct from employees;
+
+- 条件查询
+
+  - 语法：select 查询列表 from 表明 where 筛选条件;
+
+  - 分类：
+
+    - 按条件表达式筛选：
+
+      - 条件运算符：> < = != <> >= <=
+
+    - 按逻辑表达式筛选：
+
+      - 主要作用：用于连接条件表达式
+      - 逻辑运算符：&& || ! and or not
+
+    - 模糊查询
+
+      like
+
+      between and
+
+      in
+
+      is null
+
+  - 按条件表达式筛选：
+
+    - 查询工资>12000的员工信息：select * from employees where salary>12000;
+    - 查询部门编号不等于90号的员工名和部门编号：select last_name, department_id from employees where department_id != 90;
+
+  - 按逻辑表达式筛选：
+
+    - 查询工资在10000到20000之间的员工名、工资以及奖金：select last_name, salary, commission_pct from employees where salary >= 10000 and salary <= 20000;
+    - 查询部门编号不是在90到110之间，或者工资高于15000的员工信息：select * from employees where department_id < 90 or department_id > 110 or salary > 15000;
 
 
 
