@@ -41,7 +41,7 @@
 ## MySQL服务端的登录和退出
 
 - 登录：mysql 【-h  localhost -P 3306】（本机可省略） -u root -p（可以直接写密码，不能有空格）
-  - -h：host
+  - -h：主机名
   - -P：端口号
   - -u：用户名
   - -p：密码
@@ -156,9 +156,13 @@
 
     查询员工的名和姓连接成一个字段，并显示为姓名：select concat(last_name,first_name) as 姓名 from employees;
 
-  - ifnull函数检测是否为空：
+  - ifnull函数检测是否为null，如果为null，则返回指定的值，否则返回原本的值：
 
+    ```
     select ifnull(commission_pct, 0) as 奖金率, commission_pct from employees;
+    ```
+    
+  - isnull函数判断某字段或表达式是否为null，如果是，则返回1，否则返回0
 
 - 条件查询
 
@@ -194,10 +198,271 @@
 
     - 查询工资在10000到20000之间的员工名、工资以及奖金：select last_name, salary, commission_pct from employees where salary >= 10000 and salary <= 20000;
     - 查询部门编号不是在90到110之间，或者工资高于15000的员工信息：select * from employees where department_id < 90 or department_id > 110 or salary > 15000;
+    
+  - 模糊查询
+  
+    - like
+      - 一般和通配符搭配使用，可以判断字符型数值或数值型
+      
+      - 通配符：
+        - % 任意多个字符，包含0个字符
+        - _ 任意单个字符
+        
+      - 查询员工名中包含字符a的员工信息：
+      
+        ```
+        SELECT * FROM employees WHERE last_name LIKE '%a%';
+        ```
+      
+      - 查询员工名中第三个字符为e，第五个字符为a的员工名和工资：
+      
+        ```
+        SELECT last_name, salary FROM employees WHERE last_name LIKE '__n_l%';
+        ```
+      
+      - 查询员工名中第二个字符为`_`的员工名：
+      
+        ```
+        SELECT last_name FROM employees WHERE last_name LIKE '_\_ %';
+        ```
+      
+      - 指定转义字符：
+      
+        ```
+        SELECT last_name FROM employees WHERE last_name LIKE '_$_%' ESCAPE '$';
+        ```
+      
+    - between and
+    
+      - 使用between and可以提高语句的简洁度；
+    
+      - 包含临界值；
+    
+      - 两个临界值不能替换顺序；
+    
+      - 查询员工编号在100到120之间的员工信息：
+    
+        ```
+        SELECT * FROM employees WHERE employee_id >= 100 AND employee_id <= 120;
+        ```
+    
+        ```
+        SELECT * FROM employees WHERE employee_id BETWEEN 100 AND 120;
+        ```
+    
+    - in
+    
+      - 含义：判断某字段的值是否属于in列表中的某一项
+    
+      - 使用in提高语句简洁度
+    
+      - in列表的值类型必须一致或兼容
+    
+      - in相当于等于，所以不支持通配符（like才支持）
+    
+      - 查询员工的工种编号是 IT_PROG、AD_VP、AD_PRES中的一个员工名和工种编号：
+    
+        ```
+        SELECT last_name, job_id FROM employees WHERE job_id = 'IT_PROG' OR job_id = 'AD_VP' OR job_id = 'AD_PRES';
+        ```
+    
+        ```
+        SELECT last_name, job_id FROM employees WHERE job_id IN ('IT_PROG', 'AD_VP', 'AD_PRES');
+        ```
+    
+    - is null
+    
+      - 用于判断null值
+    
+      - =或者<>不能用于判断null值
+    
+      - 查询没有奖金的员工名和奖金率：
+    
+        ```
+        SELECT
+        	last_name,
+        	commission_pct
+        FROM
+        	employees
+        WHERE
+        	commission_pct IS NULL;
+        ```
+    
+      - 查询有奖金的：
+    
+        ```
+        SELECT
+        	last_name,
+        	commission_pct
+        FROM
+        	employees
+        WHERE
+        	commission_pct IS NOT NULL;
+        ```
+    
+    - 安全等于 <=>
+    
+      - is null：仅仅可以判断null值，可读性较高
+      - <=>：既可以判断null值，又可以判断普通的数值，可读性较低
 
+- 测试题
 
+  - 查询没有奖金，且工资小于18000的salary, last_name：
 
+    ```
+    SELECT 
+      salary,
+      last_name 
+    FROM
+      employees 
+    WHERE commission_pct IS NULL 
+      AND salary < 18000;
+    ```
 
+  - 查询employees表中，job_id不为‘IT’或者工资为12000的员工信息：
+
+    ```
+    SELECT 
+      * 
+    FROM
+      employees 
+    WHERE job_id <> 'IT' 
+      OR salary = 12000 ;
+    ```
+
+  - 查看部门表的结构：
+
+    ```
+    DESC departments;
+    ```
+
+  - 查询部门表中涉及到了哪些位置编号：
+
+    ```
+    SELECT DISTINCT 
+      location_id 
+    FROM
+      departments ;
+    ```
+
+  - 经典面试题：`select * from employees;` 和 `select * from employees where commission_pct like ‘%%’ and last_name like ‘%%’;` 结果是否一样？并说明原因：**不一样！如果判断的字段中有null值**，如果查询是`select * from employees where commission_pct like ‘%%’ or last_name like ‘%%’ or ...;`把所有字段都or写齐了就一样了。
+
+- 排序查询
+
+  - 语法：
+
+    select 查询列表
+
+    from 表
+
+    【where 筛选条件】
+
+    order by 排序列表 【asc|desc】
+
+  - asc代表的是升序，desc代表的是降序，如果不写，默认是升序
+
+  - order by子句中可以支持单个字段、多个字段、表达式、函数、别名
+
+  - order by子句一般是放在查询语句的最后面，但limit子句除外
+
+  - 查询员工的信息，要求工资从高到低排序：
+
+    ```
+    SELECT 
+      * 
+    FROM
+      employees 
+    ORDER BY salary DESC ;
+    ```
+
+    从低到高是ASC（默认是ASC）
+
+  - 查询部门编号>=90的员工信息，按入职时间的先后进行排序：
+
+    ```
+    SELECT 
+      * 
+    FROM
+      employees 
+    WHERE department_id >= 90 
+    ORDER BY hiredate ASC ;
+    ```
+
+  - 按年薪的高低显示员工的信息和年薪【按表达式（别名）排序】
+
+    ```
+    SELECT 
+      *,
+      salary * 12 * (1+ IFNULL(commission_pct, 0)) AS 年薪 
+    FROM
+      employees 
+    ORDER BY 年薪 DESC ;
+    ```
+
+  - 按姓名的长度显示员工的姓名和工资【按函数排序】
+
+    ```
+    SELECT 
+      LENGTH(last_name) AS 字节长度,
+      last_name,
+      salary 
+    FROM
+      employees 
+    ORDER BY 字节长度 DESC;
+    ```
+
+  - 查询员工信息，要求先按工资排序，再按员工编号排序
+
+    ```
+    SELECT 
+      * 
+    FROM
+      employees 
+    ORDER BY salary ASC,
+      employee_id DESC ;
+    ```
+
+- 测试题
+
+  - 查询员工的姓名和部门号和年薪，按年薪降序，按姓名升序
+
+    ```
+    SELECT 
+      last_name,
+      department_id,
+      salary * 12 * (1+ IFNULL(commission_pct, 0)) AS 年薪 
+    FROM
+      employees 
+    ORDER BY 年薪 DESC,
+      last_name ASC ;
+    ```
+
+  - 选择工资不在8000到17000的员工的姓名和工资，按工资降序
+
+    ```
+    SELECT 
+      last_name,
+      salary 
+    FROM
+      employees 
+    WHERE salary NOT BETWEEN 8000 
+      AND 17000 
+    ORDER BY salary DESC ;
+    ```
+
+  - 查询邮箱中包含e的员工信息，并先按邮箱的字节数降序，再按部门号升序
+
+    ```
+    SELECT 
+      * 
+    FROM
+      employees 
+    WHERE email LIKE '%e%' 
+    ORDER BY LENGTH(email) DESC,
+      department_id ASC ;
+    ```
+
+    
 
 
 
