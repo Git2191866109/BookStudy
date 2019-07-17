@@ -731,7 +731,87 @@
             employees ;
           ```
 
-          
+  - 测试题
+
+    - 显示系统时间（日期+时间）
+
+      ```
+      SELECT NOW();
+      ```
+
+    - 查询员工号，姓名，工资，以及工资提高20%后的结果（new salary）
+
+      ```
+      SELECT 
+        employee_id,
+        last_name,
+        salary,
+        salary * 1.2 AS "new salary" 
+      FROM
+        employees ;
+      ```
+
+    - 将员工的姓名按首字母排序，并写出姓名的长度（length）
+
+      ```
+      SELECT 
+        last_name,
+        LENGTH(last_name) 
+      FROM
+        employees 
+      ORDER BY SUBSTR(last_name, 1, 1) ;
+      ```
+
+    - 做一个查询
+
+      ```
+      SELECT 
+        CONCAT(
+          last_name,
+          ' earns ',
+          salary,
+          ' monthly but wants ',
+          salary * 3
+        ) AS "Dream Salary" 
+      FROM
+        employees ;
+      ```
+
+    - case-when训练
+
+      ```
+      SELECT 
+        last_name,
+        job_id AS job,
+        CASE
+          job_id 
+          WHEN 'AD_PRES' 
+          THEN 'A' 
+          WHEN 'ST_MAN' 
+          THEN 'B' 
+          WHEN 'IT_PROG' 
+          THEN 'C' 
+          WHEN 'SA_PRE' 
+          THEN 'D' 
+          WHEN 'ST_CLERK' 
+          THEN 'E' 
+        END AS Grade 
+      FROM
+        employees 
+      WHERE job_id = 'AD_PRES' ;
+      ```
+
+  - 分组函数
+
+    - 功能：用作统计使用，又称为聚合函数或统计函数或组函数
+
+    - 分类：sum 求和、avg 平均值、max 最大值、min 最小值、count 计数（非空）
+
+      ```
+      SELECT SUM(salary) FROM employees;
+      ```
+
+      
 
 
 
