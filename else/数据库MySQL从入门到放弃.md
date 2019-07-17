@@ -462,7 +462,276 @@
       department_id ASC ;
     ```
 
-    
+- 常见函数
+
+  - 功能：类似于java中的方法，将一组逻辑语句
+
+  - 好处：
+
+    - 隐藏了实现细节
+    - 提高代码的重用性
+
+  - 调用：select 函数名(实参列表) 【from 表】;
+
+  - 特点：
+
+    - 叫什么（函数名）
+    - 干什么（函数功能）
+
+  - 分类：
+
+    - 单行函数：如concat、length、ifnull等
+    - 分组函数：做统计使用，又称为统计函数、聚合函数、组函数
+
+  - 单行函数：
+
+    - 字符函数
+
+      - length：获取参数值的字节个数
+
+      - concat：拼接字符串
+
+      - upper/lower：将字符串变成大写/小写
+
+        - 将姓变成大写，名变成小写，然后拼接：
+
+          ```
+          SELECT 
+            CONCAT(UPPER(last_name), LOWER(first_name)) AS 姓名 
+          FROM
+            employees ;
+          ```
+
+      - substr/substring：截取字符串
+
+        - 注意：索引从1开始
+
+        - 截取从指定索引处后面所有字符
+
+          ```
+          SELECT 
+            SUBSTR(
+              '李莫愁爱上了陆展元',
+              6
+            ) AS output ;
+          ```
+
+        - 截取从指定索引处指定字符长度的字符
+
+          ```
+          SELECT 
+            SUBSTR(
+              '李莫愁爱上了陆展元',
+              1,
+              3
+            ) output ;
+          ```
+
+      - 案例：姓名中首字母大写，其他字符小写，然后用_拼接，显示出来：
+
+        ```
+        SELECT 
+          CONCAT(
+            UPPER(SUBSTR(last_name, 1, 1)),
+            '_',
+            LOWER(SUBSTR(last_name, 2))
+          ) AS output 
+        FROM
+          employees ;
+        ```
+
+      - instr：返回子串第一次出现的索引，如果找不到返回0
+
+        ```
+        SELECT 
+          INSTR(
+            '杨不悔爱上了殷六侠',
+            '殷六侠'
+          ) AS output ;
+        ```
+
+      - trim：去掉字符串前后的空格或子串
+
+        ```
+        SELECT 
+          LENGTH(TRIM('   张翠山   ')) AS output ;
+        ```
+
+        ```
+        SELECT 
+          TRIM('a' FROM 'aaa张a翠aa山aaaaa') AS output ;
+        ```
+
+      - lpad：用指定的字符实现左填充指定长度
+
+      - rpad：用指定的字符实现右填充指定长度
+
+      - replace：替换，替换所有的子串
+
+    - 数学函数
+
+      - round：四舍五入
+      - ceil：向上取整，返回>=该参数的最小整数
+      - floor：向下取整，返回<=该参数的最大整数
+      - truncate：截断，小数点后截断到几位
+      - mod：取余，被除数为正，则为正；被除数为负，则为负
+
+    - 日期函数
+
+      - now：返回当前系统日期+时间
+
+      - curdate：返回当前系统日期，不包含时间
+
+      - curtime：返回当前时间，不包含日期
+
+      - 可以获取指定的部分，年、月、日、小时、分钟、秒
+
+        ```
+        SELECT 
+          YEAR(hiredate) 年 
+        FROM
+          employees ;
+        ```
+
+      - str_to_date：将日期格式的字符转换成指定格式的日期
+
+        ```
+        SELECT 
+          STR_TO_DATE('1998-3-2', '%Y-%c-%d') AS output ;
+        ```
+
+        - 查询入职日期为1992-4-3的员工信息
+
+          ```
+          SELECT 
+            * 
+          FROM
+            employees 
+          WHERE hiredate = STR_TO_DATE('4-3 1992', '%c-%d %Y') ;
+          ```
+
+      - date_format：将日期转换成字符串
+
+        ```
+        SELECT 
+          DATE_FORMAT(NOW(), '%y年%m月%d日)') AS output ;
+        ```
+
+        - 查询有奖金的员工名和入职日期（xx月/xx日 xx年）
+
+          ```
+          SELECT 
+            last_name,
+            DATE_FORMAT(hiredate, '%m月/%d日 %y年') AS 入职日期 
+          FROM
+            employees 
+          WHERE commission_pct IS NOT NULL ;
+          ```
+
+    - 其他函数
+
+      ```
+      SELECT VERSION();
+      SELECT DATABASE();
+      SELECT USER();
+      ```
+
+    - 流程控制函数
+
+      - if函数：if else的效果
+
+        ```
+        SELECT 
+          last_name,
+          commission_pct,
+          IF(
+            commission_pct IS NULL,
+            '没奖金，呵呵',
+            '有奖金，嘻嘻'
+          ) 备注 
+        FROM
+          employees ;
+        ```
+
+      - case函数的使用1：switch case的效果
+
+        - 语法：
+
+          ```
+          case 要判断的字段或表达式
+          when 常量1 then 要显示的值1或语句1;
+          when 常量2 then 要显示的值2或语句2;
+          ...
+          else 要显示的值n或语句n;
+          end
+          ```
+
+        - 查询员工的工资，要求：
+
+          部门号=30，显示的工资为1.1倍
+
+          部门号=40，显示的工资为1.2倍
+
+          部门号=50，显示的工资为1.3倍
+
+          其他部门，显示的工资为原工资
+
+          ```
+          SELECT 
+            salary AS 原始工资,
+            department_id,
+            CASE
+              department_id 
+              WHEN 30 
+              THEN salary * 1.1 
+              WHEN 40 
+              THEN salary * 1.2 
+              WHEN 50 
+              THEN salary * 1.3 
+              ELSE salary 
+            END AS 新工资 
+          FROM
+            employees ;
+          ```
+
+      - case函数的使用2：类似于多重if
+
+        ```
+        case
+        when 条件1 then 要显示的值1或语句1
+        when 条件2 then 要显示的值2或语句2
+        ...
+        else 要显示的值n或语句n
+        end
+        ```
+
+        - 查询员工的工资情况
+
+          如果工资>20000，显示A级别
+
+          如果工资>15000，显示B级别
+
+          如果工资>10000，显示C级别
+
+          否则，显示D级别
+
+          ```
+          SELECT 
+            salary,
+            CASE
+              WHEN salary > 20000 
+              THEN 'A' 
+              WHEN salary > 15000 
+              THEN 'B' 
+              WHEN salary > 10000 
+              THEN 'C' 
+              ELSE 'D' 
+            END AS 工资级别 
+          FROM
+            employees ;
+          ```
+
+          
 
 
 
