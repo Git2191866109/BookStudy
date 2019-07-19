@@ -8,6 +8,8 @@ leetcode连接：https://leetcode-cn.com/problemset/all/
 
 刷题顺序：从简单->中等->困难
 
+- [简单题库](https://leetcode-cn.com/problemset/all/?difficulty=%E7%AE%80%E5%8D%95)
+
 解题思路：做一个自己的答案，再参考评论中的思路，自己编写更加高效的代码（下面给出两个百分数，分别代表**执行用时**和**内存消耗**击败了%多少的用户）
 
 
