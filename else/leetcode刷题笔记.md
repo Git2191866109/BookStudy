@@ -184,3 +184,24 @@ class Solution:
 
 修改后	96.39	8.35	快乐！
 
+## [27. 移除元素](https://leetcode-cn.com/problems/remove-element/)
+
+```python
+class Solution:
+    def removeElement(self, nums: List[int], val: int) -> int:   
+        if val not in nums:
+            return len(nums)
+        i = nums.index(val)
+        for j in range(i+1, len(nums)):
+            if nums[j] == val:
+                continue
+            else:
+                nums[i] = nums[j]
+                i += 1
+        return i
+```
+
+85.85	8.97	快乐
+
+天啦，我基本上就是官方答案了，还参考个锤子
+
