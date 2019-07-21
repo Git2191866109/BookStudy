@@ -1,4 +1,4 @@
-#  数据库MySQL学习笔记
+# [数据库MySQL学习笔记
 
 [TOC]
 
@@ -572,6 +572,7 @@
   - floor：向下取整，返回<=该参数的最大整数
   - truncate：截断，小数点后截断到几位
   - mod：取余，被除数为正，则为正；被除数为负，则为负
+  - rand：获取随机数，返回0-1之间的小数
 
 - 日期函数
 
@@ -624,13 +625,19 @@
         employees 
       WHERE commission_pct IS NOT NULL ;
       ```
+    
+  - datediff：返回两个日期相差的天数
+
+  - monthname：以英文形式返回月
 
 - 其他函数
 
   ```
-  SELECT VERSION();
-  SELECT DATABASE();
-  SELECT USER();
+  SELECT VERSION();	当前数据库服务器的版本
+  SELECT DATABASE();	当前打开的数据库
+  SELECT USER();		当前用户
+  password('字符');		返回该字符的密码形式
+  md5('字符');			也是加密的一种形式（MD5）
   ```
 
 - 流程控制函数
@@ -894,6 +901,8 @@
 
   group by 分组的列表
 
+  【having 分组后的筛选】
+
   【order by 子句】
 
 - 注意：查询列表比较特殊，要求是分组函数和group by后出现的字段
@@ -904,9 +913,9 @@
 
     ​						数据源					位置								关键字
 
-    分组前筛选	  原始表					group by子句的前面		where
+    分组前筛选	  原始表					group by子句的前面		where
 
-    分组后筛选	  分组后的结果集	  group by子句的后面		having
+    分组后筛选	  分组后的结果集	  group by子句的后面		having
 
   - 分组函数做条件肯定是放在having子句中
 
@@ -1171,7 +1180,7 @@
     - 外连接
       - 左外连接
       - 右外连接
-      - 全外连接
+      - 全外连接（mysql不支持）
     - 交叉连接
 
 - sql92标准
@@ -1340,7 +1349,214 @@
         AND d.`location_id` = l.`location_id` ;
       ```
 
-      
+  - 非等值连接
+  
+    - 查询员工的工资和工资级别
+  
+      ```
+      SELECT 
+        salary,
+        grade_level 
+      FROM
+        employees e,
+        job_grades g 
+      WHERE salary BETWEEN g.lowest_sal 
+        AND g.highest_sal ;
+      ```
+  
+  - 自连接
+  
+    - 查询 员工名和上级的名称
+  
+      ```
+      SELECT 
+        e.employee_id,
+        e.last_name,
+        m.employee_id,
+        m.last_name 
+      FROM
+        employees e,
+        employees m 
+      WHERE e.`manager_id` = m.`employee_id` ;
+      ```
+  
+  - 测试题：
+  
+    - 显示员工表的最大工资，工资平均值
+  
+      ```
+      SELECT 
+        MAX(salary),
+        AVG(salary) 
+      FROM
+        employees ;
+      ```
+  
+    - 查询员工表的employee_id，job_id，last_name，按department_id降序，salary升序
+  
+      ```
+      SELECT 
+        employee_id,
+        job_id,
+        last_name 
+      FROM
+        employees 
+      ORDER BY department_id DESC,
+        salary ASC ;
+      ```
+  
+    - 查询员工表的job_id中包含a和e的，并且a在e的前面
+  
+      ```
+      SELECT 
+        job_id 
+      FROM
+        employees 
+      WHERE job_id LIKE '%a%e%' ;
+      ```
+  
+    - 显示当前日期，以及去前后空格，截取子字符串的函数
+  
+      ```
+      select now();
+      select trim();
+      select substr(str, startIndex, [length])
+      ```
+  
+- sql99语法
+
+  - 语法：
+
+    select 查询列表
+
+    from 表1 别名 【连接类型】
+
+    join 表2 别名 
+
+    on 连接条件
+
+    【where 筛选条件】
+
+    【group by 分组】
+
+    【having 筛选条件】
+
+    【order by 排序列表】
+
+  - 内连接（同上）：连接类型是inner
+
+  - 外连接
+
+    - 左外：left 【outer】
+    - 右外：right【outer】
+    - 全外：full 【outer】
+
+  - 交叉连接：cross
+
+  - 内连接：
+
+    - 语法：
+
+      select 查询列表
+
+      from 表1 别名
+
+      inner join 表2 别名
+
+      on 连接条件
+
+      …
+
+    - 分类：
+
+      等值连接
+
+      非等值连接
+
+      自连接
+
+    - 特点：
+
+      - 添加排序、分组、筛选
+      - inner可以省略
+      - 筛选条件放在where后面，连接条件放在on后面，提高分离性，便于阅读
+      - inner join连接和sql92语法中的等值连接效果是一样的，都是查询多表的交集
+
+    - 等值连接：
+
+      - 查询员工名、部门名
+
+        ```
+        SELECT 
+          last_name,
+          department_name 
+        FROM
+          employees e 
+          INNER JOIN departments d 
+            ON e.`department_id` = d.`department_id` ;
+        ```
+
+      - 查询名字中包含e的给员工名和工种名
+
+        ```
+        SELECT 
+          last_name,
+          job_title 
+        FROM
+          employees e 
+          INNER JOIN jobs j 
+            ON e.`job_id` = j.`job_id` 
+        WHERE last_name LIKE "%e%" ;
+        ```
+
+      - 查询部门个数>3的城市名和部门个数
+
+        ```
+        SELECT 
+          city,
+          COUNT(*) 部门个数 
+        FROM
+          departments d 
+          INNER JOIN locations l 
+            ON d.`location_id` = l.`location_id` 
+        GROUP BY city 
+        HAVING 部门个数 > 3 ;
+        ```
+
+      -  查询哪个部门的部门员工个数>3的部门名和员工个数，并按个数降序排序
+
+        ```
+        SELECT 
+          department_name,
+          COUNT(*) 员工个数 
+        FROM
+          departments d 
+          INNER JOIN employees e 
+            ON d.`department_id` = e.`department_id` 
+        GROUP BY d.`department_id` 
+        HAVING 员工个数 > 3 
+        ORDER BY 员工个数 DESC ;
+        ```
+
+      - 查询员工名、部门名、工种名，并按部门名降序
+
+        ```
+        SELECT 
+          last_name,
+          department_name,
+          job_title 
+        FROM
+          employees e 
+          INNER JOIN departments d 
+            ON e.`department_id` = d.`department_id` 
+          INNER JOIN jobs j 
+            ON e.`job_id` = j.`job_id` 
+        ORDER BY d.`department_id` DESC ;
+        ```
+
+    - 非等值连接
+
+      - 
 
 
 
