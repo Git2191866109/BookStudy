@@ -77,6 +77,21 @@ class Solution:
         return str(x) == str(x)[::-1]
 ```
 
+## [13. 罗马数字转整数](https://leetcode-cn.com/problems/roman-to-integer/)
+
+```python
+class Solution:
+    def romanToInt(self, s: str) -> int:
+        for i in range(len(str[::-1])):
+            未完待续...
+```
+
+
+
+
+
+
+
 ## [14. 最长公共前缀](https://leetcode-cn.com/problems/longest-common-prefix/)
 
 ```python
