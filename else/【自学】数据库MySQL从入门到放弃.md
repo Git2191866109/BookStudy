@@ -1745,6 +1745,105 @@
 
 ### 7. 子查询
 
+- 含义：出现在其他语句中的select语句，称为子查询或内查询；外部的查询语句，称为主查询或外查询
+
+- 分类：
+
+  - 按子查询出现的位置：
+    - select后面：仅仅支持标量子查询
+    - from后面：支持表子查询
+    - where或having后面：支持标量子查询，列子查询，行子查询（较少）
+    - exists后面（相关子查询）：支持表子查询
+  - 按功能、结果集的行列数不同：
+    - 标量子查询（结果集只有一行一列）
+    - 列子查询（结果集只有一列多行）
+    - 行子查询（结果集有一行多列）
+    - 表子查询（结果集一般为多行多列）
+
+- where或having后面
+
+  - 标量子查询（单行子查询）
+
+  - 列子查询（多行子查询）
+
+  - 行子查询（多列多行）
+
+  - 特点：
+
+    - 子查询放在小括号内 
+    - 子查询一般放在条件的右侧，where，having
+    - 标量子查询，一般搭配着单行操作符使用（> < >= <= = <>）
+    - 列子查询，一般搭配着多行操作符使用（IN、ANY/SOME、ALL）
+    - 子查询的执行优选与主查询执行，主查询的条件用到了子查询的结果
+
+  - 案例1：谁的工资比Abel高？
+
+    ```
+    SELECT 
+      salary 
+    FROM
+      employees 
+    WHERE last_name = 'Abel' ;
+    ```
+
+  - 案例2：返回job_id与141号员工相同，salary比143员工多的员工，姓名，job_id，工资
+
+    ```
+    SELECT 
+      last_name,
+      job_id,
+      salary 
+    FROM
+      employees 
+    WHERE job_id = 
+      (SELECT 
+        job_id 
+      FROM
+        employees 
+      WHERE employee_id = 141) 
+      AND salary > 
+      (SELECT 
+        salary 
+      FROM
+        employees 
+      WHERE employee_id = 143) ;
+    ```
+
+  - 案例3：返回公司工资最少的员工的last_name, job_id和salary
+
+    ```
+    SELECT 
+      last_name,
+      job_id,
+      salary 
+    FROM
+      employees 
+    WHERE salary = 
+      (SELECT 
+        MIN(salary) 
+      FROM
+        employees) ;
+    ```
+
+  - 案例4：查询最低工资大于50号部门的最低工资的部门id和其最低工资
+
+    ```
+    SELECT 
+      MIN(salary),
+      e.`department_id` 
+    FROM
+      employees e 
+    GROUP BY e.`department_id` 
+    HAVING MIN(salary) > 
+      (SELECT 
+        MIN(salary) 
+      FROM
+        employees 
+      WHERE department_id = 50) ;
+    ```
+
+  - 
+
 
 
 
