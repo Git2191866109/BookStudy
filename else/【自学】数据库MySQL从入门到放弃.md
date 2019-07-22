@@ -1556,9 +1556,194 @@
 
     - 非等值连接
 
-      - 
+      - 查询员工的工资级别
+      
+        ```
+        SELECT 
+          salary,
+          grade_level 
+        FROM
+          employees e 
+          INNER JOIN job_grades g 
+            ON e.`salary` BETWEEN g.`lowest_sal` 
+            AND g.`highest_sal` ;
+        ```
+      
+      - 查询每个工资级别>20的个数，并且按工资级别降序
+      
+        ```
+        SELECT 
+          COUNT(*),
+          grade_level 
+        FROM
+          employees e 
+          INNER JOIN job_grades g 
+            ON e.`salary` BETWEEN g.`lowest_sal` 
+            AND g.`highest_sal` 
+        GROUP BY grade_level 
+        HAVING COUNT(*) > 20 
+        ORDER BY grade_level DESC ;
+        ```
+      
+    - 自连接
+    
+      - 查询员工的名字、上级的名字
+    
+        ```
+        SELECT 
+          e.last_name,
+          m.last_name 
+        FROM
+          employees e 
+          INNER JOIN employees m 
+            ON e.`manager_id` = m.`employee_id` ;
+        ```
+    
+      - 查询姓名中包含字符k的员工的名字、上级的名字
+    
+        ```
+        SELECT 
+          e.last_name,
+          m.last_name 
+        FROM
+          employees e 
+          INNER JOIN employees m 
+            ON e.`manager_id` = m.`employee_id` 
+        WHERE e.`last_name` LIKE "%k%" ;
+        ```
+    
+  - 外连接
+  
+    - 应用场景：用于查询一个表中有，另一个表没有的记录
+  
+    - 特点：
+  
+      - 外连接的查询结果为主表中的所有记录，如果从表中有和它匹配的，则显示匹配的值，如果从表中没有和它匹配的，则显示null
+      - 外连接查询结果=内连接结果+主表中有而从表中没有的记录
+      - 左外连接：left join左边的是主表
+      - 右外连接：right join右边的是主表
+      - 左外和右外交换两个表的顺序，可以实现同样的效果
+      - 圈外链接=内连接的结果+表1中有但表2中没有的+表2中有但表1中没有的
+  
+    - 查询没有男朋友的女神名
+  
+      ```
+      SELECT 
+        b.name,
+        bo.* 
+      FROM
+        beauty b 
+        LEFT JOIN boys bo 
+          ON b.boyfriend_id = bo.id 
+      WHERE bo.`id` IS NULL ;
+      ```
+  
+    - 查询哪个部门没有员工
+  
+    - 左外：
+  
+      ```
+      SELECT 
+        d.*,
+        e.employee_id 
+      FROM
+        departments d 
+        LEFT OUTER JOIN employees e 
+          ON d.`department_id` = e.`department_id` 
+      WHERE e.`employee_id` IS NULL ;
+      ```
+  
+    - 右外：
+  
+      ```
+      SELECT 
+        d.*,
+        e.employee_id 
+      FROM
+        employees e 
+        RIGHT OUTER JOIN departments d 
+          ON d.`department_id` = e.`department_id` 
+      WHERE e.`employee_id` IS NULL ;
+      ```
+  
+    - 全外连接
+  
+      - mysql不支持
+  
+      - 案例：
+  
+        ```
+        SELECT 
+          b.*,
+          bo.* 
+        FROM
+          beauty b FULL 
+          OUTER JOIN boys bo 
+            ON b.`boyfriend_id` = bo.id ;
+        ```
+  
+    - 交叉连接（也就是笛卡尔乘积）
+  
+      - 案例：
+  
+        ```
+        SELECT 
+          b.*,
+          bo.* 
+        FROM
+          beauty b 
+          CROSS JOIN boys bo ;
+        ```
+  
+- sql92 和 sql99 pk
 
+  - 功能：sql99支持的较多
+  - 可读性：sql99实现连接条件和筛选条件的分离，可读性较高
 
+- 练习：
+
+  - 查询编号>3的女神的男朋友信息，如果有则列出详细信息，如果没有，则用null填充
+
+    ```
+    SELECT 
+      a.id,
+      a.name,
+      b.* 
+    FROM
+      beauty a 
+      LEFT JOIN boys b 
+        ON a.`boyfriend_id` = b.`id` 
+    WHERE a.`id` > 3 ;
+    ```
+
+  - 查询哪个城市没有部门
+
+    ```
+    SELECT 
+      city,
+      d.* 
+    FROM
+      departments d 
+      RIGHT JOIN locations l 
+        ON d.location_id = l.location_id 
+    WHERE d.department_id IS NULL ;
+    ```
+
+  - 查询部门名为SAL或IT的员工信息
+
+    ```
+    SELECT 
+      d.`department_name`,
+      e.* 
+    FROM
+      departments d 
+      LEFT JOIN employees e 
+        ON d.`department_id` = e.`department_id` 
+    WHERE d.`department_name` = 'SAL' 
+      OR d.`department_name` = 'IT' ;
+    ```
+
+### 7. 子查询
 
 
 
