@@ -1776,6 +1776,8 @@
     - 列子查询，一般搭配着多行操作符使用（IN、ANY/SOME、ALL）
     - 子查询的执行优选与主查询执行，主查询的条件用到了子查询的结果
 
+#### 标量子查询
+
   - 案例1：谁的工资比Abel高？
 
     ```
@@ -1842,7 +1844,108 @@
       WHERE department_id = 50) ;
     ```
 
-  - 
+#### 列子查询（多行子查询）
+
+- 多行比较操作符：
+
+  IN/NOT IN：等于列表中的任意一个
+
+  ANY|SOME：和子查询返回的某一个值比较，用的较少
+
+  ALL：和子查询返回的所有值比较
+
+  - 案例1：返回location_id是1400或1700的部门中的所有员工姓名
+
+    ```
+    SELECT 
+      last_name 
+    FROM
+      employees 
+    WHERE department_id IN 
+      (SELECT DISTINCT 
+        department_id 
+      FROM
+        departments 
+      WHERE location_id IN (1400, 1700)) ;
+    ```
+
+  - 案例2：返回其他工种中比job_id为‘IT_PROG’工种任一工资低的员工的员工号、姓名、job_id以及salary
+
+    ```
+    SELECT 
+      employee_id,
+      last_name,
+      job_id,
+      salary 
+    FROM
+      employees 
+    WHERE salary < ANY 
+      (SELECT DISTINCT 
+        salary 
+      FROM
+        employees 
+      WHERE job_id = 'IT_PROG') 
+      AND job_id <> 'IT_PROG' ;
+    ```
+
+    或者用max代替any
+
+    ```
+    SELECT 
+      employee_id,
+      last_name,
+      job_id,
+      salary 
+    FROM
+      employees 
+    WHERE salary < 
+      (SELECT 
+        MAX(salary) 
+      FROM
+        employees 
+      WHERE job_id = 'IT_PROG') 
+      AND job_id <> 'IT_PROG' ;
+    ```
+
+  - 案例3：返回其他工种中比job_id为‘IT_PROG’工种所有工资都低的员工的员工号、姓名、job_id以及salary
+
+    ```
+    SELECT 
+      employee_id,
+      last_name,
+      job_id,
+      salary 
+    FROM
+      employees 
+    WHERE salary < ALL 
+      (SELECT DISTINCT 
+        salary 
+      FROM
+        employees 
+      WHERE job_id = 'IT_PROG') 
+      AND job_id <> 'IT_PROG' ;
+    ```
+
+    或者用min代替all
+
+    ```
+    SELECT 
+      employee_id,
+      last_name,
+      job_id,
+      salary 
+    FROM
+      employees 
+    WHERE salary < 
+      (SELECT 
+        MIN(salary) 
+      FROM
+        employees 
+      WHERE job_id = 'IT_PROG') 
+      AND job_id <> 'IT_PROG' ;
+    ```
+
+    
 
 
 
