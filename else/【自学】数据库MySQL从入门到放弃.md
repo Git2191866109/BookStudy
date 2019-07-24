@@ -1760,23 +1760,24 @@
     - 行子查询（结果集有一行多列）
     - 表子查询（结果集一般为多行多列）
 
-- where或having后面
 
-  - 标量子查询（单行子查询）
+#### where或having后面
 
-  - 列子查询（多行子查询）
+- 标量子查询（单行子查询）
 
-  - 行子查询（多列多行）
+- 列子查询（多行子查询）
 
-  - 特点：
+- 行子查询（多列多行）
 
-    - 子查询放在小括号内 
-    - 子查询一般放在条件的右侧，where，having
-    - 标量子查询，一般搭配着单行操作符使用（> < >= <= = <>）
-    - 列子查询，一般搭配着多行操作符使用（IN、ANY/SOME、ALL）
-    - 子查询的执行优选与主查询执行，主查询的条件用到了子查询的结果
+- 特点：
 
-#### 标量子查询
+  - 子查询放在小括号内 
+  - 子查询一般放在条件的右侧，where，having
+  - 标量子查询，一般搭配着单行操作符使用（> < >= <= = <>）
+  - 列子查询，一般搭配着多行操作符使用（IN、ANY/SOME、ALL）
+  - 子查询的执行优选与主查询执行，主查询的条件用到了子查询的结果
+
+##### 标量子查询
 
   - 案例1：谁的工资比Abel高？
 
@@ -1844,7 +1845,9 @@
       WHERE department_id = 50) ;
     ```
 
-#### 列子查询（多行子查询）
+##### 列子查询
+
+- （多行子查询）
 
 - 多行比较操作符：
 
@@ -1945,11 +1948,303 @@
       AND job_id <> 'IT_PROG' ;
     ```
 
-    
+##### 行子查询
 
+- 结果集一行多列或多行多列
 
+- 案例1：查询员工编号最少并且工资最高的员工信息
 
+  ```
+  SELECT 
+    * 
+  FROM
+    employees 
+  WHERE (employee_id, salary) = 
+    (SELECT 
+      MIN(employee_id),
+      MAX(salary) 
+    FROM
+      employees) ;
+  ```
 
+#### select后面
+
+- 仅仅支持标量子查询
+
+- 案例1：查询每个部门的员工个数
+
+  ```
+  SELECT 
+    d.*,
+    (SELECT 
+      COUNT(*) 
+    FROM
+      employees e 
+    WHERE e.department_id = d.department_Id) 个数 
+  FROM
+    departments d ;
+  ```
+
+- 案例2：查询员工号=102的部门名
+
+  ```
+  SELECT 
+    (SELECT 
+      department_name 
+    FROM
+      departments d 
+      INNER JOIN employees e 
+        ON d.department_id = e.department_id 
+    WHERE e.employee_id = 102) 部门名 ;
+  ```
+
+#### from后面
+
+- 将子查询结果充当一张表，要求必须起别名
+
+- 案例1：查询每个部门的平均工资的工资等级
+
+  ```
+  SELECT 
+    ag_dep.*,
+    g.`grade_level` 
+  FROM
+    (SELECT 
+      AVG(salary) ag,
+      department_id 
+    FROM
+      employees 
+    GROUP BY department_id) ag_dep 
+    INNER JOIN job_grades g 
+      ON ag_dep.ag BETWEEN g.`lowest_sal` 
+      AND g.`highest_sal` ;
+  ```
+
+#### exists后面
+
+- 相关子查询
+
+- 语法：exists（完整的查询语句）
+
+- 结果：1或0
+
+- 案例1：查询有员工的部门名
+
+  ```
+  SELECT 
+    department_name 
+  FROM
+    departments d 
+  WHERE EXISTS 
+    (SELECT 
+      * 
+    FROM
+      employees e 
+    WHERE d.`department_id` = e.`department_id`) ;
+  ```
+
+  用in更简单
+
+  ```
+  SELECT 
+    department_name 
+  FROM
+    departments d 
+  WHERE d.`department_id` IN 
+    (SELECT 
+      department_id 
+    FROM
+      employees e) ;
+  ```
+
+- 习题集
+
+  1. 查询和zlotkey相同部门的员工姓名和工资
+
+       ```
+       SELECT 
+         last_name,
+         salary 
+       FROM
+         employees 
+       WHERE department_id = 
+         (SELECT 
+           department_id 
+         FROM
+           employees e 
+         WHERE e.`last_name` = 'Zlotkey') ;
+       ```
+
+    2. 查询工资比公司平均工资高的员工的员工号，姓名和工资
+  
+       ```
+       SELECT 
+         employee_id,
+         last_name,
+         salary 
+       FROM
+         employees e 
+       WHERE e.`salary` > 
+         (SELECT 
+           AVG(salary) 
+         FROM
+           employees) ;
+       ```
+  
+    3. 查询各部门中工资比本部门平均工资高的员工的员工号，姓名和工资
+  
+       ```
+       SELECT 
+         employee_id,
+         last_name,
+         salary 
+       FROM
+         employees e 
+         INNER JOIN 
+           (SELECT 
+             AVG(salary) ag,
+             department_id 
+           FROM
+             employees 
+           GROUP BY department_id) nt 
+           ON nt.department_id = e.department_id 
+       WHERE salary > ag ;
+       ```
+  
+    4. 查询和姓名中包含字母u的员工在相同部门的员工的员工号和姓名
+  
+       ```
+       SELECT 
+         employee_id,
+         last_name 
+       FROM
+         employees 
+       WHERE department_id IN 
+         (SELECT DISTINCT 
+           department_id 
+         FROM
+           employees 
+         WHERE last_name LIKE '%u%') ;
+       ```
+  
+    5. 查询在部门的location_id为1700的部门工作的员工的员工号
+  
+       ```
+       SELECT 
+         employee_id 
+       FROM
+         employees 
+       WHERE department_id IN 
+         (SELECT DISTINCT 
+           department_id 
+         FROM
+           departments 
+         WHERE location_id = 1700) ;
+       ```
+  
+    6. 查询管理者是King的员工姓名和工资
+  
+       ```
+       SELECT 
+         last_name,
+         salary 
+       FROM
+         employees 
+       WHERE manager_id IN 
+         (SELECT 
+           employee_id 
+         FROM
+           employees 
+         WHERE last_name = 'K_ing') ;
+       ```
+  
+    7. 查询工资最高的员工的姓名，要求first_name和last_name显示为一列，列名为 姓.名
+  
+       ```
+       SELECT 
+         CONCAT(nt.first_name, nt.last_name) "姓.名" 
+       FROM
+         (SELECT 
+           first_name,
+           last_name 
+         FROM
+           employees 
+         WHERE salary = 
+           (SELECT 
+             MAX(salary) 
+           FROM
+             employees)) nt ;
+       ```
+
+### 8. 分页查询
+
+- 应用场景：当要显示的数据，一页显示不全，需要分页提交sql请求
+
+- 语法：
+
+  select 查询列表
+
+  from 表
+
+  【join type】 join 表2
+
+  on 连接条件
+
+  where 筛选条件
+
+  group by 分组字段
+
+  having 分组后的筛选
+
+  order by 排序的字段】
+
+  limit offset，size；
+
+  offset：要显示条目的起始索引（从0开始）
+
+  size：要显示的条目个数
+
+- 特点：
+
+  - limit语句放在查询语句的最后
+
+  - 公式：
+
+    要显示的页数page，每页的条目数size
+
+    select 查询列表
+
+    from 表
+
+    limit （page - 1）* size， size；
+
+- 案例1：查询前5条员工信息
+
+  ```
+  SELECT * FROM employees LIMIT 0, 5;
+  或者
+  SELECT * FROM employees LIMIT 5;
+  ```
+
+- 案例2：查询第11条-第25条
+
+  ```
+  SELECT * FROM employees LIMIT 10, 15;
+  ```
+
+- 案例3：有奖金的员工信息，并且工资较高的前10名显示出来
+
+  ```
+  SELECT 
+    * 
+  FROM
+    employees 
+  WHERE commission_pct IS NOT NULL 
+  ORDER BY salary DESC 
+  LIMIT 10 ;
+  ```
+
+  
 
 
 
