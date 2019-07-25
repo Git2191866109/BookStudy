@@ -1,4 +1,4 @@
-# 数据库MySQL学习笔记
+数据库MySQL学习笔记
 
 [TOC]
 
@@ -2244,6 +2244,293 @@
   ORDER BY salary DESC 
   LIMIT 10 ;
   ```
+
+- 经典案例1：
+
+  1. 查询工资最低的员工信息：last_name, salary
+
+     ```
+     SELECT 
+       last_name,
+       salary 
+     FROM
+       employees 
+     WHERE salary = 
+       (SELECT 
+         MIN(salary) 
+       FROM
+         employees) ;
+     ```
+
+  2. 查询平均工资最低的部门信息
+
+     ```
+     SELECT 
+       * 
+     FROM
+       departments 
+     WHERE department_id = 
+       (SELECT 
+         department_id 
+       FROM
+         employees 
+       GROUP BY department_id 
+       ORDER BY AVG(salary) ASC 
+       LIMIT 1) ;
+     ```
+
+  3. 查询平均工资最低的部门信息和该部门的平均工资
+
+     ```
+     SELECT 
+       d.*,
+       dd.ag 
+     FROM
+       departments d 
+       INNER JOIN 
+         (SELECT 
+           AVG(salary) ag,
+           department_id 
+         FROM
+           employees 
+         GROUP BY department_id 
+         ORDER BY ag 
+         LIMIT 1) dd 
+         ON d.`department_id` = dd.department_id ;
+     ```
+
+  4. 查询平均工资最高的job信息
+
+     ```
+     SELECT 
+       * 
+     FROM
+       jobs j 
+     WHERE j.`job_id` = 
+       (SELECT 
+         job_id 
+       FROM
+         employees 
+       GROUP BY job_id 
+       ORDER BY AVG(salary) DESC 
+       LIMIT 1) ;
+     ```
+
+  5. 查询平均工资高于公司平均工资的部门有哪些
+
+     ```
+     SELECT 
+       AVG(salary) ag,
+       department_id 
+     FROM
+       employees 
+     GROUP BY department_id 
+     HAVING ag > 
+       (SELECT 
+         AVG(salary) 
+       FROM
+         employees) ;
+     ```
+
+  6. 查询出公司中所有manager的详细信息
+
+     ```
+     SELECT 
+       * 
+     FROM
+       employees 
+     WHERE employee_id IN 
+       (SELECT DISTINCT 
+         manager_id 
+       FROM
+         employees 
+       WHERE manager_id IS NOT NULL) ;
+     ```
+
+  7. 各个部门中，最高工资中，最低的那个部门的最低工资是多少
+
+     ```
+     SELECT 
+       MIN(salary) 
+     FROM
+       employees 
+     WHERE department_id = 
+       (SELECT 
+         department_id 
+       FROM
+         employees 
+       GROUP BY department_id 
+       ORDER BY MAX(salary) ASC 
+       LIMIT 1) ;
+     ```
+
+  8. 查询平均工资最高的部门的manager的详细信息
+
+     ```
+     SELECT 
+       last_name,
+       department_id,
+       email,
+       salary 
+     FROM
+       employees 
+     WHERE employee_id = 
+       (SELECT DISTINCT 
+         manager_id 
+       FROM
+         employees 
+       WHERE department_id = 
+         (SELECT 
+           department_id 
+         FROM
+           employees 
+         GROUP BY department_id 
+         ORDER BY AVG(salary) DESC 
+         LIMIT 1) 
+         AND manager_id IS NOT NULL) ;
+     ```
+
+### 9. 联合查询
+
+- union：联合，合并，将多条查询语句的结果合并成一个结果
+
+- 引入案例：查询部门编号>90或邮箱包含a的员工信息
+
+  ```
+  SELECT 
+    * 
+  FROM
+    employees 
+  WHERE email LIKE "%a%" 
+    OR department_id > 90 ;
+  ```
+
+  用联合查询为：
+
+  ```
+  SELECT 
+    * 
+  FROM
+    employees 
+  WHERE email LIKE "%a%" 
+  UNION
+  SELECT 
+    * 
+  FROM
+    employees 
+  WHERE department_id > 90;
+  ```
+
+- 语法：
+
+  查询语句1
+
+  union 【ALL】
+
+  查询语句2
+
+  union 【ALL】
+
+  …
+
+- 应用场景：要查询的结果来自于多个表，且多个表没有直接的连接关系，但查询的信息一致
+
+- 特点：
+
+  - 要求多条查询语句的查询列数是一致的
+  - 要求多条查询语句的查询的每一列的类型和顺序最好是一致的
+  - union关键字默认去重，如果使用union all可以包含重复项
+
+## DML（Data Manipulation Language）数据操作语言
+
+- 涉及到数据的
+  - 插入：insert
+  - 修改：update
+  - 删除：delete
+
+### 1. 插入语句
+
+- 方式1：
+
+  - 语法：insert into 表名（列名，…） values（值1，…）
+
+  - 示例1：插入的值的类型要与列的类型一致或兼容
+
+    ```
+    INSERT INTO beauty (
+      id,
+      NAME,
+      sex,
+      borndate,
+      phone,
+      photo,
+      boyfriend_id
+    ) 
+    VALUES
+      (
+        13,
+        '唐艺昕',
+        '女',
+        '1990-4-23',
+        '18934531234',
+        NULL,
+        2
+      );
+    ```
+
+  - 示例2：不可以为null的列必须插入值。可以为null的列如何插入值？
+
+    ```
+    方式1：字段的值写null
+    方式2：不写该字段
+    ```
+
+  - 示例3：列的顺序是否可以调换
+
+    ```
+    INSERT INTO beauty(NAME, sex, id, phone)
+    VALUES('蒋欣', '女', 16, '110');
+    ```
+
+  - 示例4：列数和值的个数必须一致
+
+  - 示例5：可以省略列名，默认所有列，而且列的顺序和表中列的顺序一致
+
+    ```
+    INSERT INTO beauty
+    VALUES(18, '李易峰', '男', NULL, '19', NULL, NULL);
+    ```
+
+- 方式2：
+
+  - 语法：insert into 表名 set 列名=值，列名=值，…
+
+    ```
+    INSERT INTO beauty SET id = 19,
+    NAME = '刘涛',
+    phone = '999' ;
+    ```
+
+- 两种方式大pk
+
+  - 方式1支持插入多行，但是方式2不支持
+
+    ```
+    INSERT INTO beauty
+    VALUES
+    (20, '李易峰', '男', NULL, '19', NULL, NULL),
+    (21, '李易峰', '男', NULL, '19', NULL, NULL),
+    (22, '李易峰', '男', NULL, '19', NULL, NULL);
+    ```
+
+  - 方式1支持子查询，方式2不支持
+
+    ```
+    INSERT INTO beauty(id, NAME, phone)
+    SELECT 26, '送钱', '12341234';
+    ```
+
+    
 
   
 
