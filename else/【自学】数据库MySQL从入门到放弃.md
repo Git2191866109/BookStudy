@@ -2532,7 +2532,429 @@
 
 ### 2. 修改语句
 
+- 语法：
 
+  - 修改单表的记录
+
+    update 表名
+
+    set 列=新值，列=新值…
+
+    where 筛选条件；
+
+  - 修改多表的记录
+
+  - sql92语法
+
+    update 表1 别名，表2 别名
+
+    set 列=值…
+
+    where 筛选条件
+
+    and 筛选条件；
+
+  - sql99语法：
+
+    update 表1 别名
+
+    inner | left | right join 表2 别名
+
+    on 连接条件
+
+    set 列=值，…
+
+    where 筛选条件；
+
+#### 修改单表的记录
+
+- 案例1：修改beauty表中姓唐的女神电话为109090909
+
+  ```
+  UPDATE 
+    beauty 
+  SET
+    phone = '109090909' 
+  WHERE NAME LIKE '唐%' ;
+  ```
+
+- 案例2：修改boys表中id号位2的名称为张飞，魅力值为10
+
+  ```
+  UPDATE 
+    boys 
+  SET
+    boyname = '张飞',
+    usercp = 10 
+  WHERE id = 2 ;
+  ```
+
+#### 修改多表的记录
+
+- 案例1：修改张无忌的女朋友的手机号为114
+
+  ```
+  UPDATE 
+    boys b 
+    INNER JOIN beauty be 
+      ON b.`id` = be.`boyfriend_id` SET be.`phone` = '114' 
+  WHERE b.`boyName` = '张无忌' ;
+  ```
+
+- 案例2：修改没有男朋友的女神的男朋友编号都为 2号
+
+  ```
+  UPDATE 
+    boys b 
+    RIGHT JOIN beauty be 
+      ON b.`id` = be.`boyfriend_id` SET be.`boyfriend_id` = 2 
+  WHERE be.`boyfriend_id` IS NULL ;
+  ```
+
+### 3. 删除语句
+
+- 方式1：delete
+
+  - 语法
+
+    - 单表的删除
+
+      delete from 表名 where 筛选条件
+
+    - 多表的删除
+
+      - sql92语法
+
+        delete 别名（要删哪个表就写哪个表的别名，都删就都写）
+
+        from 表1 别名，表2 别名
+
+        where 连接条件
+
+        and 筛选条件；
+
+      - sql99语法
+
+        delete 别名（要删哪个表就写哪个表的别名，都删就都写）
+
+        from 表1 别名
+
+        inner | left | right join 表2 别名 on 连接条件
+
+        where 筛选条件；
+
+  - 案例1：删除手机号以9结尾的女神信息
+
+    ```
+    DELETE 
+    FROM
+      beauty 
+    WHERE phone LIKE '%9' ;
+    ```
+
+  - 案例2：删除张无忌的女朋友的信息
+
+    ```
+    DELETE 
+      be 
+    FROM
+      beauty be 
+      INNER JOIN boys b 
+        ON b.`id` = be.`boyfriend_id` 
+    WHERE b.`boyName` = '张无忌' ;
+    ```
+
+  - 案例3：删除黄晓明的信息以及他女朋友的信息
+
+    ```
+    DELETE 
+      b,
+      be 
+    FROM
+      beauty be 
+      INNER JOIN boys b 
+        ON b.`id` = be.`boyfriend_id` 
+    WHERE b.`boyName` = '黄晓明' ;
+    ```
+
+- 方式2：truncate
+
+  - 语法
+
+    truncate table 表名；
+
+  - truncate语句中不许加where
+
+  - 一删全删
+
+    ```
+    TRUNCATE TABLE boyes ;
+    ```
+
+- delete pk truncate
+
+  - delete可以加where条件，truncate不可以
+  - truncate删除效率高一些
+  - 假如要删除的表中有自增长列，如果用delete删除后，再插入数据，自增长列的值从断点开始，而truncate删除后，再插入数据，自增长列的值从1开始。
+  - truncate删除没有返回值，delete删除有返回值
+  - truncate删除不能回滚，delete删除可以回滚
+
+## DDL（Data Definition Language）数据定义语言
+
+- 库和表的管理
+  - 库的管理：创建、修改、删除
+  - 标的管理：创建、修改、删除
+  - 创建：create
+  - 修改：alter
+  - 删除：frop
+
+### 1. 库的管理
+
+- 库的创建
+
+  - 语法：create database [if not exists]  库名；
+
+  - 案例：创建库book
+
+    ```
+    CREATE DATABASE IF NOT EXISTS books;
+    ```
+
+- 库的修改
+
+  - 修改库名的语句【已停用】
+
+    ```
+    RENAME DATABASE books TO new_books;
+    ```
+
+  - 更改库的字符集
+
+    ```
+    ALTER DATABASE books CHARACTER SET gbk;
+    ```
+
+- 库的删除
+
+  ```
+  DROP DATABASE IF EXISTS books;
+  ```
+
+### 2. 表的管理
+
+- 表的创建
+
+  -  语法：
+
+    create table 表名(
+
+    ​	列名 列的类型【（长度） 约束】，
+
+    ​	列名 列的类型【（长度） 约束】，
+
+    ​	…
+
+    )
+
+  - 案例1：创建表 book
+
+    ```
+    CREATE TABLE book (
+      id INT,
+      bname VARCHAR (20),
+      price DOUBLE,
+      authorid INT,
+      publishdate DATETIME
+    ) ;
+    ```
+
+  - 案例2：创建表author
+
+    ```
+    CREATE TABLE author (
+      id INT,
+      au_name VARCHAR (20),
+      nation VARCHAR (10)
+    ) ;
+    ```
+
+  - 案例3：查看创建的表
+
+    ```
+    DESC author;
+    ```
+
+- 表的修改
+
+  - 语法：alter table 表名 add | drop | modify | change column 列名 【列类型 约束】；
+
+  - 修改列名
+
+    ```
+    ALTER TABLE book 
+      CHANGE COLUMN publishdate pubdate DATETIME ;
+    ```
+
+  - 修改列的类型或约束
+
+    ```
+    ALTER TABLE book 
+      MODIFY COLUMN pubdate TIMESTAMP ;
+    ```
+
+  - 添加新列
+
+    ```
+    ALTER TABLE author 
+      ADD COLUMN annual DOUBLE ;
+    ```
+
+  - 删除列
+
+    ```
+    ALTER TABLE author 
+      DROP COLUMN annual ;
+    ```
+
+  - 修改表名
+
+    ```
+    ALTER TABLE author 
+      RENAME TO book_author ;
+    ```
+
+- 表的删除
+  - 语法：drop table if exists 表名；
+
+  - 查看有哪些表：show tables；
+
+  - if exists 只能在库，表的创建和删除的时候使用，列的操作不能使用。
+
+  - 通用的写法：
+
+    ```
+    DROP DATABASE IF EXISTS 旧库名;
+    CREATE DATABASE 新库名;
+    
+    DROP TABLE IF EXISTS 旧表名;
+    CREATE TABLE 表名();
+    ```
+
+- 表的复制
+  - 仅仅复制表的结构
+
+    ```
+    CREATE TABLE copy LIKE book_author ;
+    ```
+
+  - 复制表的结构+数据
+
+    ```
+    CREATE TABLE copy2 
+    SELECT 
+      * 
+    FROM
+      book_author ;
+    ```
+
+  - 只复制部分数据
+
+    ```
+    CREATE TABLE copy3 
+    SELECT 
+      id,
+      au_name 
+    FROM
+      book_author 
+    WHERE nation = '中国' ;
+    ```
+
+  - 仅仅复制某些字段（部分结构）：设置where不满足，那么就没有数据
+
+    ```
+    CREATE TABLE copy4 
+    SELECT 
+      id,
+      au_name 
+    FROM
+      book_author 
+    WHERE 0 ;
+    ```
+
+- 习题集
+
+  - 创建表dept1
+
+    ```
+    USE myemployees;
+    CREATE TABLE dept1 (id INT (7), NAME VARCHAR (25)) ;
+    ```
+
+  - 将表departments中的数据插入新表dept2中
+
+    ```
+    CREATE TABLE dept2 
+    SELECT 
+      department_id,
+      department_name 
+    FROM
+      departments ;
+    ```
+
+  - 创建表emp5
+
+    ```
+    CREATE TABLE emp5 (
+      id INT (7),
+      first_name VARCHAR (25),
+      last_name VARCHAR (25),
+      dept_id INT (7)
+    ) ;
+    ```
+
+  - 将last_name的长度修改为50
+
+    ```
+    ALTER TABLE emp5 MODIFY COLUMN last_name VARCHAR(50);
+    ```
+
+  - 根据表employees创建employee2
+
+    ```
+    CREATE TABLE employee2 LIKE employees ;
+    ```
+
+  - 删除表emp5
+
+    ```
+    DROP TABLE IF EXISTS emp5;
+    ```
+
+  - 将表empoyees2重命名为emp5
+
+    ```
+    ALTER TABLE employee2 
+      RENAME TO emp5 ;
+    ```
+
+  - 在表dept和emp5中添加新列test_column，并检查所做的操作
+
+    ```
+    ALTER TABLE emp5 
+      ADD COLUMN test_column INT ;
+    DESC emp5;
+    ```
+
+  - 直接删除表emp5中的列dept_id
+
+    ```
+    ALTER TABLE emp5 
+      DROP COLUMN dept_id ;
+    ```
+
+    
+
+  
 
 
 
