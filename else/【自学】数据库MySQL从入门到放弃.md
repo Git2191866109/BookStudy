@@ -2952,7 +2952,7 @@
       DROP COLUMN dept_id ;
     ```
 
-    
+    谁谁谁
 
   
 
