@@ -52,46 +52,11 @@
 ## else
 
 - 学习顺序参考链接：https://blog.csdn.net/u010965287/article/details/93875495
-
 - 别人的计划：https://www.cnblogs.com/cznczai/p/11148054.html
-
 - 机器学习算法工程师面试考点笔记
-
-- 《Linux教程》：[av21303002](https://www.bilibili.com/video/av21303002)
-
-  - [Linux学习从入门到放弃](https://blog.csdn.net/qq_21579045/article/details/95605401)
-
-- 《Java 编程学习第一季》：[av47103781](https://www.bilibili.com/video/av47103781?from=search&seid=3410921728153997119)
-- 《Java 企业开发第一季 - Spring 实战》：av47176832
-- 《Java 企业开发第二季 - MyBatis 实战》：av47228830
-- 《Java 企业开发第三季 - Spring MVC 实战》：av47218566
-- 《Java 企业开发第四季 - Spring Boot 实战》：av47230137
-- 《Java 企业开发第五季 - Spring Cloud 实战》：av22613028
-- 《Java 企业开发第六季 - Dubbo 实战》：av47009143
-- 《Java 企业开发第七季 - 电商项目实战》：av48308453
-
-- 《数据库第一季 - MySQL 实战》：av47702905
-- 《数据库第二季 - Redis 实战》：av47423174
-- 《数据库第三季 - MongoDB 实战》：av47425352
-- 《数据库第四季 - Elasticsearch 实战》：av48279989
-- 《数据库第五季 - Oracle 实战》：av48502473
-
-- 《前端开发第一季 - HTML + CSS 实战》：av49126649
-- 《前端开发第二季 - Javascript 实战》：av48927313
-- 《前端开发第三季 - React 实战》：av48033695
-- 《前端开发第四季 - Vue 实战》：av50886891
-- 《前端开发第五季 - React 项目实战》：av48495066
-- 《前端开发第六季 - Vue 项目实战》：av48333477
-
-- 《大数据开发第一季 - Hadoop》：av48621769
-- 《大数据开发第二季 - HBase》：av48581792
-- 《大数据开发第三季 - Hive》：av48609427
-- 《大数据开发第四季 - Flink》：av50996367
-- 《大数据开发第五季 - Spark》：av48668079
-
-- 《架构之路第一季 - RabbitMQ》：av48444262
-- 《架构之路第二季 - Kafka》：av47773990
-- 《架构之路第三季 - Zookeeper》：av47773419
+- [Linux学习笔记](https://blog.csdn.net/qq_21579045/article/details/95605401)：[av21303002](https://www.bilibili.com/video/av21303002)
+- [MySQL基础学习笔记](https://blog.csdn.net/qq_21579045/article/details/98111827)：[av59623481](https://www.bilibili.com/video/av59623481)
+- MySQL高级学习笔记：[av59623481](https://www.bilibili.com/video/av59623481)
 
 ------
 
