@@ -1,8 +1,6 @@
 # 李英俊的计算机书籍学习笔记
 
-只上传了.py和.ipynb格式的文件，大部分处理的数据集、生成的中间数据、生成的模型文件因为占用储存过大，都没有上传。（通过gitignore的方式）
-
-要努力！要加油呀~
+李英俊努力努力再努力！！！
 
 ## Book1：《Python编程从入门到实践》
 
@@ -39,7 +37,7 @@
 
 ## Book4：《机器学习实战——基于Scikit-Learn和TensorFlow》
 
-- 
+- [第1章 机器学习概览](https://blog.csdn.net/qq_21579045/article/details/98965103)
 - [第14章 循环神经网络](<https://blog.csdn.net/qq_21579045/article/details/92986126>)
 - [第15章 自动编码器](https://blog.csdn.net/qq_21579045/article/details/94593920)
 - [第16章 强化学习](https://github.com/TinyHandsome/BookStudy/blob/master/book4/chapter16/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0.ipynb)
