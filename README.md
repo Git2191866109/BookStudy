@@ -40,6 +40,7 @@
 - [第1章 机器学习概览](https://blog.csdn.net/qq_21579045/article/details/98965103)
 - [第2章 端到端的机器学习项目](https://blog.csdn.net/qq_21579045/article/details/99290756)
 - [第3章 分类](https://blog.csdn.net/qq_21579045/article/details/99545227)
+- [第4章 训练模型](https://blog.csdn.net/qq_21579045/article/details/99677150)
 - [第14章 循环神经网络](<https://blog.csdn.net/qq_21579045/article/details/92986126>)
 - [第15章 自动编码器](https://blog.csdn.net/qq_21579045/article/details/94593920)
 - [第16章 强化学习](https://github.com/TinyHandsome/BookStudy/blob/master/book4/chapter16/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0.ipynb)
