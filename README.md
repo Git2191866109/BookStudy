@@ -51,12 +51,11 @@
 
 ## else
 
-- 学习顺序参考链接：https://blog.csdn.net/u010965287/article/details/93875495
-- 别人的计划：https://www.cnblogs.com/cznczai/p/11148054.html
 - 机器学习算法工程师面试考点笔记
 - [Linux学习笔记](https://blog.csdn.net/qq_21579045/article/details/95605401)：[av21303002](https://www.bilibili.com/video/av21303002)
 - [MySQL基础学习笔记](https://blog.csdn.net/qq_21579045/article/details/98111827)：[av59623481](https://www.bilibili.com/video/av59623481)
-- MySQL高级学习笔记：[av59623481](https://www.bilibili.com/video/av59623481)
+- [MySQL高级学习笔记](https://blog.csdn.net/qq_21579045/article/details/99702766)：[av59623481](https://www.bilibili.com/video/av59623481)
+- Java学习笔记：[av59529105](https://www.bilibili.com/video/av59529105/)
 
 ------
 
