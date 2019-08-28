@@ -8,4 +8,8 @@
  */
 
 public class Test4 {
+    public static void main(String[] args){
+        Test4 x = new Test4();
+        System.out.println(x instanceof Object);
+    }
 }
