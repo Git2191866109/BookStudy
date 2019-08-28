@@ -44,9 +44,10 @@
 - [第5章 支持向量机](https://blog.csdn.net/qq_21579045/article/details/99732143)
 - [第6章 决策树](https://blog.csdn.net/qq_21579045/article/details/99731945)
 - [第7章 集成学习和随机森林](https://blog.csdn.net/qq_21579045/article/details/100089194)
+- [第8章 降维](https://blog.csdn.net/qq_21579045/article/details/100121656)
 - [第14章 循环神经网络](<https://blog.csdn.net/qq_21579045/article/details/92986126>)
 - [第15章 自动编码器](https://blog.csdn.net/qq_21579045/article/details/94593920)
-- [第16章 强化学习](https://github.com/TinyHandsome/BookStudy/blob/master/book4/chapter16/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0.ipynb)
+- [第16章 强化学习](https://github.com/TinyHandsome/BookStudy/blob/master/book4/第16章 强化学习/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0.ipynb)
 
 ## Book5：《Hadoop权威指南》
 
