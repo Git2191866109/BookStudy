@@ -185,7 +185,7 @@ with tf.Session() as sess:
   - TensorFlow会帮你计算梯度，不过它还提供更容易的方法：它内置了很多的优化器，其中就包含梯度下降优化器。你只需要把上面对gradients=…和training_op=…赋值的语句修改成下面的代码即可：
 
     ```python
-    optimizer = tf.train.GradientDescentOptimizer(learning_rate=learning_rate)
+    optimizer = tf.train.GradientDescentOptimizer(learning_rate=learning_rate)
     training_op = optimizer.minimize(mse)
     ```
 
@@ -297,6 +297,8 @@ with tf.Session() as sess:
 ## 用TensorBoard来可视化图和训练曲线
 
 
+
+## 命名作用域
 
 
 
