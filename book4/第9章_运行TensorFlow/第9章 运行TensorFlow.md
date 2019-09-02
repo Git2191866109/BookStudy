@@ -1,5 +1,7 @@
 # 第9章 运行TensorFlow
 
+[TOC]
+
 **参考书**
 
 《机器学习实战——基于Scikit-Learn和TensorFlow》
@@ -296,7 +298,7 @@ with tf.Session() as sess:
 
 ## 用TensorBoard来可视化图和训练曲线
 
-- 开启TensorBoard：tensorboard –logdir tf_logs/
+- 开启TensorBoard：tensorboard --logdir tf_logs/
 
 ```python
 from datetime import datetime
@@ -400,7 +402,212 @@ print(mse.op.name)
 
 ## 模块化
 
+- 一段错误的代码，这段代码中包含了一个cut-and-paste的错误
 
+  ```python
+  import tensorflow as tf
+  import numpy as np
+  
+  n_features = 3
+  X = tf.placeholder(tf.float32, shape=(None, n_features), name="X")
+  
+  w1 = tf.Variable(tf.random_normal((n_features, 1)), name="weights1")
+  w2 = tf.Variable(tf.random_normal((n_features, 1)), name="weights2")
+  b1 = tf.Variable(0.0, name="bias1")
+  b2 = tf.Variable(0.0, name="bias2")
+  
+  z1 = tf.add(tf.matmul(X, w1), b1, name="z1")
+  z2 = tf.add(tf.matmul(X, w2), b2, name="z2")
+  
+  relu1 = tf.maximum(z1, 0., name="relu1")
+  relu2 = tf.maximum(z1, 0., name="relu2")
+  
+  output = tf.add(relu1, relu2, name="output")
+  ```
+
+- TensorFlow会让你保持DRY（Don’t Repeat Yourself，不要重复自己）原则：用一个函数来构建ReLU。
+
+  ```python
+  def reset_graph(seed=42):
+      tf.reset_default_graph()
+      tf.set_random_seed(seed)
+      np.random.seed(seed)
+  
+  def relu(X):
+      with tf.name_scope("relu"):
+          w_shape = (int(X.get_shape()[1]), 1)
+          w = tf.Variable(tf.random_normal(w_shape), name="weights")
+          b = tf.Variable(0.0, name="bias")
+          z = tf.add(tf.matmul(X, w), b, name="z")
+          return tf.maximum(z, 0., name="relu")
+      
+  reset_graph()
+  n_features = 3
+  X = tf.placeholder(tf.float32, shape=(None, n_features), name="X")
+  relus = [relu(X) for i in range(5)]
+  output = tf.add_n(relus, name="output")
+  
+  with tf.Session() as sess:
+      sess.run(tf.global_variables_initializer())
+      result = output.eval(feed_dict={X: [[1, 2, 3], [4, 5, 6]]})
+      print(result)
+      
+  ```
+
+file_writer.close()
+  ```
+  
+  ![img](https://img-blog.csdnimg.cn/20190902143242170.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70)
+
+## 共享变量
+
+- 如果你想在图的不同组建中共享变量：最简单的做法是先创建，然后将其作为参数传递给需要它的函数。
+
+- TensorFlow提供另外一个选择，可以让代码更加清晰，也更加模块化。
+
+  - 如果共享变量不存在，该方法先通过get_variable()函数创建共享变量；如果已经存在了，就复用该共享变量。期望的行为通过当前variable_scope()的一个属性来控制（创建或者复用）。
+
+    ```python
+    with tf.variable_scope("relu"):
+        threshold = tf.get_variable("threshold", shape=(), initializer=tf.constant_initializer(0.0))
+  ```
+
+  - 注意，如果这个变量之前已经被get_variable()调用创建过，这里会抛出一个一场。这种机制避免由于误操作而复用变量。
+
+  - 如果要复用一个变量，需要通过设置变量作用域reuse属性为True来显示地实现（在这里，不必指定形状或初始化器）。
+
+    ```python
+    with tf.variable_scope("relu", reuse=True):
+        threshold = tf.get_variable("threshold")
+    ```
+
+  - 这段代码会获取既有的“relu/threshold”变量，如果该变量不存在，或者在调用get_variable()时没有创建成功，那么会抛出一个异常。
+
+  - 另一种方式是，在调用作用域的reuse_variables()方法块中设置reuse属性为True。
+
+    ```python
+    with tf.variable_scope("relu") as scope:
+        scope.reuse_variables()
+        threshold = tf.get_variable("threshold")
+    ```
+
+  - 一旦reuse属性设置为True之后，在该块中就不能再设置为False了。另外，如果在块中定义了另外的变量作用域，它们会自动继承resue=True。最后，只有通过get_variable()创建的变量才可以用这种方式进行复用。
+
+- 现在你已经看到了所有能让relu()函数无须传入参数就访问threshold变量的方法了：
+
+  ```python
+  reset_graph()
+  
+  def relu(X):
+      with tf.variable_scope("relu", reuse=True):
+          threshold = tf.get_variable("threshold")
+          w_shape = int(X.get_shape()[1]), 1                          # not shown
+          w = tf.Variable(tf.random_normal(w_shape), name="weights")  # not shown
+          b = tf.Variable(0.0, name="bias")                           # not shown
+          z = tf.add(tf.matmul(X, w), b, name="z")                    # not shown
+          return tf.maximum(z, threshold, name="max")
+  
+  X = tf.placeholder(tf.float32, shape=(None, n_features), name="X")
+  with tf.variable_scope("relu"):
+      threshold = tf.get_variable("threshold", shape=(),
+                                  initializer=tf.constant_initializer(0.0))
+  relus = [relu(X) for relu_index in range(5)]
+  output = tf.add_n(relus, name="output")
+  
+  file_writer = tf.summary.FileWriter("D:/李添的数据哦！！！/BookStudy/book4/model/logs/relu6", tf.get_default_graph())
+  file_writer.close()
+  
+  with tf.Session() as sess:
+      sess.run(tf.global_variables_initializer())
+      result = output.eval(feed_dict={X: [[1, 2, 3], [4, 5, 6]]})
+      print(result)
+  ```
+
+- 通过get_variable()创建的变量总是以它们的variable_scope作为前缀来命名的（比如“relu/threshold”），对于其它节点（包括通过tf.Variable()创建的变量）变量作用域的行为就好像是一个新的作用域。具体来说，如果一个命名作用域有一个已经创建了的变量名，那么就会加上一个后缀以保证其唯一性。比如，上面的例子中的所有变量（除了threshold变量）都有一个“relu_1”到“relu_5”的前缀。![img](https://img-blog.csdnimg.cn/20190902152139183.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70)
+
+- 遗憾的是，threshold变量必须定义在relu()函数之外，其他所有的ReLU代码都在内部。要解决这个问题，下面的代码在relu()函数第一次调用时创建了threshold变量，并在后续的调用中复用。现在relu()函数无须关注命名作用域或者变量共享问题，它只需要调用get_variable()，来创建或者复用threshold变量（无需关心到底是创建还是复用）。剩下的代码调用了relu()5次，确保第一次调用时将reuse设置为False，后续的调用将reuse设置为True。![img](https://img-blog.csdnimg.cn/20190902153429369.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70)
+
+- 结果跟之前的略有不同，因为共享变量在第一个ReLU中。
+
+- 方法1：
+
+  ```python
+  reset_graph()
+  
+  def relu(X):
+      with tf.variable_scope("relu"):
+          threshold = tf.get_variable("threshold", shape=(), initializer=tf.constant_initializer(0.0))
+          w_shape = (int(X.get_shape()[1]), 1)
+          w = tf.Variable(tf.random_normal(w_shape), name="weights")
+          b = tf.Variable(0.0, name="bias")
+          z = tf.add(tf.matmul(X, w), b, name="z")
+          return tf.maximum(z, threshold, name="max")
+  
+  X = tf.placeholder(tf.float32, shape=(None, n_features), name="X")
+  with tf.variable_scope("", default_name="") as scope:
+      first_relu = relu(X)     # create the shared variable
+      scope.reuse_variables()  # then reuse it
+      relus = [first_relu] + [relu(X) for i in range(4)]
+  output = tf.add_n(relus, name="output")
+  
+  file_writer = tf.summary.FileWriter("D:/李添的数据哦！！！/BookStudy/book4/model/logs/relu8", tf.get_default_graph())
+  file_writer.close()
+  
+  with tf.Session() as sess:
+      sess.run(tf.global_variables_initializer())
+      result = output.eval(feed_dict={X: [[1, 2, 3], [4, 5, 6]]})
+      print(result)
+  ```
+
+- 方法2：
+
+  ```python
+  reset_graph()
+  
+  def relu(X):
+      threshold = tf.get_variable("threshold", shape=(),
+                                  initializer=tf.constant_initializer(0.0))
+      w_shape = (int(X.get_shape()[1]), 1)                        # not shown in the book
+      w = tf.Variable(tf.random_normal(w_shape), name="weights")  # not shown
+      b = tf.Variable(0.0, name="bias")                           # not shown
+      z = tf.add(tf.matmul(X, w), b, name="z")                    # not shown
+      return tf.maximum(z, threshold, name="max")
+  
+  X = tf.placeholder(tf.float32, shape=(None, n_features), name="X")
+  relus = []
+  for relu_index in range(5):
+      with tf.variable_scope("relu", reuse=(relu_index >= 1)) as scope:
+          relus.append(relu(X))
+  output = tf.add_n(relus, name="output")
+  
+  file_writer = tf.summary.FileWriter("D:/李添的数据哦！！！/BookStudy/book4/model/logs/relu9", tf.get_default_graph())
+  file_writer.close()
+  
+  with tf.Session() as sess:
+      sess.run(tf.global_variables_initializer())
+      result = output.eval(feed_dict={X: [[1, 2, 3], [4, 5, 6]]})
+      print(result)
+  ```
+
+## 练习摘抄
+
+- 语句a_val, b_val = a.eval(session=sess), b.eval(session=sess)和a_val, b_val = sess.run([a, b])等价吗？
+
+  **不等价**。第一条语句会运行两次（第一次计算a，第二次计算b），而第二条语句只运行一次。<u>如果这些操作（或者它们依赖的操作）中的任意一个具有副作用（比如，修改一个变量，向队列中插入一条记录，或者读取一个文件等），那么效果就会不同。如果操作没有副作用，那么语句会返回同样的结果，不过第二条语句会比第一条快。</u>
+
+- 假设你创建了一个包含变量w的图，然后在两个线程中分别启动一个会话，两个线程都使用了图g，每个会话会有自己对w变量的拷贝，还是会共享变量？
+
+  在本地TensorFlow中，会话用来管理变量的值，如果你创建了一个包含变量w的图g，然后启动两个线程，并在每个线程中打开一个本地的会话，这两个线程使用同一个图g，那么每个会话会拥有自己的w的拷贝。如果在分布式的TensorFlow中，变量的值则存储在由集群管理的容器中，如果两个会话连接了同一个集群，并使用同一个容器，那么它们会共享变量w。
+
+- 变量何时被初始化，又在何时被销毁？
+
+  变量在调用其初始化器的时候被初始化，在会话结束的时候被销毁。在分布式TensorFlow中，变量存活于集群上的容器中，所以关闭一个会话不会销毁变量。要销毁一个变量，你需要清空它所在的容器。
+
+- 占位符和变量的区别是什么？
+
+  - 变量和占位符完全不同。
+  - 变量是包含一个值的操作。你执行一个变量，它会返回对应的值。在执行之前，你需要初始化变量。你可以修改变量的值（比如，通过使用赋值操作）。变量有状态：在连续运行图时，变量保持相同的值。通常它被用作保存模型的参数，不过也可以用作其他用途（比如，对全局训练的步数进行计数）。
+  - 占位符则只能做很少的事儿：它们只有其所代表的张量的类型和形状的信息，但没有值。事实上，如果你要对一个依赖于占位符的操作进行求值，你必须先为其传值（通过feed_dict），否则你会得到一个异常。占位符通常在被用作在执行期为训练或者测试数据传值。在将值传递给赋值节点以更改变量的值时（例如，模型的权重），占位符也很有用。
 
 ------
 
