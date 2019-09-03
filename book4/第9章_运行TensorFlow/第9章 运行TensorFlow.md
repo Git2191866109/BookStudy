@@ -452,9 +452,7 @@ print(mse.op.name)
       result = output.eval(feed_dict={X: [[1, 2, 3], [4, 5, 6]]})
       print(result)
       
-  ```
-
-file_writer.close()
+  file_writer.close()
   ```
   
   ![img](https://img-blog.csdnimg.cn/20190902143242170.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70)
@@ -470,7 +468,7 @@ file_writer.close()
     ```python
     with tf.variable_scope("relu"):
         threshold = tf.get_variable("threshold", shape=(), initializer=tf.constant_initializer(0.0))
-  ```
+    ```
 
   - 注意，如果这个变量之前已经被get_variable()调用创建过，这里会抛出一个一场。这种机制避免由于误操作而复用变量。
 
@@ -615,9 +613,7 @@ file_writer.close()
 
 - 反向模式autodiff需要多少次遍历图形才能计算10个变量的成本函数的梯度？正向模式autodiff怎么样？符号微分呢？
 
-  要计算任意数量变量的成本函数的梯度，反向模式的
-
-  
+  要计算任意数量变量的成本函数的梯度，反向模式的autodiff算法（由TensorFlow实现）只需要遍历两次图。作为对比，正向模式的autodiff算法需要为每个变量运行一次（如果我们需要10个不同变量的梯度，那么就需要执行10次）。对于符号微分，它会建立一个不同的图来计算梯度，所以根本不会遍历原来的图（除了在建立新的梯度图时）。一个高度优化的符号微分系统可能只需要运行一次新的梯度图来计算和所有变量相关的梯度，但与原始图相比，新的图可能时非常复杂和低效的。
 
 ------
 
