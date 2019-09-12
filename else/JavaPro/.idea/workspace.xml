@@ -2,18 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0ef6269b-9ccd-436a-a618-ce5349fd792c" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaPro/Animal.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaPro/Animal.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaPro/Cat.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaPro/Cat.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaPro/Dog.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaPro/Dog.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaPro/StringTest1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaPro/StringTest1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaPro/Test1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaPro/Test1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaPro/Test2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaPro/Test2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaPro/Test3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaPro/Test3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaPro/Test4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaPro/Test4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaPro/Test5_polymorphism.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaPro/Test5_polymorphism.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaPro/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaPro/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../【自学】4. JAVA基础.md" beforeDir="false" afterPath="$PROJECT_DIR$/../【自学】4. JAVA基础.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -32,7 +22,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="ProjectId" id="1QfZuOYHBymnw192aUrzLoY7jIM" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -54,25 +46,17 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.StringTest1">
+  <component name="RunManager" selected="Application.testCopy">
+    <configuration name="ForEachTest1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ForEachTest1" />
+      <module name="JavaPro" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="StringTest1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="StringTest1" />
-      <module name="JavaPro" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Test2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Test2" />
-      <module name="JavaPro" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Test3" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Test3" />
       <module name="JavaPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
@@ -101,6 +85,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="testCopy" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="testCopy" />
+      <module name="JavaPro" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <option name="TEST_OBJECT" value="class" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
@@ -118,19 +110,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.Test2" />
-      <item itemvalue="Application.Test3" />
       <item itemvalue="Application.Test4" />
       <item itemvalue="Application.Test5_polymorphism" />
       <item itemvalue="Application.StringTest1" />
+      <item itemvalue="Application.ForEachTest1" />
+      <item itemvalue="Application.testCopy" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.testCopy" />
+        <item itemvalue="Application.ForEachTest1" />
         <item itemvalue="Application.StringTest1" />
         <item itemvalue="Application.Test5_polymorphism" />
         <item itemvalue="Application.Test4" />
-        <item itemvalue="Application.Test3" />
-        <item itemvalue="Application.Test2" />
       </list>
     </recent_temporary>
   </component>
@@ -153,6 +145,7 @@
       <workItem from="1567848481589" duration="1660000" />
       <workItem from="1568026058662" duration="983000" />
       <workItem from="1568163835249" duration="627000" />
+      <workItem from="1568274461647" duration="3087000" />
     </task>
     <servers />
   </component>
@@ -164,7 +157,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
