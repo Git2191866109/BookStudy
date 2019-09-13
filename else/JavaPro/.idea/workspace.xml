@@ -46,7 +46,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.testCopy">
+  <component name="RunManager" selected="Application.TestBinarySearch">
     <configuration name="ForEachTest1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ForEachTest1" />
       <module name="JavaPro" />
@@ -55,24 +55,24 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="StringTest1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="StringTest1" />
+    <configuration name="TestArrays" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="TestArrays" />
       <module name="JavaPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test4" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Test4" />
+    <configuration name="TestBinarySearch" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="TestBinarySearch" />
       <module name="JavaPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test5_polymorphism" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Test5_polymorphism" />
+    <configuration name="TestBubbleSort" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="TestBubbleSort" />
       <module name="JavaPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
@@ -110,19 +110,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.Test4" />
-      <item itemvalue="Application.Test5_polymorphism" />
-      <item itemvalue="Application.StringTest1" />
       <item itemvalue="Application.ForEachTest1" />
       <item itemvalue="Application.testCopy" />
+      <item itemvalue="Application.TestArrays" />
+      <item itemvalue="Application.TestBubbleSort" />
+      <item itemvalue="Application.TestBinarySearch" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.TestBinarySearch" />
+        <item itemvalue="Application.TestBubbleSort" />
+        <item itemvalue="Application.TestArrays" />
         <item itemvalue="Application.testCopy" />
         <item itemvalue="Application.ForEachTest1" />
-        <item itemvalue="Application.StringTest1" />
-        <item itemvalue="Application.Test5_polymorphism" />
-        <item itemvalue="Application.Test4" />
       </list>
     </recent_temporary>
   </component>
@@ -146,6 +146,8 @@
       <workItem from="1568026058662" duration="983000" />
       <workItem from="1568163835249" duration="627000" />
       <workItem from="1568274461647" duration="3087000" />
+      <workItem from="1568349889260" duration="1869000" />
+      <workItem from="1568366687332" duration="1999000" />
     </task>
     <servers />
   </component>
