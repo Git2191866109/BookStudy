@@ -94,7 +94,7 @@ class MLTools:
         return model
 
 
-def model_building(X_train, y_train, X_test, y_test, save_path=None, target_names=None):
+def model_building(X_train, y_train, X_test, y_test, save_path, target_names=None):
     """
     训练模型，并得到结果，并重新训练所有数据，保存模型
     :param save_path: 模型的保存路径
@@ -119,7 +119,7 @@ def model_building(X_train, y_train, X_test, y_test, save_path=None, target_name
     model_names = ['多项式朴素贝叶斯', '高斯朴素贝叶斯', 'K最近邻', '逻辑回归', '支持向量机', '决策树', '随机森林', 'Adaboost', 'GBDT', 'xgboost']
 
     # 遍历每个模型
-    with open('./report.txt', 'w+') as f:
+    with open(save_path + 'report.txt', 'w+') as f:
 
         for count in range(len(models)):
             model = models[count]
@@ -139,9 +139,8 @@ def model_building(X_train, y_train, X_test, y_test, save_path=None, target_name
             f.writelines(test)
             f.write('\n')
 
-            if save_path:
-                model.fit(np.r_[np.array(X_train), np.array(X_test)], np.r_[np.array(y_train), np.array(y_test)])
-                joblib.dump(model, os.path.join(save_path, model_name + '.plk'))
+            model.fit(np.r_[np.array(X_train), np.array(X_test)], np.r_[np.array(y_train), np.array(y_test)])
+            joblib.dump(model, os.path.join(save_path, model_name + '.plk'))
 
 
 if __name__ == '__main__':
