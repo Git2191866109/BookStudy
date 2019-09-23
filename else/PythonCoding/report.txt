@@ -1,0 +1,230 @@
+- 多项式朴素贝叶斯
+-- 【训练集】
+              precision    recall  f1-score   support
+
+      setosa       1.00      1.00      1.00        40
+  versicolor       0.87      0.98      0.92        41
+   virginica       0.97      0.85      0.90        39
+
+    accuracy                           0.94       120
+   macro avg       0.95      0.94      0.94       120
+weighted avg       0.95      0.94      0.94       120
+
+-- 【测试集】
+              precision    recall  f1-score   support
+
+      setosa       1.00      1.00      1.00        10
+  versicolor       0.82      1.00      0.90         9
+   virginica       1.00      0.82      0.90        11
+
+    accuracy                           0.93        30
+   macro avg       0.94      0.94      0.93        30
+weighted avg       0.95      0.93      0.93        30
+
+- 高斯朴素贝叶斯
+-- 【训练集】
+              precision    recall  f1-score   support
+
+      setosa       1.00      1.00      1.00        40
+  versicolor       0.93      0.93      0.93        41
+   virginica       0.92      0.92      0.92        39
+
+    accuracy                           0.95       120
+   macro avg       0.95      0.95      0.95       120
+weighted avg       0.95      0.95      0.95       120
+
+-- 【测试集】
+              precision    recall  f1-score   support
+
+      setosa       1.00      1.00      1.00        10
+  versicolor       1.00      1.00      1.00         9
+   virginica       1.00      1.00      1.00        11
+
+    accuracy                           1.00        30
+   macro avg       1.00      1.00      1.00        30
+weighted avg       1.00      1.00      1.00        30
+
+- K最近邻
+-- 【训练集】
+              precision    recall  f1-score   support
+
+      setosa       1.00      1.00      1.00        40
+  versicolor       0.97      0.93      0.95        41
+   virginica       0.93      0.97      0.95        39
+
+    accuracy                           0.97       120
+   macro avg       0.97      0.97      0.97       120
+weighted avg       0.97      0.97      0.97       120
+
+-- 【测试集】
+              precision    recall  f1-score   support
+
+      setosa       1.00      1.00      1.00        10
+  versicolor       1.00      1.00      1.00         9
+   virginica       1.00      1.00      1.00        11
+
+    accuracy                           1.00        30
+   macro avg       1.00      1.00      1.00        30
+weighted avg       1.00      1.00      1.00        30
+
+- 逻辑回归
+-- 【训练集】
+              precision    recall  f1-score   support
+
+      setosa       1.00      1.00      1.00        40
+  versicolor       0.97      0.90      0.94        41
+   virginica       0.90      0.97      0.94        39
+
+    accuracy                           0.96       120
+   macro avg       0.96      0.96      0.96       120
+weighted avg       0.96      0.96      0.96       120
+
+-- 【测试集】
+              precision    recall  f1-score   support
+
+      setosa       1.00      1.00      1.00        10
+  versicolor       1.00      1.00      1.00         9
+   virginica       1.00      1.00      1.00        11
+
+    accuracy                           1.00        30
+   macro avg       1.00      1.00      1.00        30
+weighted avg       1.00      1.00      1.00        30
+
+- 支持向量机
+-- 【训练集】
+              precision    recall  f1-score   support
+
+      setosa       1.00      1.00      1.00        40
+  versicolor       1.00      0.98      0.99        41
+   virginica       0.97      1.00      0.99        39
+
+    accuracy                           0.99       120
+   macro avg       0.99      0.99      0.99       120
+weighted avg       0.99      0.99      0.99       120
+
+-- 【测试集】
+              precision    recall  f1-score   support
+
+      setosa       1.00      1.00      1.00        10
+  versicolor       1.00      1.00      1.00         9
+   virginica       1.00      1.00      1.00        11
+
+    accuracy                           1.00        30
+   macro avg       1.00      1.00      1.00        30
+weighted avg       1.00      1.00      1.00        30
+
+- 决策树
+-- 【训练集】
+              precision    recall  f1-score   support
+
+      setosa       1.00      1.00      1.00        40
+  versicolor       1.00      1.00      1.00        41
+   virginica       1.00      1.00      1.00        39
+
+    accuracy                           1.00       120
+   macro avg       1.00      1.00      1.00       120
+weighted avg       1.00      1.00      1.00       120
+
+-- 【测试集】
+              precision    recall  f1-score   support
+
+      setosa       1.00      1.00      1.00        10
+  versicolor       1.00      1.00      1.00         9
+   virginica       1.00      1.00      1.00        11
+
+    accuracy                           1.00        30
+   macro avg       1.00      1.00      1.00        30
+weighted avg       1.00      1.00      1.00        30
+
+- 随机森林
+-- 【训练集】
+              precision    recall  f1-score   support
+
+      setosa       1.00      1.00      1.00        40
+  versicolor       1.00      1.00      1.00        41
+   virginica       1.00      1.00      1.00        39
+
+    accuracy                           1.00       120
+   macro avg       1.00      1.00      1.00       120
+weighted avg       1.00      1.00      1.00       120
+
+-- 【测试集】
+              precision    recall  f1-score   support
+
+      setosa       1.00      1.00      1.00        10
+  versicolor       1.00      1.00      1.00         9
+   virginica       1.00      1.00      1.00        11
+
+    accuracy                           1.00        30
+   macro avg       1.00      1.00      1.00        30
+weighted avg       1.00      1.00      1.00        30
+
+- Adaboost
+-- 【训练集】
+              precision    recall  f1-score   support
+
+      setosa       1.00      1.00      1.00        40
+  versicolor       0.97      0.93      0.95        41
+   virginica       0.93      0.97      0.95        39
+
+    accuracy                           0.97       120
+   macro avg       0.97      0.97      0.97       120
+weighted avg       0.97      0.97      0.97       120
+
+-- 【测试集】
+              precision    recall  f1-score   support
+
+      setosa       1.00      1.00      1.00        10
+  versicolor       1.00      1.00      1.00         9
+   virginica       1.00      1.00      1.00        11
+
+    accuracy                           1.00        30
+   macro avg       1.00      1.00      1.00        30
+weighted avg       1.00      1.00      1.00        30
+
+- GBDT
+-- 【训练集】
+              precision    recall  f1-score   support
+
+      setosa       1.00      1.00      1.00        40
+  versicolor       1.00      1.00      1.00        41
+   virginica       1.00      1.00      1.00        39
+
+    accuracy                           1.00       120
+   macro avg       1.00      1.00      1.00       120
+weighted avg       1.00      1.00      1.00       120
+
+-- 【测试集】
+              precision    recall  f1-score   support
+
+      setosa       1.00      1.00      1.00        10
+  versicolor       1.00      1.00      1.00         9
+   virginica       1.00      1.00      1.00        11
+
+    accuracy                           1.00        30
+   macro avg       1.00      1.00      1.00        30
+weighted avg       1.00      1.00      1.00        30
+
+- xgboost
+-- 【训练集】
+              precision    recall  f1-score   support
+
+      setosa       1.00      1.00      1.00        40
+  versicolor       1.00      1.00      1.00        41
+   virginica       1.00      1.00      1.00        39
+
+    accuracy                           1.00       120
+   macro avg       1.00      1.00      1.00       120
+weighted avg       1.00      1.00      1.00       120
+
+-- 【测试集】
+              precision    recall  f1-score   support
+
+      setosa       1.00      1.00      1.00        10
+  versicolor       1.00      1.00      1.00         9
+   virginica       1.00      1.00      1.00        11
+
+    accuracy                           1.00        30
+   macro avg       1.00      1.00      1.00        30
+weighted avg       1.00      1.00      1.00        30
+

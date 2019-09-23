@@ -119,7 +119,7 @@ def model_building(X_train, y_train, X_test, y_test, save_path=None, target_name
     model_names = ['多项式朴素贝叶斯', '高斯朴素贝叶斯', 'K最近邻', '逻辑回归', '支持向量机', '决策树', '随机森林', 'Adaboost', 'GBDT', 'xgboost']
 
     # 遍历每个模型
-    with open('./test.txt', 'w+') as f:
+    with open('./report.txt', 'w+') as f:
 
         for count in range(len(models)):
             model = models[count]

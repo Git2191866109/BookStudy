@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ea5c8d16-0fc6-49cc-b094-1d94ec9b194b" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaWorkSpace/CalendarTest1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaWorkSpace/CalendarTest1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../【自学】4. JAVA基础.md" beforeDir="false" afterPath="$PROJECT_DIR$/../【自学】4. JAVA基础.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -149,7 +146,7 @@
       <workItem from="1569121698864" duration="257000" />
       <workItem from="1569122044365" duration="162000" />
       <workItem from="1569122321905" duration="969000" />
-      <workItem from="1569129956445" duration="3209000" />
+      <workItem from="1569129956445" duration="3808000" />
     </task>
     <servers />
   </component>
