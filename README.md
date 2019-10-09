@@ -55,7 +55,7 @@
 
 
 
-## else
+## else：其它非书本操作
 
 - 机器学习算法工程师面试考点笔记
 - [Linux学习笔记](https://blog.csdn.net/qq_21579045/article/details/95605401)：[av21303002](https://www.bilibili.com/video/av21303002)
@@ -63,7 +63,7 @@
 - [MySQL高级学习笔记](https://blog.csdn.net/qq_21579045/article/details/99702766)：[av59623481](https://www.bilibili.com/video/av59623481)
 - Java学习笔记：[av59529105](https://www.bilibili.com/video/av59529105/)
 
-## tools
+## tools：自己写的小工具
 
 - alter_filename：批量更改文件名的后缀（包括遍历内部文件夹）
 
