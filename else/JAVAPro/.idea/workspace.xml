@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="664eef89-93bd-40e6-8d4f-b8b025cfb276" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/abc.txt" beforeDir="false" afterPath="$PROJECT_DIR$/abc.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dest.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/TestIO08.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JAVAPro/TestIO08.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFileCopy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFileCopy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../【自学】4. JAVA基础.md" beforeDir="false" afterPath="$PROJECT_DIR$/../【自学】4. JAVA基础.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -73,41 +69,41 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.DecorateTest02">
-    <configuration name="DecorateTest01" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="DecorateTest01" />
+  <component name="RunManager" selected="Application.ObjectTest2">
+    <configuration name="ConvertTest1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ConvertTest1" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DecorateTest02" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="DecorateTest02" />
+    <configuration name="ConvertTest2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ConvertTest2" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestIO11" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="TestIO11" />
+    <configuration name="DataTest1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="DataTest1" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestIO12" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="TestIO12" />
+    <configuration name="ObjectTest1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ObjectTest1" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestIO13" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="TestIO13" />
+    <configuration name="ObjectTest2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ObjectTest2" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
@@ -137,19 +133,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.TestIO11" />
-      <item itemvalue="Application.TestIO12" />
-      <item itemvalue="Application.TestIO13" />
-      <item itemvalue="Application.DecorateTest01" />
-      <item itemvalue="Application.DecorateTest02" />
+      <item itemvalue="Application.ConvertTest1" />
+      <item itemvalue="Application.ConvertTest2" />
+      <item itemvalue="Application.DataTest1" />
+      <item itemvalue="Application.ObjectTest1" />
+      <item itemvalue="Application.ObjectTest2" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.DecorateTest02" />
-        <item itemvalue="Application.DecorateTest01" />
-        <item itemvalue="Application.TestIO13" />
-        <item itemvalue="Application.TestIO12" />
-        <item itemvalue="Application.TestIO11" />
+        <item itemvalue="Application.ObjectTest2" />
+        <item itemvalue="Application.ObjectTest1" />
+        <item itemvalue="Application.DataTest1" />
+        <item itemvalue="Application.ConvertTest2" />
+        <item itemvalue="Application.ConvertTest1" />
       </list>
     </recent_temporary>
   </component>
@@ -178,6 +174,8 @@
       <workItem from="1571301194026" duration="3354000" />
       <workItem from="1571378015535" duration="4399000" />
       <workItem from="1571382640724" duration="3278000" />
+      <workItem from="1571453168418" duration="9239000" />
+      <workItem from="1571474785169" duration="201000" />
     </task>
     <servers />
   </component>
