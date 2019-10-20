@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="664eef89-93bd-40e6-8d4f-b8b025cfb276" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../【自学】4. JAVA基础.md" beforeDir="false" afterPath="$PROJECT_DIR$/../【自学】4. JAVA基础.md" afterDir="false" />
     </list>
@@ -69,23 +68,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.ObjectTest2">
-    <configuration name="ConvertTest1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ConvertTest1" />
-      <module name="JAVAPro" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ConvertTest2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ConvertTest2" />
-      <module name="JAVAPro" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Application.PrintTest2">
     <configuration name="DataTest1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="DataTest1" />
       <module name="JAVAPro" />
@@ -104,6 +87,22 @@
     </configuration>
     <configuration name="ObjectTest2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ObjectTest2" />
+      <module name="JAVAPro" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PrintTest1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="PrintTest1" />
+      <module name="JAVAPro" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PrintTest2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="PrintTest2" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
@@ -133,19 +132,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.ConvertTest1" />
-      <item itemvalue="Application.ConvertTest2" />
       <item itemvalue="Application.DataTest1" />
       <item itemvalue="Application.ObjectTest1" />
       <item itemvalue="Application.ObjectTest2" />
+      <item itemvalue="Application.PrintTest1" />
+      <item itemvalue="Application.PrintTest2" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.PrintTest2" />
+        <item itemvalue="Application.PrintTest1" />
         <item itemvalue="Application.ObjectTest2" />
         <item itemvalue="Application.ObjectTest1" />
         <item itemvalue="Application.DataTest1" />
-        <item itemvalue="Application.ConvertTest2" />
-        <item itemvalue="Application.ConvertTest1" />
       </list>
     </recent_temporary>
   </component>
@@ -176,6 +175,7 @@
       <workItem from="1571382640724" duration="3278000" />
       <workItem from="1571453168418" duration="9239000" />
       <workItem from="1571474785169" duration="201000" />
+      <workItem from="1571557403545" duration="935000" />
     </task>
     <servers />
   </component>
