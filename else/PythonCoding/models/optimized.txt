@@ -1,0 +1,24 @@
+- 多项式朴素贝叶斯
+
+- 高斯朴素贝叶斯
+
+- K最近邻
+
+- 逻辑回归
+
+- 支持向量机
+
+- 决策树
+
+- 随机森林
+optimized parameters: 
+min_samples_split = 190.0000
+max_depth = 9.0000
+n_estimators = 9.0000
+f1_macro: 1.0000-->1.0000
+- Adaboost
+
+- GBDT
+
+- xgboost
+

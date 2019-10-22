@@ -3,6 +3,23 @@
   <component name="ChangeListManager">
     <list default="true" id="664eef89-93bd-40e6-8d4f-b8b025cfb276" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JAVAPro.iml" beforeDir="false" afterPath="$PROJECT_DIR$/JAVAPro.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/SplitFile.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JAVAPro/SplitFile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PythonCoding/ML_combines.py" beforeDir="false" afterPath="$PROJECT_DIR$/../PythonCoding/ML_combines.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PythonCoding/models/Adaboost.plk" beforeDir="false" afterPath="$PROJECT_DIR$/../PythonCoding/models/Adaboost.plk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PythonCoding/models/GBDT.plk" beforeDir="false" afterPath="$PROJECT_DIR$/../PythonCoding/models/GBDT.plk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PythonCoding/models/K最近邻.plk" beforeDir="false" afterPath="$PROJECT_DIR$/../PythonCoding/models/K最近邻.plk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PythonCoding/models/xgboost.plk" beforeDir="false" afterPath="$PROJECT_DIR$/../PythonCoding/models/xgboost.plk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PythonCoding/models/决策树.plk" beforeDir="false" afterPath="$PROJECT_DIR$/../PythonCoding/models/决策树.plk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PythonCoding/models/多项式朴素贝叶斯.plk" beforeDir="false" afterPath="$PROJECT_DIR$/../PythonCoding/models/多项式朴素贝叶斯.plk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PythonCoding/models/支持向量机.plk" beforeDir="false" afterPath="$PROJECT_DIR$/../PythonCoding/models/支持向量机.plk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PythonCoding/models/逻辑回归.plk" beforeDir="false" afterPath="$PROJECT_DIR$/../PythonCoding/models/逻辑回归.plk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PythonCoding/models/随机森林.plk" beforeDir="false" afterPath="$PROJECT_DIR$/../PythonCoding/models/随机森林.plk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PythonCoding/models/高斯朴素贝叶斯.plk" beforeDir="false" afterPath="$PROJECT_DIR$/../PythonCoding/models/高斯朴素贝叶斯.plk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idea_settings.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../【参考】各种算法知识点小笔记.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../【参考】找工作准备的参考.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../【自学】4. JAVA基础.md" beforeDir="false" afterPath="$PROJECT_DIR$/../【自学】4. JAVA基础.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -42,16 +59,20 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="fileTemplates" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\lib" />
       <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src" />
     </key>
   </component>
@@ -67,9 +88,9 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.SplitFile">
-    <configuration name="PrintTest1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="PrintTest1" />
+  <component name="RunManager" selected="Application.CIOTest1">
+    <configuration name="CIOTest1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="CIOTest1" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
@@ -131,19 +152,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.PrintTest1" />
       <item itemvalue="Application.PrintTest2" />
       <item itemvalue="Application.RanTest1" />
       <item itemvalue="Application.RanTest2" />
       <item itemvalue="Application.SplitFile" />
+      <item itemvalue="Application.CIOTest1" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.CIOTest1" />
         <item itemvalue="Application.SplitFile" />
         <item itemvalue="Application.RanTest2" />
         <item itemvalue="Application.RanTest1" />
         <item itemvalue="Application.PrintTest2" />
-        <item itemvalue="Application.PrintTest1" />
       </list>
     </recent_temporary>
   </component>
@@ -175,7 +196,7 @@
       <workItem from="1571453168418" duration="9239000" />
       <workItem from="1571474785169" duration="201000" />
       <workItem from="1571557403545" duration="935000" />
-      <workItem from="1571618267696" duration="8183000" />
+      <workItem from="1571618267696" duration="17258000" />
     </task>
     <servers />
   </component>
@@ -194,20 +215,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ArquillianSettingsConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
   </component>
 </project>
