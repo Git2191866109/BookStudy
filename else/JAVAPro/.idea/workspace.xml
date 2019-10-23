@@ -3,23 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="664eef89-93bd-40e6-8d4f-b8b025cfb276" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JAVAPro.iml" beforeDir="false" afterPath="$PROJECT_DIR$/JAVAPro.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/SplitFile.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JAVAPro/SplitFile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/CIOTest1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JAVAPro/CIOTest1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CIOTest1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CIOTest1.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../PythonCoding/ML_combines.py" beforeDir="false" afterPath="$PROJECT_DIR$/../PythonCoding/ML_combines.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PythonCoding/models/Adaboost.plk" beforeDir="false" afterPath="$PROJECT_DIR$/../PythonCoding/models/Adaboost.plk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PythonCoding/models/GBDT.plk" beforeDir="false" afterPath="$PROJECT_DIR$/../PythonCoding/models/GBDT.plk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PythonCoding/models/K最近邻.plk" beforeDir="false" afterPath="$PROJECT_DIR$/../PythonCoding/models/K最近邻.plk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PythonCoding/models/xgboost.plk" beforeDir="false" afterPath="$PROJECT_DIR$/../PythonCoding/models/xgboost.plk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PythonCoding/models/决策树.plk" beforeDir="false" afterPath="$PROJECT_DIR$/../PythonCoding/models/决策树.plk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PythonCoding/models/多项式朴素贝叶斯.plk" beforeDir="false" afterPath="$PROJECT_DIR$/../PythonCoding/models/多项式朴素贝叶斯.plk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PythonCoding/models/支持向量机.plk" beforeDir="false" afterPath="$PROJECT_DIR$/../PythonCoding/models/支持向量机.plk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PythonCoding/models/逻辑回归.plk" beforeDir="false" afterPath="$PROJECT_DIR$/../PythonCoding/models/逻辑回归.plk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PythonCoding/models/随机森林.plk" beforeDir="false" afterPath="$PROJECT_DIR$/../PythonCoding/models/随机森林.plk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PythonCoding/models/高斯朴素贝叶斯.plk" beforeDir="false" afterPath="$PROJECT_DIR$/../PythonCoding/models/高斯朴素贝叶斯.plk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../idea_settings.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../【参考】各种算法知识点小笔记.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../【参考】找工作准备的参考.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../【自学】4. JAVA基础.md" beforeDir="false" afterPath="$PROJECT_DIR$/../【自学】4. JAVA基础.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PythonCoding/models/optimized.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../PythonCoding/models/optimized.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PythonCoding/models/report.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../PythonCoding/models/report.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../【参考】1. 各种算法知识点小笔记.md" beforeDir="false" afterPath="$PROJECT_DIR$/../【参考】1. 各种算法知识点小笔记.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -196,7 +185,7 @@
       <workItem from="1571453168418" duration="9239000" />
       <workItem from="1571474785169" duration="201000" />
       <workItem from="1571557403545" duration="935000" />
-      <workItem from="1571618267696" duration="17258000" />
+      <workItem from="1571618267696" duration="22141000" />
     </task>
     <servers />
   </component>

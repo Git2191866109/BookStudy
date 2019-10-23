@@ -1,12 +1,15 @@
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
 import org.apache.commons.io.filefilter.EmptyFileFilter;
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.commons.io.filefilter.SuffixFileFilter;
 
+import javax.imageio.stream.FileCacheImageInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -77,5 +80,20 @@ public class CIOTest1 {
         dd.add("礼拜");
         FileUtils.writeLines(new File("happy.txt"), dd, "-", true);
 
+        // 拷贝
+        FileUtils.copyFile(new File("test.png"), new File("p-copy.png"));
+        // 复制文件到目录
+        FileUtils.copyFileToDirectory(new File("test.png"), new File("lib"));
+        // 复制目录到目录下
+        FileUtils.copyDirectoryToDirectory(new File("lib"), new File("lib2"));
+        // 复制当前路径的某个目录到当前目录的新目录
+        FileUtils.copyDirectory(new File("lib"), new File("lib2"));
+        // 拷贝URL内容
+        // 方法1：保存网上的图片到本地文件
+        String url = "https://img-blog.csdnimg.cn/2019062009044675.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70";
+        FileUtils.copyURLToFile(new URL(url), new File("what.jpg"));
+        // 方法2：获取网页的源码
+        String dat = IOUtils.toString(new URL("http://www.baidu.com"), "UTF-8");
+        System.out.println(dat);
     }
 }
