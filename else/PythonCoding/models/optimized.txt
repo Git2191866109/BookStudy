@@ -12,29 +12,29 @@
 
 - Ëæ»úÉ­ÁÖ
 -- optimized parameters: 
-n_estimators = 190
+max_depth = 10
+n_estimators = 1
 min_samples_split = 9
-max_depth = 9
 f1_macro: 1.0000-->1.0000
 
 - Adaboost
 -- optimized parameters: 
-n_estimators = 190
+max_depth = 10
+n_estimators = 1
 min_samples_split = 9
-max_depth = 9
 f1_macro: 1.0000-->1.0000
 
 - GBDT
 -- optimized parameters: 
-n_estimators = 190
+max_depth = 10
+n_estimators = 1
 min_samples_split = 9
-max_depth = 7
 f1_macro: 1.0000-->1.0000
 
 - xgboost
 -- optimized parameters: 
-n_estimators = 190
+max_depth = 10
+n_estimators = 2
 min_samples_split = 9
-max_depth = 9
 f1_macro: 1.0000-->1.0000
 

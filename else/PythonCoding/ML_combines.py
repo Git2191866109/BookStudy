@@ -230,62 +230,97 @@ class MLTools:
         return best_model, word
 
 
-def model_building(X_train, y_train, X_test, y_test, save_path, target_names=None):
+def model_building(X_train, y_train, X_test, y_test, save_path, target_names=None, is_emsemble=True,
+                   just_emsemble=False):
     """
     训练模型，并得到结果，并重新训练所有数据，保存模型
     :param save_path: 模型的保存路径
     :param target_names: 样本标签名
+    :param is_emsemble: 是否对四种集成学习模型进行集成
+    :param just_emsemble: 已经有了其他模型，只对模型进行集成
     """
     from sklearn.metrics import classification_report
     import joblib
     import os
     import numpy as np
 
-    tool = MLTools(X_train, y_train, X_test, y_test)
-    models = [tool.multinomial_naive_bayes_classifier(),
-              tool.gaussian_naive_bayes_classifier(),
-              tool.knn_classifier(),
-              tool.logistic_regression_classifier(),
-              tool.svm_classifier(),
-              tool.decision_tree_classifier(),
-              tool.random_forest_classifier(),
-              tool.adaboost_classifier(),
-              tool.gradient_boosting_classifier(),
-              tool.xgboost_classifier()]
-    model_names = ['多项式朴素贝叶斯', '高斯朴素贝叶斯', 'K最近邻', '逻辑回归', '支持向量机', '决策树', '随机森林', 'Adaboost', 'GBDT', 'xgboost']
+    if not just_emsemble:
+        tool = MLTools(X_train, y_train, X_test, y_test)
+        models = [tool.multinomial_naive_bayes_classifier(),
+                  tool.gaussian_naive_bayes_classifier(),
+                  tool.knn_classifier(),
+                  tool.logistic_regression_classifier(),
+                  tool.svm_classifier(),
+                  tool.decision_tree_classifier(),
+                  tool.random_forest_classifier(),
+                  tool.adaboost_classifier(),
+                  tool.gradient_boosting_classifier(),
+                  tool.xgboost_classifier()]
+        model_names = ['多项式朴素贝叶斯', '高斯朴素贝叶斯', 'K最近邻', '逻辑回归', '支持向量机', '决策树', '随机森林', 'Adaboost', 'GBDT', 'xgboost']
 
-    # 遍历每个模型
-    f = open(save_path + 'report.txt', 'w+')
-    g = open(save_path + 'optimized.txt', 'w+')
+        # 遍历每个模型
+        f = open(save_path + 'report.txt', 'w+')
+        g = open(save_path + 'optimized.txt', 'w+')
 
-    for count in range(len(models)):
-        model, optimized = models[count]
-        model_name = model_names[count]
-        print(str(count + 1) + '. 正在运行：', model_name, '...')
-        train_pred = model.predict(X_train)
-        test_pred = model.predict(X_test)
+        for count in range(len(models)):
+            model, optimized = models[count]
+            model_name = model_names[count]
+            print(str(count + 1) + '. 正在运行：', model_name, '...')
+            train_pred = model.predict(X_train)
+            test_pred = model.predict(X_test)
 
-        train = classification_report(y_train, train_pred, target_names=target_names)
-        test = classification_report(y_test, test_pred, target_names=target_names)
+            train = classification_report(y_train, train_pred, target_names=target_names)
+            test = classification_report(y_test, test_pred, target_names=target_names)
 
-        f.write('- ' + model_name + '\n')
-        f.write('-- 【训练集】' + '\n')
-        f.writelines(train)
-        f.write('\n')
-        f.write('-- 【测试集】' + '\n')
-        f.writelines(test)
-        f.write('\n')
+            f.write('- ' + model_name + '\n')
+            f.write('-- 【训练集】' + '\n')
+            f.writelines(train)
+            f.write('\n')
+            f.write('-- 【测试集】' + '\n')
+            f.writelines(test)
+            f.write('\n')
 
-        g.write('- ' + model_name + '\n')
-        if optimized:
-            g.write(optimized)
-        g.write('\n')
+            g.write('- ' + model_name + '\n')
+            if optimized:
+                g.write(optimized)
+            g.write('\n')
 
-        model.fit(np.r_[np.array(X_train), np.array(X_test)], np.r_[np.array(y_train), np.array(y_test)])
-        joblib.dump(model, os.path.join(save_path, model_name + '.plk'))
+            model.fit(np.r_[np.array(X_train), np.array(X_test)], np.r_[np.array(y_train), np.array(y_test)])
+            joblib.dump(model, os.path.join(save_path, model_name + '.plk'))
+
+        f.close()
+        g.close()
+
+    # 开始集成模型
+    from sklearn.ensemble import VotingClassifier
+    f = open(save_path + 'report.txt', 'a+')
+    emsemble_names = ['随机森林', 'Adaboost', 'GBDT', 'xgboost']
+    emsemble_path = [os.path.join(save_path, i + '.plk') for i in emsemble_names]
+    estimators = []
+    for x, y in zip(emsemble_names, emsemble_path):
+        estimators.append((x, joblib.load(y)))
+    voting_clf = VotingClassifier(estimators, voting='soft', n_jobs=-1)
+    voting_clf.fit(X_train, y_train)
+
+    print('11.  正在运行：集成模型...')
+    train_pred = voting_clf.predict(X_train)
+    test_pred = voting_clf.predict(X_test)
+
+    train = classification_report(y_train, train_pred, target_names=target_names)
+    test = classification_report(y_test, test_pred, target_names=target_names)
+
+    f.write('- ' + '集成模型' + '\n')
+    f.write('-- 【训练集】' + '\n')
+    f.writelines(train)
+    f.write('\n')
+    f.write('-- 【测试集】' + '\n')
+    f.writelines(test)
+    f.write('\n')
+
+    voting_clf.fit(np.r_[np.array(X_train), np.array(X_test)], np.r_[np.array(y_train), np.array(y_test)])
+    joblib.dump(voting_clf, os.path.join(save_path, '集成模型' + '.plk'))
 
     f.close()
-    g.close()
 
 
 def example1():
@@ -322,4 +357,4 @@ def example2():
 
 
 if __name__ == '__main__':
-    example2()
+    example1()
