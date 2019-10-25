@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="664eef89-93bd-40e6-8d4f-b8b025cfb276" name="Default" comment="" />
+    <list default="true" id="664eef89-93bd-40e6-8d4f-b8b025cfb276" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/../../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../writes/分享一个自己制作的机器学习工具集合.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../writes/分享一个自己制作的机器学习工具集合.md" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -178,7 +182,7 @@
       <workItem from="1571474785169" duration="201000" />
       <workItem from="1571557403545" duration="935000" />
       <workItem from="1571618267696" duration="24823000" />
-      <workItem from="1571878838521" duration="726000" />
+      <workItem from="1571878838521" duration="4403000" />
     </task>
     <servers />
   </component>

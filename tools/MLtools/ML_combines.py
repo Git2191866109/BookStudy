@@ -100,7 +100,8 @@ class MLTools:
             for p2 in MLTools.parameter_tree['max_depth']:
                 for p3 in MLTools.parameter_tree['min_samples_split']:
                     test_model = RandomForestClassifier(random_state=MLTools.random_state, n_estimators=p1,
-                                                        max_depth=p2, min_samples_split=p3, n_jobs=-1)
+                                                        max_depth=p2, min_samples_split=p3, n_jobs=-1,
+                                                        class_weight="balanced")
                     test_model.fit(self.X_train, self.y_train)
                     test_pred = test_model.predict(self.X_test)
                     new_score = f1_score(self.y_test, test_pred, average='macro')
@@ -112,7 +113,8 @@ class MLTools:
                         max_score = new_score
                         best_param = [p1, p2, p3]
         best_model = RandomForestClassifier(random_state=MLTools.random_state, n_estimators=best_param[0],
-                                            max_depth=best_param[1], min_samples_split=best_param[2], n_jobs=-1)
+                                            max_depth=best_param[1], min_samples_split=best_param[2], n_jobs=-1,
+                                            class_weight="balanced")
         best_model.fit(self.X_train, self.y_train)
         word = '-- optimized parameters: \n'
         count = 0
@@ -140,7 +142,7 @@ class MLTools:
                 for p3 in MLTools.parameter_tree['min_samples_split']:
                     test_model = AdaBoostClassifier(
                         DecisionTreeClassifier(random_state=MLTools.random_state,
-                                               max_depth=p2, min_samples_split=p3),
+                                               max_depth=p2, min_samples_split=p3, class_weight="balanced"),
                         random_state=MLTools.random_state, n_estimators=p1)
                     test_model.fit(self.X_train, self.y_train)
                     test_pred = test_model.predict(self.X_test)
@@ -150,7 +152,7 @@ class MLTools:
                         best_param = [p1, p2, p3]
         best_model = AdaBoostClassifier(
             DecisionTreeClassifier(random_state=MLTools.random_state,
-                                   max_depth=best_param[1], min_samples_split=best_param[2]),
+                                   max_depth=best_param[1], min_samples_split=best_param[2], class_weight="balanced"),
             random_state=MLTools.random_state, n_estimators=best_param[0])
         best_model.fit(self.X_train, self.y_train)
         word = '-- optimized parameters: \n'
@@ -211,7 +213,7 @@ class MLTools:
             for p2 in MLTools.parameter_tree['max_depth']:
                 for p3 in MLTools.parameter_tree['min_samples_split']:
                     test_model = XGBClassifier(random_state=MLTools.random_state, n_estimators=p1,
-                                               max_depth=p2, min_samples_split=p3, n_jobs=-1)
+                                               max_depth=p2, min_samples_split=p3, n_jobs=-1, class_weight="balanced")
                     test_model.fit(self.X_train, self.y_train)
                     test_pred = test_model.predict(self.X_test)
                     new_score = f1_score(self.y_test, test_pred, average='macro')
@@ -219,7 +221,8 @@ class MLTools:
                         max_score = new_score
                         best_param = [p1, p2, p3]
         best_model = XGBClassifier(random_state=MLTools.random_state, n_estimators=best_param[0],
-                                   max_depth=best_param[1], min_samples_split=best_param[2], n_jobs=-1)
+                                   max_depth=best_param[1], min_samples_split=best_param[2], n_jobs=-1,
+                                   class_weight="balanced")
         best_model.fit(self.X_train, self.y_train)
         word = '-- optimized parameters: \n'
         count = 0
