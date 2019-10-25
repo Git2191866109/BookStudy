@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="664eef89-93bd-40e6-8d4f-b8b025cfb276" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/../../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../writes/分享一个自己制作的机器学习工具集合.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../writes/分享一个自己制作的机器学习工具集合.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/CIOTest1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JAVAPro/CIOTest1.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -73,17 +72,9 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.CIOTest1">
+  <component name="RunManager" selected="Application.StartThread1">
     <configuration name="CIOTest1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="CIOTest1" />
-      <module name="JAVAPro" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PrintTest2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="PrintTest2" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
@@ -114,6 +105,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="StartThread1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="StartThread1" />
+      <module name="JAVAPro" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
@@ -137,19 +136,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.PrintTest2" />
       <item itemvalue="Application.RanTest1" />
       <item itemvalue="Application.RanTest2" />
       <item itemvalue="Application.SplitFile" />
       <item itemvalue="Application.CIOTest1" />
+      <item itemvalue="Application.StartThread1" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.StartThread1" />
         <item itemvalue="Application.CIOTest1" />
         <item itemvalue="Application.SplitFile" />
         <item itemvalue="Application.RanTest2" />
         <item itemvalue="Application.RanTest1" />
-        <item itemvalue="Application.PrintTest2" />
       </list>
     </recent_temporary>
   </component>
@@ -182,7 +181,7 @@
       <workItem from="1571474785169" duration="201000" />
       <workItem from="1571557403545" duration="935000" />
       <workItem from="1571618267696" duration="24823000" />
-      <workItem from="1571878838521" duration="4403000" />
+      <workItem from="1571878838521" duration="9342000" />
     </task>
     <servers />
   </component>
