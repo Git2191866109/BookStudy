@@ -24,3 +24,168 @@
    2. 实现Runnable接口，重写run()方法，通过new一个Thead对象调start()方法。
 
 - start方法不保证立即运行，由cpu调用
+
+   ```java
+   /**
+    * @author: Li Tian
+    * @contact: litian_cup@163.com
+    * @software: IntelliJ IDEA
+    * @file: ThreadStudy01.java
+    * @time: 2019/10/25 12:37
+    * @desc: 进程学习1
+    */
+   
+   public class StartThread1 extends Thread{
+   
+       public void run(){
+           for (int i = 0; i < 20; i++) {
+               System.out.println("一边听歌一边敲代码。");
+           }
+       }
+   
+       public static void main(String[] args) throws InterruptedException {
+           // 创建子类对象
+           StartThread1 st = new StartThread1();
+           // 启动
+           st.start();
+           // run是普通方法的调用
+   //        st.run();
+           for (int i = 0; i < 20; i++) {
+               System.out.println("coding。");
+               Thread.sleep(1);
+           }
+       }
+   }
+   ```
+
+- 创建线程方式1：利用线程下载图片案例
+
+   ```java
+   /**
+    * @author: Li Tian
+    * @contact: litian_cup@163.com
+    * @software: IntelliJ IDEA
+    * @file: TDownloader.java
+    * @time: 2019/10/28 15:58
+    * @desc: 进程学习2：下载图片
+    */
+   
+   public class TDownloader extends Thread{
+       // 远程路径
+       private String url;
+       // 存储名字
+       private String name;
+   
+       public TDownloader(String url, String name) {
+           this.url = url;
+           this.name = name;
+       }
+   
+       @Override
+       public void run() {
+           WebDownloader wd = new WebDownloader();
+           wd.download(url, name);
+           System.out.println(name);
+       }
+       
+       public static void main(String[] args){
+           TDownloader td1 = new TDownloader("https://img-blog.csdnimg.cn/20181107085145510.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0hhcHB5Um9ja2luZw==,size_16,color_FFFFFF,t_70", "lstm.png");
+           TDownloader td2 = new TDownloader("https://img-blog.csdnimg.cn/20181107095455442.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0hhcHB5Um9ja2luZw==,size_16,color_FFFFFF,t_70", "peephole_connection.png");
+           TDownloader td3 = new TDownloader("https://img-blog.csdnimg.cn/20181107101049389.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0hhcHB5Um9ja2luZw==,size_16,color_FFFFFF,t_70", "gru.png");
+   
+           // 启动三个线程
+           td1.start();
+           td2.start();
+           td3.start();
+       }
+   }
+   ```
+
+- 利用线程方式2：（推荐使用这种方式）
+
+   - 避免单继承的局限性，优先使用接口
+   - 方便共享资源
+
+   ```java
+   /**
+    * @author: Li Tian
+    * @contact: litian_cup@163.com
+    * @software: IntelliJ IDEA
+    * @file: ThreadStudy01.java
+    * @time: 2019/10/25 12:37
+    * @desc: 进程学习3
+    */
+   
+   public class StartRun1 implements Runnable {
+   
+       public void run() {
+           for (int i = 0; i < 20; i++) {
+               System.out.println("一边听歌一边敲代码。");
+           }
+       }
+   
+       public static void main(String[] args) throws InterruptedException {
+           /*
+           // 创建实现类对象
+           StartRun1 sr = new StartRun1();
+           // 创建代理类对象
+           Thread t = new Thread(sr);
+           // 启动
+           t.start();
+           // run是普通方法的调用
+   //        st.run();
+           */
+   
+           // 利用匿名对象
+           new Thread(new StartRun1()).start();
+   
+           for (int i = 0; i < 20; i++) {
+               System.out.println("coding。");
+               Thread.sleep(1);
+           }
+       }
+   }
+   ```
+
+   ```java
+   /**
+    * @author: Li Tian
+    * @contact: litian_cup@163.com
+    * @software: IntelliJ IDEA
+    * @file: TDownloader.java
+    * @time: 2019/10/28 15:58
+    * @desc: 进程学习2：下载图片
+    */
+   
+   public class IDownloader implements Runnable {
+       // 远程路径
+       private String url;
+       // 存储名字
+       private String name;
+   
+       public IDownloader(String url, String name) {
+           this.url = url;
+           this.name = name;
+       }
+   
+       @Override
+       public void run() {
+           WebDownloader wd = new WebDownloader();
+           wd.download(url, name);
+           System.out.println(name);
+       }
+   
+       public static void main(String[] args) {
+           IDownloader td1 = new IDownloader("https://img-blog.csdnimg.cn/20181107085145510.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0hhcHB5Um9ja2luZw==,size_16,color_FFFFFF,t_70", "lstm.png");
+           IDownloader td2 = new IDownloader("https://img-blog.csdnimg.cn/20181107095455442.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0hhcHB5Um9ja2luZw==,size_16,color_FFFFFF,t_70", "peephole_connection.png");
+           IDownloader td3 = new IDownloader("https://img-blog.csdnimg.cn/20181107101049389.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0hhcHB5Um9ja2luZw==,size_16,color_FFFFFF,t_70", "gru.png");
+   
+           // 启动三个线程
+           new Thread(td1).start();
+           new Thread(td2).start();
+           new Thread(td3).start();
+       }
+   }
+   ```
+
+   
