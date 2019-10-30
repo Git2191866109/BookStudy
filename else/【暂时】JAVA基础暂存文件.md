@@ -188,4 +188,218 @@
    }
    ```
 
+- 共享资源：模拟买票
+
+   ```java
+   /**
+    * @author: Li Tian
+    * @contact: litian_cup@163.com
+    * @software: IntelliJ IDEA
+    * @file: Web12306.java
+    * @time: 2019/10/30 12:36
+    * @desc: 共享资源：模拟买票
+    */
    
+   public class Web12306 implements Runnable {
+       // 票数
+       private int ticketNums = 99;
+   
+       @Override
+       public void run() {
+           while(true){
+               if(ticketNums<0){
+                   break;
+               }
+               try {
+                   Thread.sleep(200);
+               } catch (InterruptedException e) {
+                   e.printStackTrace();
+               }
+               System.out.println(Thread.currentThread().getName() + "-->" + ticketNums--);
+           }
+       }
+   
+       public static void main(String[] args){
+           // 一份资源
+           Web12306 web = new Web12306();
+           // 多个代理
+           new Thread(web, "张三").start();
+           new Thread(web, "李四").start();
+           new Thread(web, "王五").start();
+       }
+   }
+   ```
+
+- 共享资源：模拟龟兔赛跑
+
+   ```java
+   /**
+    * @author: Li Tian
+    * @contact: litian_cup@163.com
+    * @software: IntelliJ IDEA
+    * @file: Racer.java
+    * @time: 2019/10/30 14:55
+    * @desc: 共享资源：模拟龟兔赛跑
+    */
+   
+   public class Racer implements Runnable {
+       private String winner;       // 胜利者
+   
+       @Override
+       public void run() {
+           for (int steps = 1; steps <= 100; steps++) {
+               // 模拟休息
+               if(Thread.currentThread().getName().equals("rabit") && steps % 10 == 0){
+                   try {
+                       Thread.sleep(100);
+                   } catch (InterruptedException e) {
+                       e.printStackTrace();
+                   }
+               }
+               System.out.println(Thread.currentThread().getName() + "-->" + steps);
+               // 比赛是否结束
+               boolean flag = gameOver(steps);
+               if (flag) {
+                   break;
+               }
+           }
+       }
+   
+       private boolean gameOver(int steps) {
+           if (winner != null) {
+               // 存在胜利者
+               return true;
+           } else {
+               if (steps == 100) {
+                   winner = Thread.currentThread().getName();
+                   System.out.println("winner==>" + winner);
+                   return true;
+               }
+           }
+           return false;
+       }
+   
+       public static void main(String[] args) {
+           Racer racer = new Racer();
+           new Thread(racer, "tortoise").start();
+           new Thread(racer, "rabbit").start();
+       }
+   }
+   ```
+
+- Callable：能抛出异常，有返回值（了解）
+
+   ```java
+   import com.sun.org.apache.xpath.internal.operations.Bool;
+   import jdk.nashorn.internal.codegen.CompilerConstants;
+   
+   import java.util.concurrent.*;
+   
+   /**
+    * @author: Li Tian
+    * @contact: litian_cup@163.com
+    * @software: IntelliJ IDEA
+    * @file: TDownloader.java
+    * @time: 2019/10/28 15:58
+    * @desc: Callable了解学习
+    */
+   
+   public class CDownloader implements Callable<Boolean> {
+       // 远程路径
+       private String url;
+       // 存储名字
+       private String name;
+   
+       public CDownloader(String url, String name) {
+           this.url = url;
+           this.name = name;
+       }
+   
+       @Override
+       public Boolean call() throws Exception {
+           WebDownloader wd = new WebDownloader();
+           wd.download(url, name);
+           System.out.println(name);
+           return true;
+       }
+   
+       public static void main(String[] args) throws ExecutionException, InterruptedException {
+           CDownloader cd1 = new CDownloader("https://img-blog.csdnimg.cn/20181107085145510.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0hhcHB5Um9ja2luZw==,size_16,color_FFFFFF,t_70", "lstm.png");
+           CDownloader cd2 = new CDownloader("https://img-blog.csdnimg.cn/20181107095455442.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0hhcHB5Um9ja2luZw==,size_16,color_FFFFFF,t_70", "peephole_connection.png");
+           CDownloader cd3 = new CDownloader("https://img-blog.csdnimg.cn/20181107101049389.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0hhcHB5Um9ja2luZw==,size_16,color_FFFFFF,t_70", "gru.png");
+   
+           // 创建执行服务
+           ExecutorService ser = Executors.newFixedThreadPool(3);
+           // 提交执行
+           Future<Boolean> result1 = ser.submit(cd1);
+           Future<Boolean> result2 = ser.submit(cd2);
+           Future<Boolean> result3 = ser.submit(cd3);
+           // 获取结果
+           boolean r1 = result1.get();
+           boolean r2 = result1.get();
+           boolean r3 = result1.get();
+           // 关闭服务
+           ser.shutdownNow();
+       }
+   }
+   ```
+
+- **创建线程有几种方式**：常用的有两种，继承Thread类，重写Runnable接口。还有一种方式，JUC并发包下，实现Callable接口。
+
+- 静态代理设计模式
+
+   ```java
+   /**
+    * @author: Li Tian
+    * @contact: litian_cup@163.com
+    * @software: IntelliJ IDEA
+    * @file: StaticProxy.java
+    * @time: 2019/10/30 15:29
+    * @desc: 静态代理设计模式学习
+    */
+   
+   public class StaticProxy {
+       public static void main(String[] args) {
+           new WeddingCompany(new You()).happyMarry();
+       }
+   }
+   
+   interface Marry {
+       void happyMarry();
+   }
+   
+   // 真实角色
+   class You implements Marry {
+       @Override
+       public void happyMarry() {
+           System.out.println("你和你的广寒仙子本月了...");
+       }
+   }
+   
+   //代理角色，婚庆公司
+   class WeddingCompany implements Marry {
+       // 真实角色
+       private Marry target;
+   
+       public WeddingCompany(Marry target) {
+           this.target = target;
+       }
+   
+       @Override
+       public void happyMarry() {
+           ready();
+           this.target.happyMarry();
+           after();
+       }
+   
+       private void ready() {
+           System.out.println("布置猪窝...");
+       }
+   
+       private void after() {
+           System.out.println("闹玉兔...");
+       }
+   }
+   ```
+
+- Lambda表达式 简化线程（用一次）的使用

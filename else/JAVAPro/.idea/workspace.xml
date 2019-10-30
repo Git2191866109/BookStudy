@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="664eef89-93bd-40e6-8d4f-b8b025cfb276" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../【参考】3. 代码快捷键操作.md" beforeDir="false" afterPath="$PROJECT_DIR$/../【参考】3. 代码快捷键操作.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/StartRun1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JAVAPro/StartRun1.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -72,41 +72,41 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.StartRun1">
-    <configuration name="CIOTest1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="CIOTest1" />
+  <component name="RunManager" selected="Application.LambdaThread">
+    <configuration name="CDownloader" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="CDownloader" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SplitFile" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="SplitFile" />
+    <configuration name="LambdaThread" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="LambdaThread" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="StartRun1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="StartRun1" />
+    <configuration name="Racer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Racer" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="StartThread1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="StartThread1" />
+    <configuration name="StaticProxy" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="StaticProxy" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TDownloader" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="TDownloader" />
+    <configuration name="Web12306" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Web12306" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
@@ -136,19 +136,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.SplitFile" />
-      <item itemvalue="Application.CIOTest1" />
-      <item itemvalue="Application.StartThread1" />
-      <item itemvalue="Application.TDownloader" />
-      <item itemvalue="Application.StartRun1" />
+      <item itemvalue="Application.Web12306" />
+      <item itemvalue="Application.Racer" />
+      <item itemvalue="Application.CDownloader" />
+      <item itemvalue="Application.StaticProxy" />
+      <item itemvalue="Application.LambdaThread" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.StartRun1" />
-        <item itemvalue="Application.TDownloader" />
-        <item itemvalue="Application.StartThread1" />
-        <item itemvalue="Application.CIOTest1" />
-        <item itemvalue="Application.SplitFile" />
+        <item itemvalue="Application.LambdaThread" />
+        <item itemvalue="Application.StaticProxy" />
+        <item itemvalue="Application.CDownloader" />
+        <item itemvalue="Application.Racer" />
+        <item itemvalue="Application.Web12306" />
       </list>
     </recent_temporary>
   </component>
@@ -183,6 +183,7 @@
       <workItem from="1571618267696" duration="24823000" />
       <workItem from="1571878838521" duration="9342000" />
       <workItem from="1572247833674" duration="2639000" />
+      <workItem from="1572338376685" duration="5421000" />
     </task>
     <servers />
   </component>
