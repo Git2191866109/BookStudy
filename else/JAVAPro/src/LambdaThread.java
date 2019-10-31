@@ -8,7 +8,7 @@
  */
 
 public class LambdaThread {
-    // 静态内部类
+    // 类中类：静态内部类
     static class Test implements Runnable {
         @Override
         public void run() {
@@ -19,9 +19,9 @@ public class LambdaThread {
     }
 
     public static void main(String[] args) {
-//        new Thread(new Test()).start();
+        new Thread(new Test()).start();
 
-        // 局部内部类
+        // 方法中类：局部内部类
         class Test2 implements Runnable {
             @Override
             public void run() {
@@ -31,5 +31,24 @@ public class LambdaThread {
             }
         }
         new Thread(new Test2()).start();
+
+        // 参数中类：匿名内部类
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 20; i++) {
+                    System.out.println("一边听歌");
+                }
+            }
+        }).start();
+
+        // jdk8简化匿名内部类，lambda
+        new Thread(
+                () -> {
+                    for (int i = 0; i < 20; i++) {
+                        System.out.println("一边听歌");
+                    }
+                }
+        ).start();
     }
 }

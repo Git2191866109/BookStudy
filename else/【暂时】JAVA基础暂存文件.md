@@ -403,3 +403,281 @@
    ```
 
 - Lambda表达式 简化线程（用一次）的使用
+
+   ```java
+   /**
+    * @author: Li Tian
+    * @contact: litian_cup@163.com
+    * @software: IntelliJ IDEA
+    * @file: LambdaThread.java
+    * @time: 2019/10/30 16:00
+    * @desc: Lambda表达式 简化线程（用一次）的使用
+    */
+   
+   public class LambdaThread {
+       // 类中类：静态内部类
+       static class Test implements Runnable {
+           @Override
+           public void run() {
+               for (int i = 0; i < 10; i++) {
+                   System.out.println("一边听歌");
+               }
+           }
+       }
+   
+       public static void main(String[] args) {
+           new Thread(new Test()).start();
+   
+           // 方法中类：局部内部类
+           class Test2 implements Runnable {
+               @Override
+               public void run() {
+                   for (int i = 0; i < 10; i++) {
+                       System.out.println("一边听歌");
+                   }
+               }
+           }
+           new Thread(new Test2()).start();
+   
+           // 参数中类：匿名内部类
+           new Thread(new Runnable() {
+               @Override
+               public void run() {
+                   for (int i = 0; i < 20; i++) {
+                       System.out.println("一边听歌");
+                   }
+               }
+           }).start();
+   
+           // jdk8简化匿名内部类，lambda
+           new Thread(
+                   () -> {
+                       for (int i = 0; i < 20; i++) {
+                           System.out.println("一边听歌");
+                       }
+                   }
+           ).start();
+       }
+   }
+   ```
+
+- lambda推导：**必须存在类型**
+
+   ```java
+   /**
+    * @author: Li Tian
+    * @contact: litian_cup@163.com
+    * @software: IntelliJ IDEA
+    * @file: LambdaTest1.java
+    * @time: 2019/10/31 15:18
+    * @desc: lambda推导
+    */
+   
+   public class LambdaTest1 {
+       static class Like2 implements ILike {
+           public void lambda() {
+               System.out.println("2. 我喜欢你大爷！");
+           }
+       }
+   
+       public static void main(String[] args) {
+           class Like3 implements ILike {
+               public void lambda() {
+                   System.out.println("3. 我喜欢你大爷！");
+               }
+           }
+   
+           // 外部类
+           ILike like = new Like();
+           like.lambda();
+           // 静态内部类
+           like = new Like2();
+           like.lambda();
+           // 方法内部类
+           like = new Like3();
+           like.lambda();
+   
+           // 匿名类
+           like = new ILike() {
+               @Override
+               public void lambda() {
+                   System.out.println("4. 我喜欢你大爷！");
+               }
+           };
+           like.lambda();
+   
+           // lambda
+           like = () -> {
+               System.out.println("5. 我喜欢你大爷！");
+           };
+           like.lambda();
+       }
+   }
+   
+   interface ILike {
+       void lambda();
+   }
+   
+   class Like implements ILike {
+       @Override
+       public void lambda() {
+           System.out.println("1. 我喜欢你大爷！");
+       }
+   }
+   ```
+
+- lambda推导 + 参数
+
+   ```java
+   /**
+    * @author: Li Tian
+    * @contact: litian_cup@163.com
+    * @software: IntelliJ IDEA
+    * @file: LambdaTest1.java
+    * @time: 2019/10/31 15:18
+    * @desc: lambda推导 + 参数
+    */
+   
+   public class LambdaTest2 {
+       public static void main(String[] args) {
+           ILove love = (int a) -> {
+               System.out.println("偶买噶！-->" + a);
+           };
+           love.lambda(100);
+   
+           // 参数类型可以省略
+           ILove love2 = s -> {
+               System.out.println("偶买噶！-->" + s);
+           };
+           love2.lambda(10);
+   
+           // 花括号也可以省略
+           ILove love3 = s -> System.out.println("偶买噶！-->" + s);
+           love3.lambda(1);
+       }
+   }
+   
+   interface ILove {
+       void lambda(int a);
+   }
+   
+   class Love implements ILove {
+       @Override
+       public void lambda(int a) {
+           System.out.println("偶买噶！-->" + a);
+       }
+   }
+   /**
+    * @author: Li Tian
+    * @contact: litian_cup@163.com
+    * @software: IntelliJ IDEA
+    * @file: LambdaTest1.java
+    * @time: 2019/10/31 15:18
+    * @desc: lambda推导 + 参数
+    */
+   
+   public class LambdaTest2 {
+       public static void main(String[] args) {
+           ILove love = (int a) -> {
+               System.out.println("偶买噶！-->" + a);
+           };
+           love.lambda(100);
+   
+           // 参数类型可以省略
+           ILove love2 = s -> {
+               System.out.println("偶买噶！-->" + s);
+           };
+           love2.lambda(10);
+   
+           // 花括号也可以省略
+           ILove love3 = s -> System.out.println("偶买噶！-->" + s);
+           love3.lambda(1);
+       }
+   }
+   
+   interface ILove {
+       void lambda(int a);
+   }
+   
+   class Love implements ILove {
+       @Override
+       public void lambda(int a) {
+           System.out.println("偶买噶！-->" + a);
+       }
+   }
+   ```
+
+- lambda推导 + 参数 + 返回值
+
+   ```java
+   /**
+    * @author: Li Tian
+    * @contact: litian_cup@163.com
+    * @software: IntelliJ IDEA
+    * @file: LambdaTest1.java
+    * @time: 2019/10/31 15:18
+    * @desc: lambda推导 + 参数 + 返回值
+    */
+   
+   public class LambdaTest3 {
+       public static void main(String[] args) {
+           IInterest in = (int q, int p) -> {
+               System.out.println(q + p);
+               return q + p;
+           };
+           in.lambda(100, 50);
+   
+           // 简化版本
+           IInterest in2 = (q, p) -> q + p / 2;
+           System.out.println(in2.lambda(10, 20));
+       }
+   }
+   
+   interface IInterest {
+       int lambda(int a, int b);
+   }
+   
+   // 参考，下面内容可以不要
+   class Interest implements IInterest {
+       @Override
+       public int lambda(int aa, int bb) {
+           System.out.println(aa + bb);
+           return aa + bb;
+       }
+   }
+   ```
+
+- lambda推导实现线程
+
+   ```java
+   /**
+    * @author: Li Tian
+    * @contact: litian_cup@163.com
+    * @software: IntelliJ IDEA
+    * @file: LambdaTest1.java
+    * @time: 2019/10/31 15:18
+    * @desc: lambda推导实现线程
+    */
+   
+   public class LambdaTest4 {
+       public static void main(String[] args) {
+           new Thread(() -> {
+               System.out.println("一边学习lambda");
+           }).start();
+   
+           // 简化：花括号可以不要
+           new Thread(() -> System.out.println("一边泪流满面")).start();
+   
+           // 如果是多个语句，就不能省略
+           new Thread(() -> {
+               for (int i = 0; i < 20; i++) {
+                   System.out.println("我疯了，你呢？");
+               }
+           }).start();
+       }
+   }
+   ```
+
+### 2. 线程状态
+
+- 

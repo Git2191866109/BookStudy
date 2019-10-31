@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="664eef89-93bd-40e6-8d4f-b8b025cfb276" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/StartRun1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JAVAPro/StartRun1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/LambdaThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JAVAPro/LambdaThread.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LambdaThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LambdaThread.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -43,21 +44,21 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.tabs" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\lib" />
       <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src" />
+      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\lib" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -72,9 +73,33 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.LambdaThread">
-    <configuration name="CDownloader" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="CDownloader" />
+  <component name="RunManager" selected="Application.LambdaTest4">
+    <configuration name="LambdaTest1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="LambdaTest1" />
+      <module name="JAVAPro" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LambdaTest2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="LambdaTest2" />
+      <module name="JAVAPro" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LambdaTest3" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="LambdaTest3" />
+      <module name="JAVAPro" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LambdaTest4" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="LambdaTest4" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
@@ -83,30 +108,6 @@
     </configuration>
     <configuration name="LambdaThread" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="LambdaThread" />
-      <module name="JAVAPro" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Racer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Racer" />
-      <module name="JAVAPro" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="StaticProxy" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="StaticProxy" />
-      <module name="JAVAPro" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Web12306" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Web12306" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
@@ -136,19 +137,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.Web12306" />
-      <item itemvalue="Application.Racer" />
-      <item itemvalue="Application.CDownloader" />
-      <item itemvalue="Application.StaticProxy" />
       <item itemvalue="Application.LambdaThread" />
+      <item itemvalue="Application.LambdaTest1" />
+      <item itemvalue="Application.LambdaTest2" />
+      <item itemvalue="Application.LambdaTest3" />
+      <item itemvalue="Application.LambdaTest4" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.LambdaTest4" />
+        <item itemvalue="Application.LambdaTest3" />
+        <item itemvalue="Application.LambdaTest2" />
+        <item itemvalue="Application.LambdaTest1" />
         <item itemvalue="Application.LambdaThread" />
-        <item itemvalue="Application.StaticProxy" />
-        <item itemvalue="Application.CDownloader" />
-        <item itemvalue="Application.Racer" />
-        <item itemvalue="Application.Web12306" />
       </list>
     </recent_temporary>
   </component>
@@ -183,7 +184,7 @@
       <workItem from="1571618267696" duration="24823000" />
       <workItem from="1571878838521" duration="9342000" />
       <workItem from="1572247833674" duration="2639000" />
-      <workItem from="1572338376685" duration="5421000" />
+      <workItem from="1572338376685" duration="9562000" />
     </task>
     <servers />
   </component>
