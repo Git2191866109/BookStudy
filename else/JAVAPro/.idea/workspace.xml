@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="664eef89-93bd-40e6-8d4f-b8b025cfb276" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/LambdaThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JAVAPro/LambdaThread.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/LambdaThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LambdaThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../【暂时】JAVA基础暂存文件.md" beforeDir="false" afterPath="$PROJECT_DIR$/../【暂时】JAVA基础暂存文件.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -73,41 +72,41 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.LambdaTest4">
-    <configuration name="LambdaTest1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="LambdaTest1" />
+  <component name="RunManager" selected="Application.AllState">
+    <configuration name="AllState" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="AllState" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="LambdaTest2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="LambdaTest2" />
+    <configuration name="BlockedJoin1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="BlockedJoin1" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="LambdaTest3" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="LambdaTest3" />
+    <configuration name="BlockedSleep1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="BlockedSleep1" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="LambdaTest4" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="LambdaTest4" />
+    <configuration name="TerminateThread" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="TerminateThread" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="LambdaThread" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="LambdaThread" />
+    <configuration name="YieldDemo1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="YieldDemo1" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
@@ -137,19 +136,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.LambdaThread" />
-      <item itemvalue="Application.LambdaTest1" />
-      <item itemvalue="Application.LambdaTest2" />
-      <item itemvalue="Application.LambdaTest3" />
-      <item itemvalue="Application.LambdaTest4" />
+      <item itemvalue="Application.TerminateThread" />
+      <item itemvalue="Application.BlockedSleep1" />
+      <item itemvalue="Application.YieldDemo1" />
+      <item itemvalue="Application.BlockedJoin1" />
+      <item itemvalue="Application.AllState" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.LambdaTest4" />
-        <item itemvalue="Application.LambdaTest3" />
-        <item itemvalue="Application.LambdaTest2" />
-        <item itemvalue="Application.LambdaTest1" />
-        <item itemvalue="Application.LambdaThread" />
+        <item itemvalue="Application.AllState" />
+        <item itemvalue="Application.BlockedJoin1" />
+        <item itemvalue="Application.YieldDemo1" />
+        <item itemvalue="Application.BlockedSleep1" />
+        <item itemvalue="Application.TerminateThread" />
       </list>
     </recent_temporary>
   </component>
@@ -184,7 +183,7 @@
       <workItem from="1571618267696" duration="24823000" />
       <workItem from="1571878838521" duration="9342000" />
       <workItem from="1572247833674" duration="2639000" />
-      <workItem from="1572338376685" duration="9562000" />
+      <workItem from="1572338376685" duration="13699000" />
     </task>
     <servers />
   </component>

@@ -680,4 +680,288 @@
 
 ### 2. 线程状态
 
-- 
+-  一个线程对象在它的生命周期内，需要经历5个状态。 
+
+   ![å¾11-4 çº¿ç¨çå½å¨æå¾.png](https://www.sxt.cn/360shop/Public/admin/UEditor/20170526/1495787690411518.png)
+
+  1. **新生状态(New)**
+
+     用new关键字建立一个线程对象后，该线程对象就处于新生状态。处于新生状态的线程有自己的内存空间，通过调用start方法进入就绪状态。
+
+  2. **就绪状态(Runnable)**
+
+     处于就绪状态的线程已经具备了运行条件，但是还没有被分配到CPU，处于“线程就绪队列”，等待系统为其分配CPU。就绪状态并不是执行状态，当系统选定一个等待执行的Thread对象后，它就会进入执行状态。一旦获得CPU，线程就进入运行状态并自动调用自己的run方法。有4中原因会导致线程进入就绪状态：
+
+     1. 新建线程：调用start()方法，进入就绪状态;
+
+     2. 阻塞线程：阻塞解除，进入就绪状态;
+
+     3. 运行线程：调用yield()方法，直接进入就绪状态;
+
+     4. 运行线程：JVM将CPU资源从本线程切换到其他线程。
+
+  3. **运行状态(Running)**
+
+     在运行状态的线程执行自己run方法中的代码，直到调用其他方法而终止或等待某资源而阻塞或完成任务而死亡。如果在给定的时间片内没有执行结束，就会被系统给换下来回到就绪状态。也可能由于某些“导致阻塞的事件”而进入阻塞状态。
+
+  4. **阻塞状态(Blocked)**
+
+     阻塞指的是暂停一个线程的执行以等待某个条件发生(如某资源就绪)。有4种原因会导致阻塞：
+
+     1. 执行sleep(int millsecond)方法，使当前线程休眠，进入阻塞状态。当指定的时间到了后，线程进入就绪状态。
+
+     2. 执行wait()方法，使当前线程进入阻塞状态。当使用nofity()方法唤醒这个线程后，它进入就绪状态。
+
+     3. 线程运行时，某个操作进入阻塞状态，比如执行IO流操作(read()/write()方法本身就是阻塞的方法)。只有当引起该操作阻塞的原因消失后，线程进入就绪状态。
+
+     4. join()线程联合: 当某个线程等待另一个线程执行结束后，才能继续执行时，使用join()方法。
+
+  5. **死亡状态(Terminated)**
+
+     死亡状态是线程生命周期中的最后一个阶段。线程死亡的原因有两个。一个是正常运行的线程完成了它run()方法内的全部工作; 另一个是线程被强制终止，如通过执行stop()或destroy()方法来终止一个线程(注：stop()/destroy()方法已经被JDK废弃，不推荐使用)。
+
+     当一个线程进入死亡状态以后，就不能再回到其它状态了。
+
+- 线程的终止
+
+  1. 线程正常执行完毕-->次数
+  2. 外部干涉–>加入标识
+
+  不要使用stop和destroy
+
+  ```java
+  /**
+   * @author: Li Tian
+   * @contact: litian_cup@163.com
+   * @software: IntelliJ IDEA
+   * @file: TerminateThread.java
+   * @time: 2019/11/1 14:32
+   * @desc: 终止线程
+   */
+  
+  public class TerminateThread implements Runnable {
+      // 1. 设置标识，标记线程体是否可以运行
+      private boolean flag = true;
+      private String name;
+  
+      public TerminateThread(String name) {
+          this.name = name;
+      }
+  
+      @Override
+      public void run() {
+          int i = 0;
+          // 2. 关联标识，true-->运行，False-->停止
+          while (flag) {
+              System.out.println(name + "-->" + i++);
+          }
+      }
+  
+      // 3. 对外提供方法改变标识
+      public void terminate() {
+          this.flag = false;
+      }
+  
+      public static void main(String[] args) {
+          TerminateThread tt = new TerminateThread("你大爷");
+          new Thread(tt).start();
+          for (int i = 0; i < 99; i++) {
+              if (i == 88){
+                  tt.terminate();     // 线程终止
+                  System.out.println("tt game over!");
+              }
+              System.out.println("main-->" + i);
+          }
+      }
+  }
+  ```
+
+- 线程的暂停-sleep： 可以让正在运行的线程进入阻塞状态，直到休眠时间满了，进入就绪状态。 
+
+  ```java
+  import java.text.SimpleDateFormat;
+  import java.util.Date;
+  
+  /**
+   * @author: Li Tian
+   * @contact: litian_cup@163.com
+   * @software: IntelliJ IDEA
+   * @file: BlockedSleep1.java
+   * @time: 2019/11/1 14:46
+   * @desc: sleep模拟倒计时
+   */
+  
+  public class BlockedSleep1 {
+      public static void main(String[] args) throws InterruptedException {
+          // 倒计时
+          Date endTime = new Date(System.currentTimeMillis() + 1000 * 10);
+          long end = endTime.getTime();
+          while (true) {
+              System.out.println(new SimpleDateFormat("mm:ss").format(endTime));
+              Thread.sleep(1000);
+              endTime = new Date(endTime.getTime()-1000);
+              if(end-10000 > endTime.getTime()){
+                  break;
+              }
+          }
+      }
+  
+      public static void test() throws InterruptedException {
+          // 倒数10个数，1秒一个
+          int num = 10;
+          while (true) {
+              Thread.sleep(1000);
+              System.out.println(num--);
+          }
+      }
+  }
+  ```
+
+- 线程的暂停-yield： 可以让正在运行的线程直接进入就绪状态，让出CPU的使用权。 
+
+  ```java
+  import org.omg.PortableServer.THREAD_POLICY_ID;
+  
+  /**
+   * @author: Li Tian
+   * @contact: litian_cup@163.com
+   * @software: IntelliJ IDEA
+   * @file: YieldDemo1.java
+   * @time: 2019/11/1 14:55
+   * @desc: yield礼让线程，暂停线程，直接进入就绪状态不是阻塞状态
+   */
+  
+  public class YieldDemo1 {
+      public static void main(String[] args) {
+          MyYield my = new MyYield();
+          new Thread(my, "a").start();
+          new Thread(my, "b").start();
+  
+          // lambda实现
+          new Thread(() -> {
+              for (int i = 0; i < 100; i++) {
+                  System.out.println("lambda..." + i);
+              }
+          }).start();
+          for (int i = 0; i < 100; i++) {
+              if (i % 20 == 0) {
+                  Thread.yield();     // main礼让
+              }
+              System.out.println("main..." + i);
+          }
+      }
+  }
+  
+  class MyYield implements Runnable {
+      @Override
+      public void run() {
+          System.out.println(Thread.currentThread().getName() + "-->start");
+          Thread.yield();     // 礼让
+          System.out.println(Thread.currentThread().getName() + "-->end");
+      }
+  }
+  ```
+
+- 线程的联合-join：合并线程，插队线程。
+
+  ```java
+  import sun.java2d.loops.TransformHelper;
+  
+  /**
+   * @author: Li Tian
+   * @contact: litian_cup@163.com
+   * @software: IntelliJ IDEA
+   * @file: BlockedJoin1.java
+   * @time: 2019/11/1 15:05
+   * @desc: 爸爸和儿子买烟的故事
+   */
+  
+  public class BlockedJoin1 {
+      public static void main(String[] args){
+          new Father().start();
+      }
+  }
+  
+  class Father extends Thread{
+      @Override
+      public void run() {
+          System.out.println("想抽烟，发现没了");
+          System.out.println("让儿子去买中华");
+          Thread t = new Son();
+          t.start();
+          try {
+              t.join();       // father被阻塞
+              System.out.println("老爸接过烟，把零钱给了儿子");
+          } catch (InterruptedException e) {
+              e.printStackTrace();
+              System.out.println("孩子走丢了，老爸出去找孩子去了...");
+          }
+      }
+  }
+  
+  class Son extends Thread{
+      @Override
+      public void run() {
+          System.out.println("接过老爸的钱出去了...");
+          System.out.println("路边有个游戏厅，玩了10秒");
+          for (int i = 0; i < 10; i++) {
+              System.out.println(i+"秒过去了...");
+              try {
+                  Thread.sleep(1000);
+              } catch (InterruptedException e) {
+                  e.printStackTrace();
+              }
+          }
+          System.out.println("赶紧买烟去...");
+          System.out.println("手拿一包中华回家了...");
+      }
+  }
+  ```
+
+- 观察线程的各个状态
+
+  ```java
+  /**
+   * @author: Li Tian
+   * @contact: litian_cup@163.com
+   * @software: IntelliJ IDEA
+   * @file: AllState.java
+   * @time: 2019/11/1 15:22
+   * @desc: 观察线程的各个状态
+   */
+  
+  public class AllState {
+      public static void main(String[] args) {
+          Thread t = new Thread(() -> {
+              for (int i = 0; i < 5; i++) {
+                  try {
+                      Thread.sleep(100);
+                  } catch (InterruptedException e) {
+                      e.printStackTrace();
+                  }
+              }
+              System.out.println("...");
+          });
+          // 观察状态
+          Thread.State state = t.getState();
+          System.out.println(state);  // NEW
+          t.start();
+          state = t.getState();
+          System.out.println(state);  // RUNNABLE
+  
+          while (state != Thread.State.TERMINATED) {
+              try {
+                  Thread.sleep(200);
+              } catch (InterruptedException e) {
+                  e.printStackTrace();
+              }
+              state = t.getState();   // TIMED_WAITING
+              System.out.println(state);
+          }
+          state = t.getState();   // TERMINATED
+          System.out.println(state);
+      }
+  }
+  ```
+
+### 3. 线程的优先级
