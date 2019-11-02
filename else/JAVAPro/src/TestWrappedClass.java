@@ -8,7 +8,7 @@
  */
 
 public class TestWrappedClass {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         // 基本数据类型转成包装类对象
         Integer a = new Integer(3);
         Integer b = Integer.valueOf(30);

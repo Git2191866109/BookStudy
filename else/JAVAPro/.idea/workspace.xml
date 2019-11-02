@@ -3,7 +3,46 @@
   <component name="ChangeListManager">
     <list default="true" id="664eef89-93bd-40e6-8d4f-b8b025cfb276" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../【暂时】JAVA基础暂存文件.md" beforeDir="false" afterPath="$PROJECT_DIR$/../【暂时】JAVA基础暂存文件.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/Animal.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/BallGame.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/BallGame2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/CalendarTest1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/Cat.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/ContentEncode.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/DirCount.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/Dog.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/FileTest1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/ForEachTest1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/StringTest1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/Test0.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/Test1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/Test2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/Test3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/Test4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/Test5_polymorphism.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/Test6.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/TestArrays.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/TestBinarySearch.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/TestBubbleSort.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/TestCollections.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/TestIO05.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/TestIO06.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/TestIO07.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/TestIO08.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/TestIO1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/TestIO2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/TestIO3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/TestIO4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/TestIterator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/TestList.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/TestMap.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/TestSet.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/TestWrappedClass.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/User.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/Welcome.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/testCopy.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestWrappedClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestWrappedClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idea_settings.zip" beforeDir="false" afterPath="$PROJECT_DIR$/../idea_settings.zip" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -43,13 +82,14 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
+    <property name="full.screen.before.presentation.mode" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="project.structure.last.edited" value="Libraries" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.tabs" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.notifications" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -121,6 +161,7 @@
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -128,6 +169,7 @@
     </configuration>
     <configuration default="true" type="TestNG">
       <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <properties />
       <listeners />
@@ -184,6 +226,19 @@
       <workItem from="1571878838521" duration="9342000" />
       <workItem from="1572247833674" duration="2639000" />
       <workItem from="1572338376685" duration="13699000" />
+      <workItem from="1572681353739" duration="136000" />
+      <workItem from="1572681518022" duration="693000" />
+      <workItem from="1572694272712" duration="459000" />
+      <workItem from="1572694749067" duration="25000" />
+      <workItem from="1572694796065" duration="30000" />
+      <workItem from="1572694842496" duration="434000" />
+      <workItem from="1572695299562" duration="91000" />
+      <workItem from="1572695411281" duration="129000" />
+      <workItem from="1572695557807" duration="25000" />
+      <workItem from="1572695602889" duration="8000" />
+      <workItem from="1572695628934" duration="199000" />
+      <workItem from="1572695866588" duration="790000" />
+      <workItem from="1572705324921" duration="12000" />
     </task>
     <servers />
   </component>
