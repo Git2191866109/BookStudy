@@ -1214,5 +1214,184 @@
   }
   ```
 
+- 锁机制
+
+  - 为了保证数据在方法中被访问时的正确性，在访问时加入锁机制（synchronized），当一个线程获得对象的排它锁，独占资源，其他线程必须等待，使用后释放锁即可。存在以下问题：
+
+    1. 一个线程持有锁会导致其它所有需要此锁的线程挂起；
+    2. 在多线程竞争下，加锁、释放锁会导致比较多的上下文切换和调度延时，引起性能问题；
+    3. 如果一个优先级高的线程等待一个优先级低的线程释放锁会导致优先级倒置，引起性能问题。
+
+  - 线程安全：在并发时保证数据的正确性、效率尽可能高（synchronized）
+
+    - 同步方法
+    - 同步块（java有四种块，普通块局部块，构造块，静态块，同步块）
+
+  - 样例1：
+
+    ```java
+    package com.sxt.thread;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: UnsafeTest.java
+     * @time: 2019/11/4 13:57
+     * @desc: 线程同步
+     */
+    
+    public class SafeTest {
+        public static void main(String[] args) {
+            // 账户
+            Account account = new Account(100, "结婚礼金");
+            SafeDrawing you = new SafeDrawing(account, 80, "可悲的你");
+            SafeDrawing wife = new SafeDrawing(account, 90, "happy的她");
+            you.start();
+            wife.start();
+        }
+    }
+    
+    // 模拟取款
+    class SafeDrawing extends Thread {
+        // 取钱的账户
+        Account accout;
+        // 取多少钱
+        int drawingMoney;
+        // 口袋里的总数
+        int packetTotal;
+    
+        public SafeDrawing(Account accout, int drawingMoney, String name) {
+            super(name);
+            this.accout = accout;
+            this.drawingMoney = drawingMoney;
+        }
+    
+        @Override
+        public void run() {
+            test();
+        }
+    
+        public void test() {
+            if (accout.money <= 0) {
+                return;
+            }
+            synchronized (accout) {
+                if (accout.money - drawingMoney < 0) {
+                    return;
+                }
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                accout.money -= drawingMoney;
+                packetTotal += drawingMoney;
+                System.out.println(this.getName() + "-->账户余额为：" + accout.money);
+                System.out.println(this.getName() + "-->口袋里的钱为：" + packetTotal);
+            }
+        }
+    }
+    ```
+
+  - 样例2
+
+    ```java
+    package com.sxt.thread;
+    
+    import java.util.ArrayList;
+    import java.util.List;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: UnsafeTest.java
+     * @time: 2019/11/4 13:57
+     * @desc: 线程同步
+     */
+    
+    public class SafeTest2 {
+        public static void main(String[] args) {
+            List<String> list = new ArrayList<>();
+            for (int i = 0; i < 10000; i++) {
+                new Thread(() -> {
+                    // 同步块
+                    synchronized (list) {
+                        list.add(Thread.currentThread().getName());
+                    }
+                }).start();
+            }
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println(list.size());
+        }
+    }
+    ```
+
+-  双重检测：考虑临界值的问题
+
+  ```java
+  package com.sxt.thread;
+  
+  /**
+   * @author: Li Tian
+   * @contact: litian_cup@163.com
+   * @software: IntelliJ IDEA
+   * @file: Web12306.java
+   * @time: 2019/10/30 12:36
+   * @desc: 线程安全买票
+   */
+  
+  public class Safe12306 implements Runnable {
+      // 票数
+      private int ticketNums = 10;
+      private boolean flag = true;
+  
+      @Override
+      public void run() {
+          while (flag) {
+              try {
+                  Thread.sleep(100);
+              } catch (InterruptedException e) {
+                  e.printStackTrace();
+              }
+              test();
+          }
+      }
+  
+      private void test() {
+          if (ticketNums <= 0) {  // 考虑的是没有票的情况
+              flag = false;
+              return;
+          }
+          synchronized (this) {
+              if (ticketNums <= 0) {  // 考虑的是最后一张票的情况
+                  flag = false;
+                  return;
+              }
+              try {
+                  Thread.sleep(200);
+              } catch (InterruptedException e) {
+                  e.printStackTrace();
+              }
+              System.out.println(Thread.currentThread().getName() + "-->" + ticketNums--);
+          }
+      }
+  
+      public static void main(String[] args) {
+          // 一份资源
+          Safe12306 web = new Safe12306();
+          // 多个代理
+          new Thread(web, "张三").start();
+          new Thread(web, "李四").start();
+          new Thread(web, "王五").start();
+      }
+  }
+  ```
+
 - 
 
