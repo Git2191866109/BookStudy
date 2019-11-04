@@ -67,6 +67,7 @@
 
 - AlterFilename：批量更改文件名的后缀（包括遍历内部文件夹）
 - MLtools：机器学习（分类）小工具
+- idea_active：idea永久激活方式和教程
 
 ------
 

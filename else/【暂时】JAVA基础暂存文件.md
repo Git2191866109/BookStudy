@@ -965,3 +965,254 @@
   ```
 
 ### 3. 线程的优先级
+
+1. NORM_PRIORITY 5
+
+2. MIN_PRIORITY 1
+
+3. MAX_PRIORITY 10
+
+   ```java
+   /**
+    * @author: Li Tian
+    * @contact: litian_cup@163.com
+    * @software: IntelliJ IDEA
+    * @file: PriorityTest1.java
+    * @time: 2019/11/4 12:38
+    * @desc: 多线程优先级
+    */
+   
+   public class PriorityTest1 {
+       public static void main(String[] args) {
+           MyPriority mp = new MyPriority();
+           Thread t1 = new Thread(mp);
+           Thread t2 = new Thread(mp);
+           Thread t3 = new Thread(mp);
+           Thread t4 = new Thread(mp);
+           Thread t5 = new Thread(mp);
+           Thread t6 = new Thread(mp);
+   
+           t1.setPriority(Thread.MAX_PRIORITY);
+           t2.setPriority(Thread.MAX_PRIORITY);
+           t3.setPriority(Thread.MAX_PRIORITY);
+           t4.setPriority(Thread.MIN_PRIORITY);
+           t5.setPriority(Thread.MIN_PRIORITY);
+           t6.setPriority(Thread.MIN_PRIORITY);
+   
+           t1.start();
+           t2.start();
+           t3.start();
+           t4.start();
+           t5.start();
+           t6.start();
+       }
+   }
+   
+   class MyPriority implements Runnable {
+       @Override
+       public void run() {
+           System.out.println(Thread.currentThread().getName() + "-->" + Thread.currentThread().getPriority());
+           Thread.yield();
+       }
+   }
+   ```
+
+### 4. 守护线程
+
+- 是为用户线程服务的；JVM停止不用等待守护线程执行完毕
+
+- 默认：用户线程，JVM等待用户线程执行完毕才会停止
+
+  ```java
+  import org.omg.PortableServer.THREAD_POLICY_ID;
+  
+  /**
+   * @author: Li Tian
+   * @contact: litian_cup@163.com
+   * @software: IntelliJ IDEA
+   * @file: DaemonTest.java
+   * @time: 2019/11/4 13:35
+   * @desc: 守护线程学习
+   */
+  
+  public class DaemonTest {
+      public static void main(String[] args) {
+          Thread t1 = new Thread(new You1());
+          t1.run();
+          Thread t2 = new Thread(new God1());
+          // 将用户线程调整为守护线程
+          t2.setDaemon(true);
+          t2.start();
+      }
+  }
+  
+  class You1 extends Thread {
+      @Override
+      public void run() {
+          for (int i = 0; i < 365 * 100; i++) {
+              System.out.println("happy life!");
+          }
+          System.out.println("ooo...");
+      }
+  }
+  
+  class God1 extends Thread {
+      @Override
+      public void run() {
+          for (;true;) {
+              System.out.println("bless you!");
+          }
+      }
+  }
+  ```
+
+### 5. 获取线程基本信息的方法
+
+- 常用方法
+
+  ![è¡¨11-1çº¿ç¨çå¸¸ç¨æ¹æ³.png](https://www.sxt.cn/360shop/Public/admin/UEditor/20170526/1495789884517307.png) 
+
+- 案例
+
+  ```java
+  /**
+   * @author: Li Tian
+   * @contact: litian_cup@163.com
+   * @software: IntelliJ IDEA
+   * @file: InfoTest.java
+   * @time: 2019/11/4 13:46
+   * @desc: 获取线程基本信息的方法
+   */
+  
+  public class InfoTest {
+      public static void main(String[] args) throws InterruptedException {
+          // 线程是否活着
+          System.out.println(Thread.currentThread().isAlive());
+          // 设置名称：真是角色+代理角色
+          MyInfo info = new MyInfo("战斗机");
+          Thread t = new Thread(info);
+          t.setName("公鸡");
+          t.start();
+          Thread.sleep(1000);
+          System.out.println(t.isAlive());
+      }
+  }
+  
+  class MyInfo implements Runnable{
+      private String name;
+      public MyInfo(String name) {
+          this.name = name;
+      }
+  
+      @Override
+      public void run() {
+          System.out.println(Thread.currentThread().getName() + "-->" + name);
+      }
+  }
+  ```
+
+### 6. 并发控制
+
+- 并发：同一个对象多个线程同时操作
+
+- 线程不安全案例1
+
+  ```java
+  package com.sxt.thread;
+  
+  /**
+   * @author: Li Tian
+   * @contact: litian_cup@163.com
+   * @software: IntelliJ IDEA
+   * @file: UnsafeTest.java
+   * @time: 2019/11/4 13:57
+   * @desc: 线程同步
+   */
+  
+  public class UnsafeTest {
+      public static void main(String[] args) {
+          // 账户
+          Account account = new Account(100, "结婚礼金");
+          Drawing you = new Drawing(account, 80, "可悲的你");
+          Drawing wife = new Drawing(account, 90, "happy的她");
+          you.start();
+          wife.start();
+      }
+  }
+  
+  // 账户
+  class Account {
+      int money;
+      String name;
+  
+      public Account(int money, String name) {
+          this.money = money;
+          this.name = name;
+      }
+  }
+  
+  // 模拟取款
+  class Drawing extends Thread {
+      // 取钱的账户
+      Account accout;
+      // 取多少钱
+      int drawingMoney;
+      // 口袋里的总数
+      int packetTotal;
+  
+      public Drawing(Account accout, int drawingMoney, String name) {
+          super(name);
+          this.accout = accout;
+          this.drawingMoney = drawingMoney;
+      }
+  
+      @Override
+      public void run() {
+          if(accout.money - drawingMoney < 0){
+              return;
+          }
+          try {
+              Thread.sleep(1000);
+          } catch (InterruptedException e) {
+              e.printStackTrace();
+          }
+          accout.money -= drawingMoney;
+          packetTotal += drawingMoney;
+          System.out.println(this.getName() + "-->账户余额为：" + accout.money);
+          System.out.println(this.getName() + "-->口袋里的钱为：" + packetTotal);
+      }
+  }
+  ```
+
+- 线程不安全案例2
+
+  ```java
+  package com.sxt.thread;
+  
+  import java.util.ArrayList;
+  import java.util.List;
+  
+  /**
+   * @author: Li Tian
+   * @contact: litian_cup@163.com
+   * @software: IntelliJ IDEA
+   * @file: UnsafeTest.java
+   * @time: 2019/11/4 13:57
+   * @desc: 线程同步
+   */
+  
+  public class UnsafeTest2 {
+      public static void main(String[] args) {
+          List<String> list = new ArrayList<>();
+          for (int i = 0; i < 10000; i++) {
+              new Thread(()->{
+                  list.add(Thread.currentThread().getName());
+              }).start();
+          }
+          System.out.println(list.size());
+      }
+  }
+  ```
+
+- 
+
