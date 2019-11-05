@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="664eef89-93bd-40e6-8d4f-b8b025cfb276" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../【暂时】JAVA基础暂存文件.md" beforeDir="false" afterPath="$PROJECT_DIR$/../【暂时】JAVA基础暂存文件.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/thread/Safe12306.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/thread/Safe12306.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -75,7 +75,35 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Safe12306">
+  <component name="RunManager" selected="Application.HappyCinema2">
+    <configuration name="HappyCinema" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.thread.HappyCinema" />
+      <module name="JAVAPro" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.sxt.thread.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="HappyCinema2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.thread.HappyCinema2" />
+      <module name="JAVAPro" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.sxt.thread.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Safe12306" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.sxt.thread.Safe12306" />
       <module name="JAVAPro" />
@@ -118,28 +146,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UnsafeTest (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="UnsafeTest" />
-      <module name="JAVAPro" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="UnsafeTest2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.thread.UnsafeTest2" />
-      <module name="JAVAPro" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.sxt.thread.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
@@ -165,19 +171,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.UnsafeTest (1)" />
-      <item itemvalue="Application.UnsafeTest2" />
       <item itemvalue="Application.SafeTest" />
       <item itemvalue="Application.SafeTest2" />
       <item itemvalue="Application.Safe12306" />
+      <item itemvalue="Application.HappyCinema" />
+      <item itemvalue="Application.HappyCinema2" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.HappyCinema2" />
+        <item itemvalue="Application.HappyCinema" />
         <item itemvalue="Application.Safe12306" />
         <item itemvalue="Application.SafeTest2" />
         <item itemvalue="Application.SafeTest" />
-        <item itemvalue="Application.UnsafeTest2" />
-        <item itemvalue="Application.UnsafeTest (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -228,6 +234,7 @@
       <workItem from="1572705324921" duration="12000" />
       <workItem from="1572747551111" duration="8798000" />
       <workItem from="1572861955211" duration="3219000" />
+      <workItem from="1572915989838" duration="8217000" />
     </task>
     <servers />
   </component>
