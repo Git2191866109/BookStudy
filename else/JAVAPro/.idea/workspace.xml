@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="664eef89-93bd-40e6-8d4f-b8b025cfb276" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/Administrator.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/thread/Happy12306.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/thread/Happy12306.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/thread/Passenger.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/thread/Passenger.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../【暂时】JAVA基础暂存文件.md" beforeDir="false" afterPath="$PROJECT_DIR$/../【暂时】JAVA基础暂存文件.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -76,9 +77,37 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Happy12306">
-    <configuration name="Happy12306" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.thread.Happy12306" />
+  <component name="RunManager" selected="Application.CoTest2">
+    <configuration name="CoTest1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.cooperation.CoTest1" />
+      <module name="JAVAPro" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.sxt.cooperation.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CoTest2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.cooperation.CoTest2" />
+      <module name="JAVAPro" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.sxt.cooperation.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DeadLock" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.thread.DeadLock" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
@@ -91,8 +120,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="HappyCinema" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.thread.HappyCinema" />
+    <configuration name="DeadLock2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.thread.DeadLock2" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
@@ -105,36 +134,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="HappyCinema2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.thread.HappyCinema2" />
-      <module name="JAVAPro" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.sxt.thread.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Safe12306" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.thread.Safe12306" />
-      <module name="JAVAPro" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.sxt.thread.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="SafeTest2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.thread.SafeTest2" />
+    <configuration name="SynContainer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.thread.SynContainer" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
@@ -172,19 +173,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.SafeTest2" />
-      <item itemvalue="Application.Safe12306" />
-      <item itemvalue="Application.HappyCinema" />
-      <item itemvalue="Application.HappyCinema2" />
-      <item itemvalue="Application.Happy12306" />
+      <item itemvalue="Application.SynContainer" />
+      <item itemvalue="Application.DeadLock" />
+      <item itemvalue="Application.DeadLock2" />
+      <item itemvalue="Application.CoTest1" />
+      <item itemvalue="Application.CoTest2" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Happy12306" />
-        <item itemvalue="Application.HappyCinema2" />
-        <item itemvalue="Application.HappyCinema" />
-        <item itemvalue="Application.Safe12306" />
-        <item itemvalue="Application.SafeTest2" />
+        <item itemvalue="Application.CoTest2" />
+        <item itemvalue="Application.CoTest1" />
+        <item itemvalue="Application.DeadLock2" />
+        <item itemvalue="Application.DeadLock" />
+        <item itemvalue="Application.SynContainer" />
       </list>
     </recent_temporary>
   </component>
@@ -239,6 +240,8 @@
       <workItem from="1573088569867" duration="4086000" />
       <workItem from="1573132451796" duration="333000" />
       <workItem from="1573134340862" duration="1102000" />
+      <workItem from="1573181880982" duration="599000" />
+      <workItem from="1573193232039" duration="7210000" />
     </task>
     <servers />
   </component>

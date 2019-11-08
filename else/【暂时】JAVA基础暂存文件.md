@@ -1115,6 +1115,8 @@
 
 - 并发：同一个对象多个线程同时操作
 
+#### 1. 同步
+
 - 线程不安全案例1
 
   ```java
@@ -1620,5 +1622,437 @@
   }
   ```
 
+- 并发容器：import java.util.concurrent.CopyOnWriteArrayList
+
+  ```java
+  package com.sxt.thread;
   
+  import java.util.concurrent.CopyOnWriteArrayList;
+  
+  /**
+   * @author: Li Tian
+   * @contact: litian_cup@163.com
+   * @software: IntelliJ IDEA
+   * @file: SynContainer.java
+   * @time: 2019/11/8 14:09
+   * @desc: 线程同步：并发容器
+   */
+  
+  public class SynContainer {
+      public static void main(String[] args) {
+          CopyOnWriteArrayList<String> list = new CopyOnWriteArrayList<>();
+          for (int i = 0; i < 10000; i++) {
+              new Thread(() -> {
+                  // 同步块
+                  list.add(Thread.currentThread().getName());
+              }).start();
+          }
+          try {
+              Thread.sleep(1000);
+          } catch (InterruptedException e) {
+              e.printStackTrace();
+          }
+          System.out.println(list.size());
+      }
+  }
+  ```
+
+#### 2. 死锁
+
+- 死锁指的是：多个线程各自占有一些共享资源，并且互相等待其他线程占有的资源才能进行，而导致两个或者多个线程都在等待对方释放资源，都停止执行的情形。
+
+- 避免方式：不要在同一个代码块中持有多个对象锁。
+
+- 死锁案例：
+
+  ```java
+  package com.sxt.thread;
+  
+  /**
+   * @author: Li Tian
+   * @contact: litian_cup@163.com
+   * @software: IntelliJ IDEA
+   * @file: DeadLock.java
+   * @time: 2019/11/8 14:16
+   * @desc: 死锁
+   */
+  
+  public class DeadLock {
+      public static void main(String[] args) {
+          Makeup g1 = new Makeup(1, "丰光");
+          Makeup g2 = new Makeup(2, "师兄");
+          g1.start();
+          g2.start();
+      }
+  }
+  
+  // 口红
+  class Lipstick {
+  
+  }
+  
+  // 镜子
+  class Mirror {
+  
+  }
+  
+  // 化妆
+  class Makeup extends Thread {
+      static Lipstick lip = new Lipstick();
+      static Mirror mir = new Mirror();
+      // 选择
+      int choice;
+      // 名字
+      String girlname;
+  
+      public Makeup(int choice, String girlname) {
+          this.choice = choice;
+          this.girlname = girlname;
+      }
+  
+      @Override
+      public void run() {
+          // 化妆
+          makeup();
+      }
+  
+      private void makeup() {
+          // 相互持有对方的对象锁，这样才有可能造成死锁
+          if (choice == 1) {
+              // 获得口红的锁
+              synchronized (lip) {
+                  System.out.println(this.girlname + "-->涂口红");
+                  // 1秒后想拥有镜子的锁
+                  try {
+                      Thread.sleep(1000);
+                  } catch (InterruptedException e) {
+                      e.printStackTrace();
+                  }
+                  synchronized (mir) {
+                      System.out.println(this.girlname + "-->照镜子");
+                  }
+              }
+          } else {
+              synchronized (mir) {
+                  System.out.println(this.girlname + "-->照镜子");
+                  // 2秒后想拥有口红的锁
+                  try {
+                      Thread.sleep(1100);
+                  } catch (InterruptedException e) {
+                      e.printStackTrace();
+                  }
+                  synchronized (lip) {
+                      System.out.println(this.girlname + "-->涂口红");
+                  }
+              }
+          }
+      }
+  }
+  ```
+
+- 死锁的解决案例：
+
+  ```java
+  package com.sxt.thread;
+  
+  /**
+   * @author: Li Tian
+   * @contact: litian_cup@163.com
+   * @software: IntelliJ IDEA
+   * @file: DeadLock.java
+   * @time: 2019/11/8 14:16
+   * @desc: 解决死锁
+   */
+  
+  public class DeadLock2 {
+      public static void main(String[] args) {
+          Makeup2 g1 = new Makeup2(1, "丰光");
+          Makeup2 g2 = new Makeup2(2, "师兄");
+          g1.start();
+          g2.start();
+      }
+  }
+  
+  
+  // 化妆
+  class Makeup2 extends Thread {
+      static Lipstick lip = new Lipstick();
+      static Mirror mir = new Mirror();
+      // 选择
+      int choice;
+      // 名字
+      String girlname;
+  
+      public Makeup2(int choice, String girlname) {
+          this.choice = choice;
+          this.girlname = girlname;
+      }
+  
+      @Override
+      public void run() {
+          // 化妆
+          makeup();
+      }
+  
+      private void makeup() {
+          // 相互持有对方的对象锁，这样才有可能造成死锁
+          if (choice == 1) {
+              // 获得口红的锁
+              synchronized (lip) {
+                  System.out.println(this.girlname + "-->涂口红");
+                  // 1秒后想拥有镜子的锁
+                  try {
+                      Thread.sleep(1000);
+                  } catch (InterruptedException e) {
+                      e.printStackTrace();
+                  }
+              }
+              synchronized (mir) {
+                  System.out.println(this.girlname + "-->照镜子");
+              }
+          } else {
+              synchronized (mir) {
+                  System.out.println(this.girlname + "-->照镜子");
+                  // 2秒后想拥有口红的锁
+                  try {
+                      Thread.sleep(1100);
+                  } catch (InterruptedException e) {
+                      e.printStackTrace();
+                  }
+              }
+              synchronized (lip) {
+                  System.out.println(this.girlname + "-->涂口红");
+              }
+          }
+      }
+  }
+  ```
+
+#### 3. 并发协作
+
+- 生产者消费者模式
+
+- view简介
+
+  - pv：page view
+  - uv：unique view
+  - vv：visit view
+
+- 在生产者消费者问题中，仅有synchronized是不够的
+
+  - synchronized可组织并发更新同一个共享资源，实现了同步
+  - synchronized不能用来实现不同线程之间的消息传递（通信）
+
+- 实现生产者消费者的方法：
+
+  - 管程法
+  - 信号灯法
+
+- 实现方式：用wait()等待，notify()唤醒
+
+- **管程法**：借助缓冲区
+
+  ```java
+  package com.sxt.cooperation;
+  
+  /**
+   * @author: Li Tian
+   * @contact: litian_cup@163.com
+   * @software: IntelliJ IDEA
+   * @file: CoTest1.java
+   * @time: 2019/11/8 15:36
+   * @desc: 协作模型：生产者消费者实现方式1：管程法
+   */
+  
+  public class CoTest1 {
+      public static void main(String[] args) {
+          SynContainer container = new SynContainer();
+          new Productor(container).start();
+          new Consumer(container).start();
+      }
+  }
+  
+  // 生产者
+  class Productor extends Thread {
+      SynContainer container;
+  
+      public Productor(SynContainer container) {
+          this.container = container;
+      }
+  
+      @Override
+      public void run() {
+          // 开始生产
+          for (int i = 0; i < 100; i++) {
+              System.out.println("生产-->第" + i + "个馒头");
+              container.push(new SteamedBun(i));
+          }
+      }
+  }
+  
+  // 消费者
+  class Consumer extends Thread {
+      SynContainer container;
+  
+      public Consumer(SynContainer container) {
+          this.container = container;
+      }
+  
+      @Override
+      public void run() {
+          // 开始消费
+          for (int i = 0; i < 1000; i++) {
+              System.out.println("消费-->第" + container.pop().id + "个馒头");
+          }
+      }
+  }
+  
+  // 缓冲区
+  class SynContainer {
+      SteamedBun[] buns = new SteamedBun[10];
+      int count = 0;
+  
+      // 存储：生产
+      public synchronized void push(SteamedBun bun) {
+          // 何时能生产：容器存在空间
+          if (count == buns.length) {
+              try {
+                  // 线程阻塞，消费者通知生产解除
+                  this.wait();
+              } catch (InterruptedException e) {
+              }
+          }
+          // 存在空间，可以生产
+          buns[count++] = bun;
+          // 存在数据了，可以通知消费了
+          this.notifyAll();
+      }
+  
+      // 获取：消费
+      public synchronized SteamedBun pop() {
+          // 何时消费：容器中是否存在数据，存在数据则可以消费，没有数据就只能等待
+          if (count == 0) {
+              try {
+                  // 线程阻塞：生产者通知消费则接触阻塞
+                  this.wait();
+              } catch (InterruptedException e) {
+              }
+          }
+          SteamedBun bun = buns[--count];
+          // 存在空间，可以唤醒对方生产
+          this.notifyAll();
+          return bun;
+      }
+  }
+  
+  // 数据。馒头
+  class SteamedBun {
+      int id;
+  
+      public SteamedBun(int id) {
+          this.id = id;
+      }
+  }
+  ```
+
+- **信号灯法**：借助标志位
+
+  ```java
+  package com.sxt.cooperation;
+  
+  /**
+   * @author: Li Tian
+   * @contact: litian_cup@163.com
+   * @software: IntelliJ IDEA
+   * @file: CoTest2.java
+   * @time: 2019/11/8 16:38
+   * @desc: 信号灯法
+   */
+  
+  public class CoTest2 {
+      public static void main(String[] args) {
+          Tv tv = new Tv();
+          new Player(tv).start();
+          new Watcher(tv).start();
+      }
+  }
+  
+  // 生产者：演员
+  class Player extends Thread {
+      Tv tv;
+  
+      public Player(Tv tv) {
+          this.tv = tv;
+      }
+  
+      @Override
+      public void run() {
+          for (int i = 0; i < 20; i++) {
+              if (i % 2 == 0) {
+                  this.tv.play("奇葩说");
+              } else {
+                  this.tv.play("倚天屠龙记");
+              }
+          }
+      }
+  }
+  
+  // 消费者：观众
+  class Watcher extends Thread {
+      Tv tv;
+  
+      public Watcher(Tv tv) {
+          this.tv = tv;
+      }
+  
+      @Override
+      public void run() {
+          for (int i = 0; i < 20; i++) {
+              tv.watch();
+          }
+      }
+  }
+  
+  // 同一个资源：电视
+  class Tv {
+      String voice;
+      // T：演员表演，观众等待；F：观众观看，演员等待
+      boolean flag = true;
+  
+      // 表演
+      public synchronized void play(String voice) {
+          // 演员等待
+          if (!flag) {
+              try {
+                  this.wait();
+              } catch (InterruptedException e) {
+                  e.printStackTrace();
+              }
+          }
+          System.out.println("表演了" + voice);
+          this.voice = voice;
+          // 唤醒
+          this.notifyAll();
+          this.flag = !this.flag;
+      }
+  
+      // 观看
+      public synchronized void watch() {
+          // 观众等待
+          if (flag) {
+              try {
+                  this.wait();
+              } catch (InterruptedException e) {
+                  e.printStackTrace();
+              }
+          }
+          System.out.println("听到了" + voice);
+          // 唤醒
+          this.notifyAll();
+          this.flag = !this.flag;
+      }
+  }
+  ```
+
+### 7. 高级主题
 
