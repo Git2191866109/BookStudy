@@ -2056,3 +2056,117 @@
 
 ### 7. 高级主题
 
+- 定时调度（简单）：Timer和TimerTask类
+
+  ```java
+  package com.sxt.cooperation;
+  
+  import com.sun.deploy.cache.CacheEntry;
+  import com.sun.deploy.security.MozillaMyKeyStore;
+  
+  import java.util.Calendar;
+  import java.util.GregorianCalendar;
+  import java.util.Timer;
+  import java.util.TimerTask;
+  
+  /**
+   * @author: Li Tian
+   * @contact: litian_cup@163.com
+   * @software: IntelliJ IDEA
+   * @file: TimerTest1.java
+   * @time: 2019/11/9 18:27
+   * @desc: 定时调度
+   */
+  
+  public class TimerTest1 {
+      public static void main(String[] args) {
+          Timer timer = new Timer();
+          // 执行安排
+          // 执行一次
+          timer.schedule(new MyTask(), 1000);
+          // 执行多次
+          timer.schedule(new MyTask(), 1000, 200);
+          // 指定时间执行
+          Calendar cal = new GregorianCalendar(2099, 11, 3, 11, 22, 22);
+          timer.schedule(new MyTask(), cal.getTime(), 200);
+      }
+  }
+  
+  class MyTask extends TimerTask {
+      @Override
+      public void run() {
+          for (int i = 0; i < 10; i++) {
+              System.out.println("放空大脑休息一会儿~");
+          }
+      }
+  }
+  ```
+
+- 定时调度（复杂）：QUARTZ
+
+  ```java
+  package com.sxt.others;
+  
+  import static org.quartz.DateBuilder.evenSecondDate;
+  import static org.quartz.JobBuilder.newJob;
+  import static org.quartz.TriggerBuilder.newTrigger;
+  import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
+  
+  import org.quartz.JobDetail;
+  import org.quartz.Scheduler;
+  import org.quartz.SchedulerFactory;
+  import org.quartz.Trigger;
+  import org.quartz.impl.StdSchedulerFactory;
+  
+  import java.util.Date;
+  
+  /**
+   * quartz学习入门
+   */
+  public class QuartzTest {
+      public void run() throws Exception {
+          // 1. 创建Scheduler的工厂
+          SchedulerFactory sf = new StdSchedulerFactory();
+          // 2. 从工厂中获取调度器
+          Scheduler sched = sf.getScheduler();
+          // 时间
+          Date runTime = evenSecondDate(new Date());
+          // 3. 创建JobDetail
+          JobDetail job = newJob(HelloJob.class).withIdentity("job1", "group1").build();
+  
+          // 4. 触发器
+          // Trigger trigger = newTrigger().withIdentity("trigger1", "group1").startAt(runTime).build();
+          // 4 | 2：如果想要循环多次呢，每5秒一次，循环三次
+          Trigger trigger = newTrigger().withIdentity("trigger1", "group1").startAt(runTime)
+                  .withSchedule(simpleSchedule().withIntervalInSeconds(5).withRepeatCount(2)).build();
+          // 5. 注册任务和触发条件
+          sched.scheduleJob(job, trigger);
+          // 6. 启动
+          sched.start();
+          try {
+              // 5秒后停止
+              Thread.sleep(30L * 1000L);
+              // executing...
+          } catch (Exception e) {
+          }
+  
+          // shut down the scheduler
+          sched.shutdown(true);
+      }
+  
+      public static void main(String[] args) throws Exception {
+          QuartzTest example = new QuartzTest();
+          example.run();
+      }
+  }
+  ```
+
+- 指令重排HappenBefore
+
+  - 执行代码的顺序可能与编写代码不一致，即虚拟机优化代码顺序，则为指令重排（HappenBefore）——优化程序性能。
+  - 机器语言运行步骤
+    1. 从内存中获取要执行的下一个指令
+    2. 将指令解码翻译，从寄存器中取值
+    3. 操作，计算结果
+    4. 将结果写回到对应的寄存器中
+
