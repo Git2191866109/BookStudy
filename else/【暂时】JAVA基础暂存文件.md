@@ -2169,4 +2169,312 @@
     2. 将指令解码翻译，从寄存器中取值
     3. 操作，计算结果
     4. 将结果写回到对应的寄存器中
+  
+-  volatile：
+
+   -  保证线程间变量的可见性，即保证数据的同步。
+
+   -  volatile是不错的机制，但是volatile不能保证原子性。
+
+      ```java
+      package com.sxt.others;
+      
+      /**
+       * @author: Li Tian
+       * @contact: litian_cup@163.com
+       * @software: IntelliJ IDEA
+       * @file: VolatileTest.java
+       * @time: 2019/11/11 9:29
+       * @desc: volatile测试
+       * 不加volatile则程序不会停，加了之后会停
+       */
+      
+      public class VolatileTest {
+          private volatile static int num = 0;
+          public static void main(String[] args) throws InterruptedException {
+              new Thread(() -> {
+                  while(num == 0){
+                      // 此处不要编写代码，这是为了让系统没有时间更新数据
+                  }
+              }).start();
+      
+              Thread.sleep(1000);
+              num = 1;
+          }
+      }
+      ```
+
+- dcl单例模式
+
+  - 懒汉式套路的基础上加入并发控制，保证在多线程环境下，对外存在一个对象
+
+  1. 构造器私有化 --> 避免外部new构造器
+
+  2. 提供私有的静态属性 --> 存储对象的地址
+
+  3. 提供公共的静态方法 --> 获取属性
+
+     ```java
+     package com.sxt.others;
+     
+     /**
+      * @author: Li Tian
+      * @contact: litian_cup@163.com
+      * @software: IntelliJ IDEA
+      * @file: DoubleCheckedLocking.java
+      * @time: 2019/11/11 9:34
+      * @desc: 单例模式
+      */
+     
+     public class DoubleCheckedLocking {
+         // 2. 提供私有的静态属性
+         // 没有volatile其他线程可能访问一个没有初始化的对象
+         private static volatile DoubleCheckedLocking instance;
+     
+         // 1. 构造器私有化
+         private DoubleCheckedLocking() {
+     
+         }
+     
+         // 3. 提供公共的静态方法 --> 获取属性
+         public static DoubleCheckedLocking getInstance() {
+             // 再次检测，避免不必要的同步，已经存在对象
+             if (null != instance) {
+                 return instance;
+             }
+             synchronized (DoubleCheckedLocking.class) {
+                 if (null == instance) {
+                     instance = new DoubleCheckedLocking();
+                     // new一个对象的时候，要做的三件事情
+                     // 开辟空间；初始化对象信息；返回对象的地址给引用
+                     // 所以这里可能出现指令重排
+                 }
+                 return instance;
+             }
+         }
+     
+         public static void main(String[] args) {
+             Thread t = new Thread(() -> {
+                 System.out.println(DoubleCheckedLocking.getInstance());
+             });
+             t.start();
+             System.out.println(DoubleCheckedLocking.getInstance());
+         }
+     }
+     ```
+
+- ThreadLocal
+
+  - 表示的是每个线程自身的存储本地、局部区域
+
+  - 方法：get/set/initialValue
+
+    ```java
+    package com.sxt.others;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: ThreadLocalTest.java
+     * @time: 2019/11/11 9:52
+     * @desc: ThreadLocal
+     */
+    
+    public class ThreadLocalTest {
+        //    private static ThreadLocal<Integer> threadLocal = new ThreadLocal<>();
+        // 更改初始值
+    //    private static ThreadLocal<Integer> threadLocal = new ThreadLocal<Integer>(){
+    //        @Override
+    //        protected Integer initialValue() {
+    //            return 200;
+    //        }
+    //    };
+        // 简化上面代码
+        private static ThreadLocal<Integer> threadLocal = ThreadLocal.withInitial(() -> 200);
+    
+    
+        public static void main(String[] args) {
+            // 获取值，初始值为null
+            System.out.println(Thread.currentThread().getName() + "-->" + threadLocal.get());
+            // 设置值
+            threadLocal.set(99);
+            System.out.println(Thread.currentThread().getName() + "-->" + threadLocal.get());
+    
+            new Thread(new MyRun()).start();
+            new Thread(new MyRun()).start();
+        }
+    
+        public static class MyRun implements Runnable {
+            @Override
+            public void run() {
+                threadLocal.set((int)(Math.random()*99));
+                System.out.println(Thread.currentThread().getName() + "-->" + threadLocal.get());
+            }
+        }
+    }
+    ```
+
+  - 每个线程只使用自身的数据，更改不会影响其他线程
+
+    ```java
+    package com.sxt.others;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: ThreadLocalTest2.java
+     * @time: 2019/11/11 10:06
+     * @desc: 取数据
+     */
+    
+    public class ThreadLocalTest2 {
+        private static ThreadLocal<Integer> threadLocal = ThreadLocal.withInitial(() -> 1);
+    
+        public static void main(String[] args) {
+            for (int i = 0; i < 5; i++) {
+                new Thread(new MyRun()).start();
+            }
+        }
+    
+        public static class MyRun implements Runnable {
+            @Override
+            public void run() {
+                Integer left = threadLocal.get();
+                System.out.println(Thread.currentThread().getName() + "得到了-->" + left);
+                threadLocal.set(left - 1);
+                System.out.println(Thread.currentThread().getName() + "还剩下-->" + threadLocal.get());
+            }
+        }
+    }
+    ```
+
+  - ThreadLocal：分析上下文环境
+
+    - 构造器：哪里调用，就属于哪里，找线程体
+
+    - run方法：本线程自己的
+
+      ```java
+      package com.sxt.others;
+      
+      /**
+       * @author: Li Tian
+       * @contact: litian_cup@163.com
+       * @software: IntelliJ IDEA
+       * @file: ThreadLocalTest3.java
+       * @time: 2019/11/11 10:11
+       * @desc: 分析上下文环境
+       */
+      
+      public class ThreadLocalTest3 {
+          private static ThreadLocal<Integer> threadLocal = ThreadLocal.withInitial(() -> 1);
+      
+          public static void main(String[] args) {
+              new Thread(new MyRun()).start();
+              new Thread(new MyRun()).start();
+          }
+      
+          public static class MyRun implements Runnable {
+              public MyRun() {
+                  // 属于main线程
+                  threadLocal.set(-100);
+                  System.out.println(Thread.currentThread().getName() + "-->" + threadLocal.get());
+              }
+      
+              @Override
+              public void run() {
+                  // 属于其他线程
+                  System.out.println(Thread.currentThread().getName() + "-->" + threadLocal.get());
+              }
+          }
+      }
+      ```
+
+  - InheritableThreadLocal：继承上下文环境的数据，拷贝一份给子线程
+
+    ```java
+    package com.sxt.others;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: ThreadLocalTest4.java
+     * @time: 2019/11/11 10:25
+     * @desc: InheritableThreadLocal：继承上下文环境的数据，拷贝一份给子线程。起点
+     */
+    
+    public class ThreadLocalTest4 {
+        private static ThreadLocal<Integer> threadLocal = new InheritableThreadLocal<>();
+    
+        public static void main(String[] args) {
+            threadLocal.set(2);
+            System.out.println(Thread.currentThread().getName() + "-->" + threadLocal.get());
+    
+            // 线程由main线程开辟
+            new Thread(() -> {
+                System.out.println(Thread.currentThread().getName() + "-->" + threadLocal.get());
+                // 但是既然是拷贝，所以想改还是互不影响的
+                threadLocal.set(200);
+                System.out.println(Thread.currentThread().getName() + "-->" + threadLocal.get());
+            }).start();
+        }
+    }
+    ```
+
+- 可重入锁：锁可以延续使用 + 计数器：ReentrantLock
+
+- CAS（Compare and Swap）比较并交换:
+
+  - 参考链接：[CAS乐观锁](https://www.jianshu.com/p/ae25eb3cfb5d)
+
+  - 悲观锁：synchronized是独占锁即悲观锁，会导致其他所有需要锁的线程挂起，等待持有锁的线程释放锁。
+
+  - 乐观锁：每次不加锁而是假设没有冲突而去完成某项操作，如果因为冲突失败就重试，直到成功为止。
+  
+     ![img](https://img-blog.csdnimg.cn/20191111104923726.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70)
+  
+     ```java
+     package com.sxt.others;
+     
+     import java.util.concurrent.atomic.AtomicInteger;
+     
+     /**
+      * @author: Li Tian
+      * @contact: litian_cup@163.com
+      * @software: IntelliJ IDEA
+      * @file: CASTest.java
+      * @time: 2019/11/11 10:51
+      * @desc: CAS
+      */
+     
+     public class CASTest {
+         // 库存
+         private static AtomicInteger stock = new AtomicInteger(3);
+         public static void main(String[] args){
+             for (int i = 0; i < 5; i++) {
+                 new Thread(()->{
+                     // 模拟网络延时
+                     try {
+                         Thread.sleep(1000);
+                     } catch (InterruptedException e) {
+                         e.printStackTrace();
+                     }
+                     Integer left = stock.decrementAndGet();
+                     if(left<1){
+                         System.out.println("抢完了...");
+                         return;
+                     }
+                     System.out.println(Thread.currentThread().getName() + "抢了一个商品" + "-->还剩" + left);
+                 }).start();
+             }
+         }
+     }
+     ```
+
+- [Java 常见的锁分类及其特点](https://www.jianshu.com/p/a5155d000616)、[JAVA锁有哪些种类，以及区别](https://www.cnblogs.com/lxmyhappy/p/7380073.html)
+
+## 第12章 网络编程
 
