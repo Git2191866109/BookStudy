@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="664eef89-93bd-40e6-8d4f-b8b025cfb276" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/others/QuartzTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/others/QuartzTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/others/CASTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/others/CASTest.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -76,7 +76,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.CASTest">
+  <component name="RunManager" selected="Application.PortTest">
     <configuration name="CASTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.sxt.others.CASTest" />
       <module name="JAVAPro" />
@@ -91,13 +91,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ThreadLocalTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.others.ThreadLocalTest" />
+    <configuration name="IPTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.loc.IPTest" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.sxt.others.*" />
+          <option name="PATTERN" value="com.sxt.loc.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -105,13 +105,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ThreadLocalTest2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.others.ThreadLocalTest2" />
+    <configuration name="PortTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.loc.PortTest" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.sxt.others.*" />
+          <option name="PATTERN" value="com.sxt.loc.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -172,19 +172,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.ThreadLocalTest" />
-      <item itemvalue="Application.ThreadLocalTest2" />
       <item itemvalue="Application.ThreadLocalTest3" />
       <item itemvalue="Application.ThreadLocalTest4" />
       <item itemvalue="Application.CASTest" />
+      <item itemvalue="Application.IPTest" />
+      <item itemvalue="Application.PortTest" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.PortTest" />
+        <item itemvalue="Application.IPTest" />
         <item itemvalue="Application.CASTest" />
         <item itemvalue="Application.ThreadLocalTest4" />
         <item itemvalue="Application.ThreadLocalTest3" />
-        <item itemvalue="Application.ThreadLocalTest2" />
-        <item itemvalue="Application.ThreadLocalTest" />
       </list>
     </recent_temporary>
   </component>
@@ -244,6 +244,8 @@
       <workItem from="1573292981497" duration="2453000" />
       <workItem from="1573304136088" duration="3972000" />
       <workItem from="1573433868522" duration="7438000" />
+      <workItem from="1573451389213" duration="1323000" />
+      <workItem from="1573524744703" duration="2495000" />
     </task>
     <servers />
   </component>

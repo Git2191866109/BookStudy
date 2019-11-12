@@ -2478,3 +2478,136 @@
 
 ## 第12章 网络编程
 
+### 1. 概念
+
+- [BS架构和CS架构的区别](https://blog.csdn.net/woharen/article/details/89518015)、[BS架构与CS架构的区别（全）](https://blog.csdn.net/nsu406096612/article/details/71057003)
+
+- 网络：通讯协议+通信接口
+
+- 网络分层：OSI（Open System Interconnect）开放系统互连参考模型
+
+  ![图12-1 七层协议模型.png](https://www.sxt.cn/360shop/Public/admin/UEditor/20170528/1495936432794161.png)
+
+- 网络分层：OSI网络通信协议模型只是一个参考模型，而TCP/IP协议是事实上的标准。TCP/IP协议参考了OSI模型，但是并没有严格按照OSI规定的七层标准去划分，而只划分了四层。
+
+  ![图12-2 开放系统互连参考模型与TCPIP参考模型对比.png](https://www.sxt.cn/360shop/Public/admin/UEditor/20170528/1495936545384683.png)
+
+-  **数据封装与解封：**
+
+  -  由于用户传输的数据一般都比较大，有的可以达到MB字节，一次性发送出去十分困难，于是就需要把数据分成许多片段，再按照一定的次序发送出去。这个过程就需要对数据进行封装。 
+  -  数据封装(Data Encapsulation)是指将协议数据单元(PDU)封装在一组协议头和协议尾中的过程。在OSI七层参考模型中，每层主要负责与其它机器上的对等层进行通信。该过程是在协议数据单元(PDU)中实现的，其中每层的PDU一般由本层的协议头、协议尾和数据封装构成。
+
+  1. 数据发送处理过程
+
+  ​    (1) 应用层将数据交给传输层，传输层添加上TCP的控制信息(称为TCP头部)，这个数据单元称为段(Segment)，加入控制信息的过程称为封装。然后，将段交给网络层。
+
+  ​    (2) 网络层接收到段，再添加上IP头部，这个数据单元称为包(Packet)。然后，将包交给数据链路层。
+
+  ​    (3) 数据链路层接收到包，再添加上MAC头部和尾部，这个数据单元称为帧(Frame)。然后，将帧交给物理层。
+
+  ​    (4) 物理层将接收到的数据转化为比特流，然后在网线中传送。
+
+  2. 数据接收处理过程
+
+  ​    (1) 物理层接收到比特流，经过处理后将数据交给数据链路层。
+
+  ​    (2) 数据链路层将接收到的数据转化为数据帧，再除去MAC头部和尾部，这个除去控制信息的过程称为解封，然后将包交给网络层。
+
+  ​    (3) 网络层接收到包，再除去IP头部，然后将段交给传输层。
+
+  ​    (4) 传输层接收到段，再除去TCP头部，然后将数据交给应用层。
+
+     从以上传输过程中，可以总结出以下规则：
+
+  ​    (1) 发送方数据处理的方式是从高层到底层，逐层进行数据封装。
+
+  ​    (2) 接收方数据处理的方式是从底层到高层，逐层进行数据解封装。
+
+  ​    接收方的每一层只把对该层有意义的数据拿走，或者说每一层只能处理发送方同等层的数据，然后把其余的部分传递给上一层，这就是**对等层通信**的概念。 
+
+  ![图12-3 数据封装.png](https://www.sxt.cn/360shop/Public/admin/UEditor/20170528/1495936672663711.png)
+
+  ![图12-4 数据解封.png](https://www.sxt.cn/360shop/Public/admin/UEditor/20170528/1495936682749880.png)
+
+- **IP地址：**用来标识网络中的一个通信实体的地址。通信实体可以是计算机、路由器等。 比如互联网的每个服务器都要有自己的IP地址，而每个局域网的计算机要通信也要配置IP地址。路由器是连接两个或多个网络的网络设备。 
+
+  - 目前主流使用的IP地址是IPV4，但是随着网络规模的不断扩大，IPV4面临着枯竭的危险，所以推出了IPV6。
+
+    IPV4：32位地址，并以8位为一个单位，分成四部分，以点分十进制表示，如192.168.0.1。因为8位二进制的计数范围是00000000---11111111，对应十进制的0-255，所以-4.278.4.1是错误的IPV4地址。
+
+    IPV6：128位(16个字节)写成8个16位的无符号整数，每个整数用四个十六进制位表示，每个数之间用冒号(：)分开，如：3ffe:3201:1401:1280:c8ff:fe4d:db39:1984
+
+  -  **注意事项**
+
+    - 127.0.0.1 本机地址
+    - 192.168.0.0--192.168.255.255为私有地址，属于非注册地址，专门为组织机构内部使用。
+
+  - InetAddress：
+
+    1. getLocalHost：本机
+    2. getByName：根据域名DNS | IP地址 --> IP
+
+  - 两个成员方法
+
+    - getHostAddress：返回地址
+    - getHostName：返回计算机名
+  
+-  **端口：**
+
+  - IP地址用来标识一台计算机，但是一台计算机上可能提供多种网络应用程序，如何来区分这些不同的程序呢？这就要用到端口。 
+
+  - 端口是虚拟的概念，并不是说在主机上真的有若干个端口。通过端口，可以在一个主机上运行多个网络应用程序。 端口的表示是一个16位的二进制整数，对应十进制的0-65535。
+
+  - Oracle、MySQL、Tomcat、QQ、msn、迅雷、电驴、360等网络程序都有自己的端口。
+
+  - 查看命令
+
+    - 查看所有端口：netstat -aon
+    - 查看指定端口：netstat -aon | findstr “808”
+    - 查看指定进程：tasklist | findstr “808”
+    - 查看具体程序：使用任务管理器查看PID
+
+  - 需要掌握的知识：
+
+    1. 端口是用来区分软件的
+    2. 2个字节，0-65535，UDP和TCP一样多
+    3. 同一个协议端口不能冲突
+    4. 定义的端口越大越好
+
+  - InetSocketAddress
+
+    1. 构造器 new InetSocketAddress(地址|域名, 端口);
+    2. 方法：getAddress()，getPort(), getHostName()
+
+    ```java
+    package com.sxt.loc;
+    
+    import java.net.InetSocketAddress;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: PortTest.java
+     * @time: 2019/11/12 14:24
+     * @desc: 端口
+     */
+    
+    public class PortTest {
+        public static void main(String[] args){
+            // 包含端口
+            InetSocketAddress socketAddress1 = new InetSocketAddress("127.0.0.1", 8080);
+            InetSocketAddress socketAddress2 = new InetSocketAddress("localhost", 9000);
+            System.out.println(socketAddress1.getHostName());
+            System.out.println(socketAddress1.getAddress());
+            System.out.println(socketAddress1.getPort());
+            System.out.println(socketAddress2.getHostName());
+            System.out.println(socketAddress2.getAddress());
+            System.out.println(socketAddress2.getPort());
+        }
+    }
+    ```
+
+-  **URL：**
+
+  - 在www上，每一信息资源都有统一且唯一的地址，该地址就叫URL(Uniform Resource Locator)，它是www的统一资源定位符。URL由4部分组成：协议 、存放资源的主机域名、资源文件名和端口号。如果未指定该端口号，则使用协议默认的端口。例如http协议的默认端口为80。在浏览器中访问网页时，地址栏显示的地址就是URL。 
