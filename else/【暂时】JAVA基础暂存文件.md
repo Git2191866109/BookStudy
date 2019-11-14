@@ -2611,3 +2611,241 @@
 -  **URL：**
 
   - 在www上，每一信息资源都有统一且唯一的地址，该地址就叫URL(Uniform Resource Locator)，它是www的统一资源定位符。URL由4部分组成：协议 、存放资源的主机域名、资源文件名和端口号。如果未指定该端口号，则使用协议默认的端口。例如http协议的默认端口为80。在浏览器中访问网页时，地址栏显示的地址就是URL。 
+  - 网络三大基石：html、http、url
+  - 由4部分组成：
+    1. 协议
+    2. 域名、计算机
+    3. 端口：默认80
+    4. 请求资源
+
+  ```java
+  package com.sxt.loc;
+  
+  import java.net.MalformedURLException;
+  import java.net.URL;
+  
+  /**
+   * @author: Li Tian
+   * @contact: litian_cup@163.com
+   * @software: IntelliJ IDEA
+   * @file: URLTest.java
+   * @time: 2019/11/14 9:27
+   * @desc: URL练习
+   */
+  
+  public class URLTest {
+      public static void main(String[] args) throws MalformedURLException {
+          URL url = new URL("http://www.baidu.com:80/index.html?uname=shsxt&age=18#a");
+          // 获取四个值
+          System.out.println("协议：" + url.getProtocol());
+          System.out.println("域名|ip：" + url.getHost());
+          System.out.println("端口：" + url.getPort());
+          System.out.println("请求资源1：" + url.getFile());
+          System.out.println("请求资源2：" + url.getPath());
+  
+          // 参数
+          System.out.println("参数：" + url.getQuery());
+          // 锚点
+          System.out.println("锚点：" + url.getRef());
+      }
+  }
+  ```
+
+  - 爬虫
+
+    - 简单爬虫
+
+      ```java
+      package com.sxt.loc;
+      
+      import java.io.BufferedReader;
+      import java.io.IOException;
+      import java.io.InputStream;
+      import java.io.InputStreamReader;
+      import java.net.MalformedURLException;
+      import java.net.URL;
+      
+      /**
+       * @author: Li Tian
+       * @contact: litian_cup@163.com
+       * @software: IntelliJ IDEA
+       * @file: SpiderTest1.java
+       * @time: 2019/11/14 10:20
+       * @desc: 网络爬虫
+       */
+      
+      public class SpiderTest1 {
+          public static void main(String[] args) throws IOException {
+              // 获取URL
+              URL url = new URL("https://www.jd.com");
+              // 下载资源
+              InputStream is = url.openStream();
+              BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+              String msg = null;
+              while(null != (msg=br.readLine())){
+                  System.out.println(msg);
+              }
+          }
+      }
+      ```
+
+    - 如果爬虫被拒绝，可以模拟浏览器爬虫
+
+      ```java
+      package com.sxt.loc;
+      
+      import java.io.BufferedReader;
+      import java.io.IOException;
+      import java.io.InputStream;
+      import java.io.InputStreamReader;
+      import java.net.HttpURLConnection;
+      import java.net.MalformedURLException;
+      import java.net.URL;
+      
+      /**
+       * @author: Li Tian
+       * @contact: litian_cup@163.com
+       * @software: IntelliJ IDEA
+       * @file: SpiderTest2.java
+       * @time: 2019/11/14 10:26
+       * @desc: 网络爬虫，对于那些403拒绝的，模拟浏览器
+       */
+      
+      public class SpiderTest2 {
+          public static void main(String[] args) throws IOException {
+              // 获取URL
+              URL url = new URL("https://www.dianping.com");
+              // http协议打开
+              HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+              // 设置请求方式
+              conn.setRequestMethod("GET");
+              conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36");
+              BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+              String msg = null;
+              while (null != (msg = br.readLine())) {
+                  System.out.println(msg);
+              }
+          }
+      }
+      ```
+
+- Socket：
+
+  - 我们开发的网络应用程序位于应用层，TCP和UDP属于传输层协议，在应用层如何使用传输层的服务呢?在应用层和传输层之间，则是使用套接Socket来进行分离。 
+
+  - 套接字（Socket）就像是传输层为应用层开的一个小口，应用程序通过这个小口向远程发送数据，或者接收远程发来的数据;而这个小口以内，也就是数据进入这个口之后，或者数据从这个口出来之前，是不知道也不需要知道的，也不会关心它如何传输，这属于网络其它层次工作。 
+
+  - Socket实际是传输层供给应用层的编程接口。Socket就是应用层与传输层之间的桥梁。使用Socket编程可以开发客户机和服务器应用程序，可以在本地网络上进行通信，也可通过Internet在全球范围内通信。 
+
+    ![图12-5 Socket的作用.png](https://www.sxt.cn/360shop/Public/admin/UEditor/20170528/1495936842448637.png)
+
+-  **TCP协议和UDP协议的联系和区别**
+
+  - TCP协议和UDP协议是传输层的两种协议。Socket是传输层供给应用层的编程接口，所以Socket编程就分为TCP编程和UDP编程两类。
+
+  - 在网络通讯中，TCP方式就类似于拨打电话，使用该种方式进行网络通讯时，需要建立专门的虚拟连接，然后进行可靠的数据传输，如果数据发送失败，则客户端会自动重发该数据。而UDP方式就类似于发送短信，使用这种方式进行网络通讯时，不需要建立专门的虚拟连接，传输也不是很可靠，如果发送失败则客户端无法获得。
+
+  - 这两种传输方式都在实际的网络编程中使用，重要的数据一般使用TCP方式进行数据传输，而大量的非核心数据则可以通过UDP方式进行传递，在一些程序中甚至结合使用这两种方式进行数据传递。
+
+  - 由于TCP需要建立专用的虚拟连接以及确认传输是否正确，所以使用TCP方式的速度稍微慢一些，而且传输时产生的数据量要比UDP稍微大一些。
+
+  - **总结**
+
+    1. TCP是面向连接的，传输数据安全，稳定，效率相对较低。
+
+    2. UDP是面向无连接的，传输数据不安全，效率较高。
+
+### 2. UDP编程
+
+- 接收端
+
+  1. 使用DatagramSocket指定端口，创建接收端
+  2. 准备容器，封装成DatagramPacket包裹
+  3. 阻塞式接受包裹receeive(DatagramPacket p)
+  4. 分析数据，byte[] getData，getLength()
+  5. 释放资源
+
+  ```java
+  package com.sxt.udp;
+  
+  import java.net.DatagramPacket;
+  import java.net.DatagramSocket;
+  
+  /**
+   * @author: Li Tian
+   * @contact: litian_cup@163.com
+   * @software: IntelliJ IDEA
+   * @file: UDPServer.java
+   * @time: 2019/11/14 14:14
+   * @desc: 接收端
+   */
+  
+  public class UDPServer {
+      public static void main(String[] args) throws Exception{
+          System.out.println("接收方启动中...");
+          //  1. 使用DatagramSocket指定端口，创建接收端
+          DatagramSocket server = new DatagramSocket(9999);
+          //  2. 准备容器，封装成DatagramPacket包裹
+          byte[] container = new byte[1024*60];
+          DatagramPacket packet = new DatagramPacket(container, 0, container.length);
+          //  3. 阻塞式接受包裹receeive(DatagramPacket p)
+          //  阻塞式
+          server.receive(packet);
+          //  4. 分析数据，byte[] getData，getLength()
+          byte[] datas = packet.getData();
+          int len = packet.getLength();
+          System.out.println(new String(datas, 0, len));
+          //  5. 释放资源
+          server.close();
+      }
+  }
+  ```
+
+- 发送端
+
+  1. 使用DatagramSocket指定端口，创建发送端
+  2. 准备数据，一定转成字节数组
+  3. 封装成DatagramPacket包裹，需要指定目的地
+  4. 发送包裹send(DatagramPacket p)
+  5. 释放资源
+
+  ```java
+  package com.sxt.udp;
+  
+  import java.io.IOException;
+  import java.net.DatagramPacket;
+  import java.net.DatagramSocket;
+  import java.net.InetSocketAddress;
+  import java.net.SocketException;
+  
+  /**
+   * @author: Li Tian
+   * @contact: litian_cup@163.com
+   * @software: IntelliJ IDEA
+   * @file: UDPClient.java
+   * @time: 2019/11/14 14:14
+   * @desc: 发送端
+   */
+  
+  public class UDPClient {
+      public static void main(String[] args) throws IOException {
+          System.out.println("发送方启动中...");
+          //  1. 使用DatagramSocket指定端口，创建发送端
+          DatagramSocket client = new DatagramSocket(8888);
+          //  2. 准备数据，一定转成字节数组
+          String data = "上海尚学堂";
+          byte[] datas = data.getBytes();
+          //  3. 封装成DatagramPacket包裹，需要指定目的地
+          DatagramPacket packet = new DatagramPacket(datas, 0, datas.length, new InetSocketAddress("localhost", 9999));
+          //  4. 发送包裹send(DatagramPacket p)
+          client.send(packet);
+          //  5. 释放资源
+          client.close();
+      }
+  }
+  ```
+
+- 注意：Address already in use: Cannot bind，同一个协议下端口不允许冲突
+
+- 
+
