@@ -2847,5 +2847,367 @@
 
 - 注意：Address already in use: Cannot bind，同一个协议下端口不允许冲突
 
-- 
+- 操作基本数据类型使用Data流
+
+  - 接收端
+
+    ```java
+    package com.sxt.udp;
+    
+    import java.io.BufferedInputStream;
+    import java.io.ByteArrayInputStream;
+    import java.io.DataInputStream;
+    import java.net.DatagramPacket;
+    import java.net.DatagramSocket;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: UDPServer.java
+     * @time: 2019/11/14 14:14
+     * @desc: 接收端
+     */
+    
+    public class UDPTypeServer {
+        public static void main(String[] args) throws Exception{
+            System.out.println("接收方启动中...");
+            //  1. 使用DatagramSocket指定端口，创建接收端
+            DatagramSocket server = new DatagramSocket(9999);
+            //  2. 准备容器，封装成DatagramPacket包裹
+            byte[] container = new byte[1024*60];
+            DatagramPacket packet = new DatagramPacket(container, 0, container.length);
+            //  3. 阻塞式接受包裹receeive(DatagramPacket p)
+            //  阻塞式
+            server.receive(packet);
+            //  4. 分析数据，将字节数组还原为对应的类型即可
+            byte[] datas = packet.getData();
+            int len = packet.getLength();
+            DataInputStream dis = new DataInputStream(new BufferedInputStream(new ByteArrayInputStream(datas)));
+            // 顺序与写出一致
+            String msg = dis.readUTF();
+            boolean flag = dis.readBoolean();
+            System.out.println(msg + "-->" + flag);
+            //  5. 释放资源
+            server.close();
+        }
+    }
+    ```
+
+  - 发送端
+
+    ```java
+    package com.sxt.udp;
+    
+    import java.io.BufferedOutputStream;
+    import java.io.ByteArrayOutputStream;
+    import java.io.DataOutputStream;
+    import java.io.IOException;
+    import java.net.DatagramPacket;
+    import java.net.DatagramSocket;
+    import java.net.InetSocketAddress;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: UDPClient.java
+     * @time: 2019/11/14 14:14
+     * @desc: 发送端
+     */
+    
+    public class UDPTypeClient {
+        public static void main(String[] args) throws IOException {
+            System.out.println("发送方启动中...");
+            //  1. 使用DatagramSocket指定端口，创建发送端
+            DatagramSocket client = new DatagramSocket(8888);
+            //  2. 将基本类型，转成字节数组
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(baos));
+            // 操作类型+数据
+            dos.writeUTF("上海尚学堂");
+            dos.writeBoolean(false);
+            dos.flush();
+            byte[] datas = baos.toByteArray();
+            //  3. 封装成DatagramPacket包裹，需要指定目的地
+            DatagramPacket packet = new DatagramPacket(datas, 0, datas.length, new InetSocketAddress("localhost", 9999));
+            //  4. 发送包裹send(DatagramPacket p)
+            client.send(packet);
+            //  5. 释放资源
+            client.close();
+        }
+    }
+    ```
+
+- 操作引用数据类型使用Object流
+
+- 操作文件通过将文件转换成字节数组
+
+- 实现多次交流，单方面聊天
+
+  - 发送端：
+
+    ```java
+    package com.sxt.udp;
+    
+    import java.io.BufferedReader;
+    import java.io.IOException;
+    import java.io.InputStreamReader;
+    import java.net.DatagramPacket;
+    import java.net.DatagramSocket;
+    import java.net.InetSocketAddress;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: UDPClient.java
+     * @time: 2019/11/14 14:14
+     * @desc: 发送端
+     */
+    
+    public class UDPTalkClient {
+        public static void main(String[] args) throws IOException {
+            System.out.println("发送方启动中...");
+            //  1. 使用DatagramSocket指定端口，创建发送端
+            DatagramSocket client = new DatagramSocket(8888);
+            //  2. 准备数据，一定转成字节数组
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            while (true) {
+                String data = reader.readLine();
+                byte[] datas = data.getBytes();
+                //  3. 封装成DatagramPacket包裹，需要指定目的地
+                DatagramPacket packet = new DatagramPacket(datas, 0, datas.length, new InetSocketAddress("localhost", 9999));
+                //  4. 发送包裹send(DatagramPacket p)
+                client.send(packet);
+                if (data.equals("q")) {
+                    break;
+                }
+            }
+            //  5. 释放资源
+            client.close();
+        }
+    }
+    ```
+
+  - 接收端：
+
+    ```java
+    package com.sxt.udp;
+    
+    import java.net.DatagramPacket;
+    import java.net.DatagramSocket;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: UDPServer.java
+     * @time: 2019/11/14 14:14
+     * @desc: 接收端
+     */
+    
+    public class UDPTalkServer {
+        public static void main(String[] args) throws Exception {
+            System.out.println("接收方启动中...");
+            //  1. 使用DatagramSocket指定端口，创建接收端
+            DatagramSocket server = new DatagramSocket(9999);
+            while (true) {
+                //  2. 准备容器，封装成DatagramPacket包裹
+                byte[] container = new byte[1024 * 60];
+                DatagramPacket packet = new DatagramPacket(container, 0, container.length);
+                //  3. 阻塞式接受包裹receeive(DatagramPacket p)
+                //  阻塞式
+                server.receive(packet);
+                //  4. 分析数据，byte[] getData，getLength()
+                byte[] datas = packet.getData();
+                int len = packet.getLength();
+                String data = new String(datas, 0, len);
+                System.out.println(data);
+                if (data.equals("q")) {
+                    break;
+                }
+            }
+            //  5. 释放资源
+            server.close();
+        }
+    }
+    ```
+
+- 在线咨询
+
+  - 发送端：
+
+    ```java
+    package com.sxt.udp;
+    
+    import java.io.BufferedReader;
+    import java.io.IOException;
+    import java.io.InputStreamReader;
+    import java.net.DatagramPacket;
+    import java.net.DatagramSocket;
+    import java.net.InetSocketAddress;
+    import java.net.SocketException;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: TalkSend.java
+     * @time: 2019/11/16 20:03
+     * @desc: 使用面向对象封装
+     */
+    
+    public class TalkSend implements Runnable {
+        private DatagramSocket client;
+        private BufferedReader reader;
+        private String toIP;
+        private int toPort;
+    
+        public TalkSend(int port, String toIP, int toPort) {
+            this.toIP = toIP;
+            this.toPort = toPort;
+            try {
+                client = new DatagramSocket(port);
+                reader = new BufferedReader((new InputStreamReader(System.in)));
+            } catch (SocketException e) {
+                e.printStackTrace();
+            }
+        }
+    
+        @Override
+        public void run() {
+            while (true) {
+                String data = null;
+                try {
+                    data = reader.readLine();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                byte[] datas = data.getBytes();
+                //  3. 封装成DatagramPacket包裹，需要指定目的地
+                DatagramPacket packet = new DatagramPacket(datas, 0, datas.length, new InetSocketAddress(this.toIP, this.toPort));
+                //  4. 发送包裹send(DatagramPacket p)
+                try {
+                    client.send(packet);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if (data.equals("q")) {
+                    break;
+                }
+            }
+            //  5. 释放资源
+            client.close();
+        }
+    }
+    ```
+
+  - 接收端
+
+    ```java
+    package com.sxt.udp;
+    
+    import java.io.IOException;
+    import java.net.DatagramPacket;
+    import java.net.DatagramSocket;
+    import java.net.SocketException;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: TalkReceive.java
+     * @time: 2019/11/16 20:11
+     * @desc: 封装接收器
+     */
+    
+    public class TalkReceive implements Runnable {
+        private DatagramSocket server;
+        private String from;
+    
+        public TalkReceive(int port, String from) {
+            this.from = from;
+            try {
+                server = new DatagramSocket(port);
+            } catch (SocketException e) {
+                e.printStackTrace();
+            }
+        }
+    
+        @Override
+        public void run() {
+            while (true) {
+                //  2. 准备容器，封装成DatagramPacket包裹
+                byte[] container = new byte[1024 * 60];
+                DatagramPacket packet = new DatagramPacket(container, 0, container.length);
+                //  3. 阻塞式接受包裹receeive(DatagramPacket p)
+                //  阻塞式
+                try {
+                    server.receive(packet);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                //  4. 分析数据，byte[] getData，getLength()
+                byte[] datas = packet.getData();
+                int len = packet.getLength();
+                String data = new String(datas, 0, len);
+                System.out.println(from + "说：" + data);
+                if (data.equals("q")) {
+                    break;
+                }
+            }
+            //  5. 释放资源
+            server.close();
+        }
+    }
+    ```
+
+  - 模拟学生
+
+    ```java
+    package com.sxt.udp;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: TalkStudent.java
+     * @time: 2019/11/16 20:13
+     * @desc: 模拟学生端
+     */
+    
+    public class TalkStudent {
+        public static void main(String[] args) {
+            System.out.println("学生加入聊天室...");
+            new Thread(new TalkSend(7777, "localhost", 9999)).start();
+            new Thread(new TalkReceive(8888, "老师")).start();
+        }
+    }
+    ```
+
+  - 模拟老师
+
+    ```java
+    package com.sxt.udp;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: TalkTeacher.java
+     * @time: 2019/11/16 20:13
+     * @desc: 模拟老师端
+     */
+    
+    public class TalkTeacher {
+        public static void main(String[] args) {
+            System.out.println("老师加入聊天室...");
+            new Thread(new TalkReceive(9999, "学生")).start();
+            new Thread(new TalkSend(5555, "localhost", 8888)).start();
+        }
+    }
+    ```
+
+### 3. TCP编程
 

@@ -43,20 +43,22 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="full.screen.before.presentation.mode" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/com/sxt/udp" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.notifications" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.tabs" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.sxt.udp" />
       <recent name="com.sxt.thread" />
       <recent name="" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt\udp" />
       <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src" />
       <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt\others" />
       <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\lib" />
@@ -75,37 +77,9 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.UDPClient">
-    <configuration name="SpiderTest1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.loc.SpiderTest1" />
-      <module name="JAVAPro" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.sxt.loc.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="SpiderTest2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.loc.SpiderTest2" />
-      <module name="JAVAPro" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.sxt.loc.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="UDPClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.udp.UDPClient" />
+  <component name="RunManager" selected="Application.TalkStudent">
+    <configuration name="TalkStudent" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.udp.TalkStudent" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
@@ -118,8 +92,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UDPServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.udp.UDPServer" />
+    <configuration name="TalkTeacher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.udp.TalkTeacher" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
@@ -132,13 +106,41 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="URLTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.loc.URLTest" />
+    <configuration name="UDPTalkClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.udp.UDPTalkClient" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.sxt.loc.*" />
+          <option name="PATTERN" value="com.sxt.udp.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UDPTalkServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.udp.UDPTalkServer" />
+      <module name="JAVAPro" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.sxt.udp.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UDPTypeClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.udp.UDPTypeClient" />
+      <module name="JAVAPro" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.sxt.udp.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -171,19 +173,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.URLTest" />
-      <item itemvalue="Application.SpiderTest1" />
-      <item itemvalue="Application.SpiderTest2" />
-      <item itemvalue="Application.UDPClient" />
-      <item itemvalue="Application.UDPServer" />
+      <item itemvalue="Application.UDPTypeClient" />
+      <item itemvalue="Application.UDPTalkServer" />
+      <item itemvalue="Application.UDPTalkClient" />
+      <item itemvalue="Application.TalkTeacher" />
+      <item itemvalue="Application.TalkStudent" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.UDPClient" />
-        <item itemvalue="Application.UDPServer" />
-        <item itemvalue="Application.SpiderTest2" />
-        <item itemvalue="Application.SpiderTest1" />
-        <item itemvalue="Application.URLTest" />
+        <item itemvalue="Application.TalkStudent" />
+        <item itemvalue="Application.TalkTeacher" />
+        <item itemvalue="Application.UDPTalkClient" />
+        <item itemvalue="Application.UDPTalkServer" />
+        <item itemvalue="Application.UDPTypeClient" />
       </list>
     </recent_temporary>
   </component>
@@ -246,7 +248,7 @@
       <workItem from="1573451389213" duration="1323000" />
       <workItem from="1573524744703" duration="5630000" />
       <workItem from="1573695992082" duration="4611000" />
-      <workItem from="1573783523852" duration="1196000" />
+      <workItem from="1573783523852" duration="5197000" />
     </task>
     <servers />
   </component>
