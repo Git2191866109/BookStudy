@@ -12,7 +12,8 @@ package com.sxt.udp;
 public class TestTalk {
     public static void main(String[] args) {
         System.out.println("李英俊加入聊天室...");
-        new Thread(new TalkReceive(9999, "学生")).start();
-        new Thread(new TalkSend(5555, "192.168.1.101", 8888)).start();
+        new Thread(new TalkReceive(9999, "李不羁")).start();
+        new Thread(new TalkSend(5555,
+                "192.168.1.104", 8888)).start();
     }
 }
