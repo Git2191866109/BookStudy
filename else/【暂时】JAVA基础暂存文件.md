@@ -3211,3 +3211,377 @@
 
 ### 3. TCP编程
 
+- 创建服务器
+
+  1. 指定端口，使用ServerSocket创建服务器
+  2. 阻塞式等待连接 accept
+  3. 操作：输入输出流操作
+  4. 释放资源
+
+- 创建客户端
+
+  1. 建立连接：使用Socket创建客户端 + 服务的地址和端口
+  2. 操作：输入输出流操作
+  3. 释放资源
+
+- 基本步骤
+
+  - 服务器
+
+    ```java
+    package com.sxt.tcp;
+    
+    import java.io.DataInputStream;
+    import java.io.IOException;
+    import java.net.ServerSocket;
+    import java.net.Socket;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: Server.java
+     * @time: 2019/11/18 14:45
+     * @desc: 熟悉流程，创建服务器
+     */
+    
+    public class Server {
+        public static void main(String[] args) throws IOException {
+            System.out.println("-----Server-----");
+            //  1. 指定端口，使用ServerSocket创建服务器
+            ServerSocket server = new ServerSocket(8888);
+            //  2. 阻塞式等待连接 accept
+            Socket client = server.accept();
+            System.out.println("一个客户端建立了连接...");
+            //  3. 操作：输入输出流操作
+            DataInputStream dis = new DataInputStream(client.getInputStream());
+            String data = dis.readUTF();
+            System.out.println(data);
+            //  4. 释放资源
+            dis.close();
+            client.close();
+            //  关闭服务器的话
+            server.close();
+        }
+    }
+    ```
+
+  - 客户端
+
+    ```java
+    package com.sxt.tcp;
+    
+    import java.io.DataOutputStream;
+    import java.io.IOException;
+    import java.net.Socket;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: Client.java
+     * @time: 2019/11/18 14:50
+     * @desc: 创建客户端
+     */
+    
+    public class Client {
+        public static void main(String[] args) throws IOException {
+            System.out.println("-----Client-----");
+            //  1. 建立连接：使用Socket创建客户端 + 服务的地址和端口
+            Socket client = new Socket("localhost", 8888);
+            //  2. 操作：输入输出流操作
+            DataOutputStream dos = new DataOutputStream(client.getOutputStream());
+            String data = "Hello";
+            dos.writeUTF(data);
+            dos.flush();
+            //  3. 释放资源
+            dos.close();
+            client.close();
+        }
+    }
+    ```
+
+- 模拟登陆 单向
+
+  - 服务器
+
+    ```java
+    package com.sxt.tcp;
+    
+    import java.io.DataInputStream;
+    import java.io.IOException;
+    import java.net.ServerSocket;
+    import java.net.Socket;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: LoginServer.java
+     * @time: 2019/11/18 15:13
+     * @desc: 模拟登陆 单向 服务器
+     */
+    
+    public class LoginServer {
+        public static void main(String[] args) throws IOException {
+            System.out.println("-----Server-----");
+            //  1. 指定端口，使用ServerSocket创建服务器
+            ServerSocket server = new ServerSocket(8888);
+            //  2. 阻塞式等待连接 accept
+            Socket client = server.accept();
+            System.out.println("一个客户端建立了连接...");
+            //  3. 操作：输入输出流操作
+            DataInputStream dis = new DataInputStream(client.getInputStream());
+            String datas = dis.readUTF();
+            //  分析
+            String[] dataArray = datas.split("&");
+            for(String info: dataArray){
+                String[] userInfo = info.split("=");
+                System.out.println(userInfo[0] + "-->" + userInfo[1]);
+            }
+            //  4. 释放资源
+            dis.close();
+            client.close();
+            //  关闭服务器的话
+            server.close();
+        }
+    }
+    ```
+
+  - 客户端
+
+    ```java
+    package com.sxt.tcp;
+    
+    import java.io.BufferedReader;
+    import java.io.DataOutputStream;
+    import java.io.IOException;
+    import java.io.InputStreamReader;
+    import java.net.Socket;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: LoginClient.java
+     * @time: 2019/11/18 15:13
+     * @desc: 模拟登陆 单向 客户端
+     */
+    
+    public class LoginClient {
+        public static void main(String[] args) throws IOException {
+            System.out.println("-----Client-----");
+            BufferedReader console = new BufferedReader(new InputStreamReader((System.in)));
+            System.out.println("请输入用户名：");
+            String uname = console.readLine();
+            System.out.println("请输入密码：");
+            String upwd = console.readLine();
+            //  1. 建立连接：使用Socket创建客户端 + 服务的地址和端口
+            Socket client = new Socket("localhost", 8888);
+            //  2. 操作：输入输出流操作
+            DataOutputStream dos = new DataOutputStream(client.getOutputStream());
+            dos.writeUTF("uname=" + uname + "&upwd=" + upwd);
+            dos.flush();
+            //  3. 释放资源
+            dos.close();
+            client.close();
+        }
+    }
+    ```
+
+- 模拟登陆 双向
+
+  - 服务器
+
+    ```java
+    package com.sxt.tcp;
+    
+    import java.io.DataInputStream;
+    import java.io.DataOutputStream;
+    import java.io.IOException;
+    import java.net.ServerSocket;
+    import java.net.Socket;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: LoginTwoWayServer.java
+     * @time: 2019/11/18 15:23
+     * @desc: 模拟登陆 双向 服务器
+     */
+    
+    public class LoginTwoWayServer {
+        public static void main(String[] args) throws IOException {
+            System.out.println("-----Server-----");
+            //  1. 指定端口，使用ServerSocket创建服务器
+            ServerSocket server = new ServerSocket(8888);
+            //  2. 阻塞式等待连接 accept
+            Socket client = server.accept();
+            System.out.println("一个客户端建立了连接...");
+            //  3. 操作：输入输出流操作
+            DataInputStream dis = new DataInputStream(client.getInputStream());
+            String datas = dis.readUTF();
+            String uname = "";
+            String upwd = "";
+    
+            //  分析
+            String[] dataArray = datas.split("&");
+            for (String info : dataArray) {
+                String[] userInfo = info.split("=");
+                if (userInfo[0].equals("uname")) {
+                    System.out.println("你的用户名为：" + userInfo[1]);
+                    uname = userInfo[1];
+                } else if (userInfo[0].equals("upwd")) {
+                    System.out.println("你的密码为：" + userInfo[1]);
+                    upwd = userInfo[1];
+                }
+            }
+    
+            // 输出
+            DataOutputStream dos = new DataOutputStream(client.getOutputStream());
+            if (uname.equals("litian") && upwd.equals("123")) {
+                dos.writeUTF("登陆成功，欢迎回来！");
+            } else {
+                dos.writeUTF("登陆失败，用户名或密码错误！");
+            }
+            dos.flush();
+    
+            //  4. 释放资源
+            dis.close();
+            client.close();
+            //  关闭服务器的话
+            server.close();
+        }
+    }
+    ```
+
+  - 客户端
+
+    ```java
+    package com.sxt.tcp;
+    
+    import java.io.*;
+    import java.net.Socket;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: LoginTwoWayClient.java
+     * @time: 2019/11/18 15:23
+     * @desc: 模拟登陆 双向 客户端
+     */
+    
+    public class LoginTwoWayClient {
+        public static void main(String[] args) throws IOException {
+            System.out.println("-----Client-----");
+            BufferedReader console = new BufferedReader(new InputStreamReader((System.in)));
+            System.out.println("请输入用户名：");
+            String uname = console.readLine();
+            System.out.println("请输入密码：");
+            String upwd = console.readLine();
+            //  1. 建立连接：使用Socket创建客户端 + 服务的地址和端口
+            Socket client = new Socket("localhost", 8888);
+            //  2. 操作：输入输出流操作
+            DataOutputStream dos = new DataOutputStream(client.getOutputStream());
+            dos.writeUTF("uname=" + uname + "&upwd=" + upwd);
+            dos.flush();
+    
+            // 接受
+            DataInputStream dis = new DataInputStream(client.getInputStream());
+            String result = dis.readUTF();
+            System.out.println(result);
+    
+            //  3. 释放资源
+            dos.close();
+            client.close();
+        }
+    }
+    ```
+
+- 文件上传
+
+  - 服务器
+
+    ```java
+    package com.sxt.tcp;
+    
+    import java.io.*;
+    import java.net.ServerSocket;
+    import java.net.Socket;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: FileServer.java
+     * @time: 2019/11/18 15:32
+     * @desc: 服务器：存储文件
+     */
+    
+    public class FileServer {
+        public static void main(String[] args) throws IOException {
+            System.out.println("-----Server-----");
+            //  1. 指定端口，使用ServerSocket创建服务器
+            ServerSocket server = new ServerSocket(8888);
+            //  2. 阻塞式等待连接 accept
+            Socket client = server.accept();
+            System.out.println("一个客户端建立了连接...");
+            //  3. 操作：文件拷贝 存储
+            InputStream is = new BufferedInputStream(client.getInputStream());
+            OutputStream os = new BufferedOutputStream(new FileOutputStream("./快乐保存.jpg"));
+            byte[] flush = new byte[1024];
+            int len = -1;
+            while ((len = is.read(flush)) != -1) {
+                os.write(flush, 0, len);
+            }
+            //  4. 释放资源
+            os.close();
+            is.close();
+            client.close();
+            //  关闭服务器的话
+            server.close();
+        }
+    }
+    ```
+
+  - 客户端
+
+    ```java
+    package com.sxt.tcp;
+    
+    import java.io.*;
+    import java.net.Socket;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: FileClient.java
+     * @time: 2019/11/18 15:32
+     * @desc: 客户端：上传文件
+     */
+    
+    public class FileClient {
+        public static void main(String[] args) throws IOException {
+            System.out.println("-----Client-----");
+            //  1. 建立连接：使用Socket创建客户端 + 服务的地址和端口
+            Socket client = new Socket("localhost", 8888);
+            //  2. 操作：文件拷贝 上传
+            InputStream is = new BufferedInputStream(new FileInputStream("./快乐.jpg"));
+            OutputStream os = new BufferedOutputStream(client.getOutputStream());
+            byte[] flush = new byte[1024];
+            int len = -1;
+            while ((len = is.read(flush)) != -1) {
+                os.write(flush, 0, len);
+            }
+            //  3. 释放资源
+            os.close();
+            is.close();
+            client.close();
+        }
+    }
+    ```
+
+- 多用户登陆

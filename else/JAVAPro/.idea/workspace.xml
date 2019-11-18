@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="664eef89-93bd-40e6-8d4f-b8b025cfb276" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sxt/udp/TestTalk.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sxt/udp/TestTalk.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../【暂时】JAVA基础暂存文件.md" beforeDir="false" afterPath="$PROJECT_DIR$/../【暂时】JAVA基础暂存文件.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -78,14 +78,14 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.TestTalk">
-    <configuration name="TalkStudent" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.udp.TalkStudent" />
+  <component name="RunManager" selected="Application.FileClient">
+    <configuration name="FileClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.tcp.FileClient" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.sxt.udp.*" />
+          <option name="PATTERN" value="com.sxt.tcp.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -93,13 +93,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TalkTeacher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.udp.TalkTeacher" />
+    <configuration name="FileServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.tcp.FileServer" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.sxt.udp.*" />
+          <option name="PATTERN" value="com.sxt.tcp.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -107,13 +107,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestTalk" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.udp.TestTalk" />
+    <configuration name="LoginClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.tcp.LoginClient" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.sxt.udp.*" />
+          <option name="PATTERN" value="com.sxt.tcp.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -121,13 +121,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UDPTalkClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.udp.UDPTalkClient" />
+    <configuration name="LoginTwoWayClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.tcp.LoginTwoWayClient" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.sxt.udp.*" />
+          <option name="PATTERN" value="com.sxt.tcp.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -135,13 +135,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UDPTalkServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.udp.UDPTalkServer" />
+    <configuration name="LoginTwoWayServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.tcp.LoginTwoWayServer" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.sxt.udp.*" />
+          <option name="PATTERN" value="com.sxt.tcp.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -174,19 +174,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.UDPTalkServer" />
-      <item itemvalue="Application.UDPTalkClient" />
-      <item itemvalue="Application.TalkTeacher" />
-      <item itemvalue="Application.TalkStudent" />
-      <item itemvalue="Application.TestTalk" />
+      <item itemvalue="Application.LoginClient" />
+      <item itemvalue="Application.LoginTwoWayServer" />
+      <item itemvalue="Application.LoginTwoWayClient" />
+      <item itemvalue="Application.FileServer" />
+      <item itemvalue="Application.FileClient" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.TestTalk" />
-        <item itemvalue="Application.TalkStudent" />
-        <item itemvalue="Application.TalkTeacher" />
-        <item itemvalue="Application.UDPTalkClient" />
-        <item itemvalue="Application.UDPTalkServer" />
+        <item itemvalue="Application.FileClient" />
+        <item itemvalue="Application.FileServer" />
+        <item itemvalue="Application.LoginTwoWayClient" />
+        <item itemvalue="Application.LoginTwoWayServer" />
+        <item itemvalue="Application.LoginClient" />
       </list>
     </recent_temporary>
   </component>
@@ -250,6 +250,9 @@
       <workItem from="1573524744703" duration="5630000" />
       <workItem from="1573695992082" duration="4611000" />
       <workItem from="1573783523852" duration="6691000" />
+      <workItem from="1574040032558" duration="690000" />
+      <workItem from="1574059377080" duration="3327000" />
+      <workItem from="1574062942413" duration="91000" />
     </task>
     <servers />
   </component>
