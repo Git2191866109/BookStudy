@@ -3585,3 +3585,416 @@
     ```
 
 - 多用户登陆
+
+  - 服务器
+
+    ```java
+    package com.sxt.tcp;
+    
+    import java.io.DataInputStream;
+    import java.io.DataOutputStream;
+    import java.io.IOException;
+    import java.net.ServerSocket;
+    import java.net.Socket;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: LoginMultiServer.java
+     * @time: 2019/11/19 9:18
+     * @desc:
+     */
+    
+    public class LoginMultiServer {
+        public static void main(String[] args) throws IOException {
+            System.out.println("-----Server-----");
+            //  1. 指定端口，使用ServerSocket创建服务器
+            ServerSocket server = new ServerSocket(8888);
+            boolean isRunning = true;
+            while (isRunning) {
+                //  2. 阻塞式等待连接 accept
+                Socket client = server.accept();
+                System.out.println("一个客户端建立了连接...");
+                new Thread(new Channel(client)).start();
+            }
+            //  关闭服务器的话
+            server.close();
+        }
+    
+        static class Channel implements Runnable {
+            private Socket client;
+            // 输入流封装
+            private DataInputStream dis;
+            // 输出流封装
+            private DataOutputStream dos;
+    
+            public Channel(Socket client) {
+                this.client = client;
+                try {
+                    dis = new DataInputStream(client.getInputStream());
+                    dos = new DataOutputStream(client.getOutputStream());
+                } catch (IOException e) {
+                    release();
+                }
+            }
+    
+            @Override
+            public void run() {
+                //  3. 操作：输入输出流操作
+                String uname = "";
+                String upwd = "";
+                //  分析
+                String datas = receive();
+                String[] dataArray = datas.split("&");
+                for (String info : dataArray) {
+                    String[] userInfo = info.split("=");
+                    if (userInfo[0].equals("uname")) {
+                        System.out.println("你的用户名为：" + userInfo[1]);
+                        uname = userInfo[1];
+                    } else if (userInfo[0].equals("upwd")) {
+                        System.out.println("你的密码为：" + userInfo[1]);
+                        upwd = userInfo[1];
+                    }
+                }
+                if (uname.equals("litian") && upwd.equals("123")) {
+                    send("登陆成功，欢迎回来！");
+                } else {
+                    send("登陆失败，用户名或密码错误！");
+                }
+    
+                release();
+            }
+    
+            // 接受数据
+            private String receive() {
+                String datas = "";
+                try {
+                    datas = dis.readUTF();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return datas;
+            }
+    
+            // 发送数据
+            private void send(String msg) {
+                try {
+                    dos.writeUTF(msg);
+                    dos.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+    
+            // 释放资源
+            private void release() {
+                //  4. 释放资源
+                try {
+                    if (null != dos) {
+                        dos.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    if (null != dis) {
+                        dis.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    if (null != client) {
+                        client.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    ```
+
+  - 客户端
+
+    ```java
+    package com.sxt.tcp;
+    
+    import java.io.*;
+    import java.net.Socket;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: LoginMultiClient.java
+     * @time: 2019/11/19 9:18
+     * @desc:
+     */
+    
+    public class LoginMultiClient {
+        public static void main(String[] args) throws IOException {
+            System.out.println("-----Client-----");
+            //  1. 建立连接：使用Socket创建客户端 + 服务的地址和端口
+            Socket client = new Socket("localhost", 8888);
+            //  2. 操作：输入输出流操作
+            new Send(client).send();
+            new Receive(client).receive();
+            //  3. 释放资源
+            client.close();
+        }
+    
+        static class Send {
+            private Socket client;
+            private DataOutputStream dos;
+            private BufferedReader console;
+            private String msg;
+    
+            public Send(Socket client) {
+                console = new BufferedReader(new InputStreamReader((System.in)));
+                this.client = client;
+                this.msg = init();
+                try {
+                    dos = new DataOutputStream(client.getOutputStream());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+    
+            private String init() {
+                try {
+                    System.out.println("请输入用户名：");
+                    String uname = console.readLine();
+                    System.out.println("请输入密码：");
+                    String upwd = console.readLine();
+                    return "uname=" + uname + "&upwd=" + upwd;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return "???";
+                }
+            }
+    
+            public void send() {
+                try {
+                    dos.writeUTF(msg);
+                    dos.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    
+        static class Receive {
+            private Socket client;
+            private DataInputStream dis;
+    
+            public Receive(Socket client) {
+                this.client = client;
+                try {
+                    dis = new DataInputStream(client.getInputStream());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+    
+            public void receive() {
+                String result = null;
+                try {
+                    result = dis.readUTF();
+                    System.out.println(result);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    ```
+
+### 4. 在线聊天室
+
+- 实现一个客户可以正常收发信息
+
+  - 服务端
+
+    ```java
+    package com.sxt.chat1;
+    
+    import java.io.DataInputStream;
+    import java.io.DataOutputStream;
+    import java.io.IOException;
+    import java.net.ServerSocket;
+    import java.net.Socket;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: Chat.java
+     * @time: 2019/11/19 10:45
+     * @desc: 在线聊天室：服务端
+     * 目标：实现一个客户可以正常收发信息
+     */
+    
+    public class Chat {
+        public static void main(String[] args) throws IOException {
+            System.out.println("-----Server-----");
+            //  1. 指定端口，使用ServerSocket创建服务器
+            ServerSocket server = new ServerSocket(8888);
+            //  2. 阻塞式等待连接 accept
+            Socket client = server.accept();
+            System.out.println("一个客户端建立了连接...");
+            //  3. 接收消息
+            DataInputStream dis = new DataInputStream(client.getInputStream());
+            String msg = dis.readUTF();
+            //  4. 返回消息
+            DataOutputStream dos = new DataOutputStream(client.getOutputStream());
+            dos.writeUTF(msg);
+            dos.flush();
+            //  5. 释放资源
+            dos.close();
+            dis.close();
+            client.close();
+        }
+    }
+    ```
+
+  - 客户端
+
+    ```java
+    package com.sxt.chat1;
+    
+    import java.io.*;
+    import java.net.ServerSocket;
+    import java.net.Socket;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: Client.java
+     * @time: 2019/11/19 10:45
+     * @desc: 在线聊天室：客户端
+     * 目标：实现一个客户可以正常收发信息
+     */
+    
+    public class Client {
+        public static void main(String[] args) throws IOException {
+            System.out.println("-----Client-----");
+            //  1. 建立连接：使用Socket创建客户端 + 服务的地址和端口
+            Socket client = new Socket("localhost", 8888);
+            //  2. 客户端发送消息
+            BufferedReader console = new BufferedReader(new InputStreamReader((System.in)));
+            String msg = console.readLine();
+            DataOutputStream dos = new DataOutputStream(client.getOutputStream());
+            dos.writeUTF(msg);
+            dos.flush();
+            //  3. 获取消息
+            DataInputStream dis = new DataInputStream(client.getInputStream());
+            msg = dis.readUTF();
+            System.out.println(msg);
+            //  4. 释放资源
+            dos.close();
+            dis.close();
+            client.close();
+        }
+    }
+    ```
+
+- 实现一个客户可以正常收发多人信息
+
+  - 服务端
+
+    ```java
+    package com.sxt.chat1;
+    
+    import java.io.DataInputStream;
+    import java.io.DataOutputStream;
+    import java.io.IOException;
+    import java.net.ServerSocket;
+    import java.net.Socket;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: MultiChat.java
+     * @time: 2019/11/19 14:57
+     * @desc: 在线聊天室：服务端
+     * 目标：实现一个客户可以正常收发多人信息
+     */
+    
+    public class MultiChat {
+        public static void main(String[] args) throws IOException {
+            System.out.println("-----Server-----");
+            //  1. 指定端口，使用ServerSocket创建服务器
+            ServerSocket server = new ServerSocket(8888);
+            //  2. 阻塞式等待连接 accept
+            Socket client = server.accept();
+            System.out.println("一个客户端建立了连接...");
+    
+            DataInputStream dis = new DataInputStream(client.getInputStream());
+            DataOutputStream dos = new DataOutputStream(client.getOutputStream());
+            boolean isRunning = true;
+            while (isRunning) {
+                //  3. 接收消息
+                String msg = dis.readUTF();
+                //  4. 返回消息
+                dos.writeUTF(msg);
+                dos.flush();
+            }
+            //  5. 释放资源
+            dos.close();
+            dis.close();
+            client.close();
+        }
+    }
+    ```
+
+  - 客户端
+
+    ```java
+    package com.sxt.chat1;
+    
+    import java.io.*;
+    import java.net.Socket;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: MultiClient.java
+     * @time: 2019/11/19 14:57
+     * @desc: 在线聊天室：客户端
+     * 目标：实现一个客户可以正常收发多条信息
+     */
+    
+    public class MultiClient {
+        public static void main(String[] args) throws IOException {
+            System.out.println("-----Client-----");
+            //  1. 建立连接：使用Socket创建客户端 + 服务的地址和端口
+            Socket client = new Socket("localhost", 8888);
+            //  2. 客户端发送消息
+            BufferedReader console = new BufferedReader(new InputStreamReader((System.in)));
+            DataOutputStream dos = new DataOutputStream(client.getOutputStream());
+            DataInputStream dis = new DataInputStream(client.getInputStream());
+            boolean isRunning = true;
+            while (isRunning) {
+                String msg = console.readLine();
+                dos.writeUTF(msg);
+                dos.flush();
+                //  3. 获取消息
+                msg = dis.readUTF();
+                System.out.println(msg);
+            }
+            //  4. 释放资源
+            dos.close();
+            dis.close();
+            client.close();
+        }
+    }
+    ```
+
+- 使用多线程实现多个客户可以正常收发多人信息
+
+  - 问题：其他客户必须等待之前的客户退出，才能继续排队
