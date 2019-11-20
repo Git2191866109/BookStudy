@@ -49,7 +49,7 @@
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.tabs" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -251,7 +251,8 @@
       <workItem from="1574040032558" duration="690000" />
       <workItem from="1574059377080" duration="3327000" />
       <workItem from="1574062942413" duration="91000" />
-      <workItem from="1574065266441" duration="10102000" />
+      <workItem from="1574065266441" duration="16328000" />
+      <workItem from="1574247537558" duration="774000" />
     </task>
     <servers />
   </component>
