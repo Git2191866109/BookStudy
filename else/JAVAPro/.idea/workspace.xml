@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="664eef89-93bd-40e6-8d4f-b8b025cfb276" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/sxt/chat2/MultiChat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sxt/chat2/MultiChat.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -252,7 +253,8 @@
       <workItem from="1574059377080" duration="3327000" />
       <workItem from="1574062942413" duration="91000" />
       <workItem from="1574065266441" duration="16328000" />
-      <workItem from="1574247537558" duration="774000" />
+      <workItem from="1574247537558" duration="3473000" />
+      <workItem from="1574314174000" duration="4530000" />
     </task>
     <servers />
   </component>

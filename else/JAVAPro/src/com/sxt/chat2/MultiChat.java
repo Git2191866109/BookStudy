@@ -72,7 +72,6 @@ public class MultiChat {
                     e.printStackTrace();
                 }
             }).start();
-
         }
     }
 }
