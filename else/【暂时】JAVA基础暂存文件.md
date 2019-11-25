@@ -3901,7 +3901,7 @@
     }
     ```
 
-- 实现一个客户可以正常收发多人信息
+- 实现一个客户可以正常收发多人信息——基础简易版
 
   - 服务端
 
@@ -3995,6 +3995,301 @@
     }
     ```
 
-- 使用多线程实现多个客户可以正常收发多人信息
+- 使用多线程实现多个客户可以正常收发多人信息——oop封装版
 
   - 问题：其他客户必须等待之前的客户退出，才能继续排队
+  
+  - 工具类：释放资源
+  
+    ```java
+    package com.sxt.chat3;
+    
+    import java.io.Closeable;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: SxtUtils.java
+     * @time: 2019/11/25 13:40
+     * @desc: 工具类：释放资源
+     */
+    
+    public class SxtUtils {
+        public static void close(Closeable... targets){
+            for (Closeable target: targets){
+                try{
+                    if(null != target){
+                        target.close();
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    ```
+  
+  - 在线聊天室：服务端
+  
+    ```java
+    package com.sxt.chat3;
+    
+    import java.io.DataInputStream;
+    import java.io.DataOutputStream;
+    import java.io.IOException;
+    import java.net.ServerSocket;
+    import java.net.Socket;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: MultiChat.java
+     * @time: 2019/11/19 14:57
+     * @desc: 在线聊天室：服务端
+     * 目标：封装：使用多线程实现多个客户可以正常收发多人信息
+     */
+    
+    public class MultiChat {
+        public static void main(String[] args) throws IOException {
+            System.out.println("-----Server-----");
+            //  1. 指定端口，使用ServerSocket创建服务器
+            ServerSocket server = new ServerSocket(8888);
+            //  2. 阻塞式等待连接 accept
+            while (true) {
+                Socket client = server.accept();
+                System.out.println("一个客户端建立了连接...");
+                new Thread(new Channel(client)).start();
+    
+            }
+        }
+    
+        // 一个客户代表一个Channel
+        static class Channel implements Runnable {
+            private DataInputStream dis;
+            private DataOutputStream dos;
+            private Socket client;
+            private boolean isRunning;
+    
+            public Channel(Socket client) {
+                this.client = client;
+                try {
+                    dis = new DataInputStream(client.getInputStream());
+                    dos = new DataOutputStream(client.getOutputStream());
+                    isRunning = true;
+                } catch (IOException e) {
+                    release();
+                }
+            }
+    
+            // 接受消息
+            private String receive() {
+                String msg = "";
+                try {
+                    msg = dis.readUTF();
+                } catch (IOException e) {
+                    release();
+                }
+                return msg;
+            }
+    
+            // 发送消息
+            private void send(String msg) {
+                try {
+                    dos.writeUTF(msg);
+                    dos.flush();
+                } catch (IOException e) {
+                    release();
+                }
+            }
+    
+            // 释放资源
+            private void release() {
+                this.isRunning = false;
+                SxtUtils.close(dis, dos, client);
+            }
+    
+            @Override
+            public void run() {
+                while(isRunning){
+                    String msg = receive();
+                    if(!msg.equals("")){
+                        send(msg);
+                    }
+                }
+            }
+        }
+    }
+    ```
+  
+  - 使用多线程封装了发送端
+  
+    ```java
+    package com.sxt.chat3;
+    
+    import java.io.BufferedReader;
+    import java.io.DataOutputStream;
+    import java.io.IOException;
+    import java.io.InputStreamReader;
+    import java.net.Socket;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: Send.java
+     * @time: 2019/11/25 14:37
+     * @desc: 使用多线程封装了发送端
+     */
+    
+    public class Send implements Runnable {
+        private BufferedReader console;
+        private DataOutputStream dos;
+        private Socket client;
+        private boolean isRunning;
+    
+        public Send(Socket client) {
+            this.client = client;
+            console = new BufferedReader(new InputStreamReader(System.in));
+            try {
+                dos = new DataOutputStream(client.getOutputStream());
+                isRunning = true;
+            } catch (IOException e) {
+                this.release();
+            }
+    
+        }
+    
+        @Override
+        public void run() {
+            while (isRunning) {
+                String msg = getStrFromConsole();
+                if (!msg.equals("")) {
+                    send(msg);
+                }
+            }
+    
+        }
+    
+        private void send(String msg) {
+            try {
+                dos.writeUTF(msg);
+                dos.flush();
+            } catch (IOException e) {
+                release();
+            }
+        }
+    
+        private String getStrFromConsole() {
+            try {
+                return console.readLine();
+            } catch (IOException e) {
+                release();
+            }
+            return "";
+        }
+    
+        // 释放资源
+        private void release() {
+            this.isRunning = false;
+            SxtUtils.close(dos, client);
+        }
+    }
+    ```
+  
+  - 使用多线程封装了接收端
+  
+    ```java
+    package com.sxt.chat3;
+    
+    import java.io.DataInputStream;
+    import java.io.IOException;
+    import java.net.Socket;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: Receive.java
+     * @time: 2019/11/25 14:37
+     * @desc: 使用多线程封装了接收端
+     */
+    
+    public class Receive implements Runnable {
+        private Socket client;
+        private boolean isRunning;
+        private DataInputStream dis;
+    
+        public Receive(Socket client) {
+            this.client = client;
+            try {
+                dis = new DataInputStream(client.getInputStream());
+                isRunning = true;
+            } catch (IOException e) {
+                release();
+            }
+        }
+    
+        // 接受消息
+        private String receive() {
+            String msg = "";
+            try {
+                msg = dis.readUTF();
+            } catch (IOException e) {
+                release();
+            }
+            return msg;
+        }
+    
+        @Override
+        public void run() {
+            while (isRunning) {
+                String msg = receive();
+                if (!msg.equals("")) {
+                    System.out.println(msg);
+                }
+            }
+        }
+    
+        // 释放资源
+        private void release() {
+            this.isRunning = false;
+            SxtUtils.close(dis, client);
+        }
+    }
+    ```
+  
+  - 在线聊天室：客户端
+  
+    ```java
+    package com.sxt.chat3;
+    
+    import java.io.*;
+    import java.net.Socket;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: MultiClient.java
+     * @time: 2019/11/19 14:57
+     * @desc: 在线聊天室：客户端
+     * 目标：封装：使用多线程实现多个客户可以正常收发多条信息
+     */
+    
+    public class MultiClient {
+        public static void main(String[] args) throws IOException {
+            System.out.println("-----Client-----");
+            //  1. 建立连接：使用Socket创建客户端 + 服务的地址和端口
+            Socket client = new Socket("localhost", 8888);
+            //  2. 客户端发送消息
+            new Thread(new Send(client)).start();
+            new Thread(new Receive(client)).start();
+        }
+    }
+    ```
+  
+- 手写聊天室——群聊过渡版
+
+  - 
