@@ -4292,4 +4292,307 @@
   
 - 手写聊天室——群聊过渡版
 
-  - 
+  - 服务器
+  
+    ```java
+    package com.sxt.chat4;
+    
+    import java.io.DataInputStream;
+    import java.io.DataOutputStream;
+    import java.io.IOException;
+    import java.net.ServerSocket;
+    import java.net.Socket;
+    import java.util.concurrent.CopyOnWriteArrayList;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: MultiChat.java
+     * @time: 2019/11/19 14:57
+     * @desc: 在线聊天室：服务端
+     * 目标：加入容器实现群聊
+     */
+    
+    public class Chat {
+        private static CopyOnWriteArrayList<Channel> all = new CopyOnWriteArrayList<>();
+    
+        public static void main(String[] args) throws IOException {
+            System.out.println("-----Server-----");
+            //  1. 指定端口，使用ServerSocket创建服务器
+            ServerSocket server = new ServerSocket(8888);
+            //  2. 阻塞式等待连接 accept
+            while (true) {
+                Socket client = server.accept();
+                System.out.println("一个客户端建立了连接...");
+                Channel c = new Channel(client);
+                // 管理所有的成员
+                all.add(c);
+                new Thread(c).start();
+    
+            }
+        }
+    
+        // 一个客户代表一个Channel
+        static class Channel implements Runnable {
+            private DataInputStream dis;
+            private DataOutputStream dos;
+            private Socket client;
+            private boolean isRunning;
+            private String name;
+    
+            public Channel(Socket client) {
+                this.client = client;
+                try {
+                    dis = new DataInputStream(client.getInputStream());
+                    dos = new DataOutputStream(client.getOutputStream());
+                    isRunning = true;
+                    // 获取名称
+                    this.name = receive();
+                    // 欢迎你的到来
+                    this.send("欢迎你的到来");
+                    sendOthers(this.name + "来了shsxt聊天室", true);
+                } catch (IOException e) {
+                    release();
+                }
+            }
+    
+            // 接受消息
+            private String receive() {
+                String msg = "";
+                try {
+                    msg = dis.readUTF();
+                } catch (IOException e) {
+                    release();
+                }
+                return msg;
+            }
+    
+            // 发送消息
+            private void send(String msg) {
+                try {
+                    dos.writeUTF(msg);
+                    dos.flush();
+                } catch (IOException e) {
+                    release();
+                }
+            }
+    
+            // 群聊
+            private void sendOthers(String msg, boolean isSys) {
+                for(Channel other: all){
+                    if(other == this){  // 自己
+                        continue;
+                    }
+                    if(!isSys) {
+                        // 群聊消息
+                        other.send(this.name + "说：" + msg);
+                    }else{
+                        // 系统消息
+                        other.send(msg);
+                    }
+                }
+            }
+    
+            // 释放资源
+            private void release() {
+                this.isRunning = false;
+                SxtUtils.close(dis, dos, client);
+                // 退出
+                all.remove(this);
+                sendOthers(this.name + "离开了...", true);
+            }
+    
+            @Override
+            public void run() {
+                while (isRunning) {
+                    String msg = receive();
+                    if (!msg.equals("")) {
+                        // send(msg);
+                        sendOthers(msg, false);
+                    }
+                }
+            }
+        }
+    }
+    ```
+  
+  - 客户端
+  
+    ```java
+    package com.sxt.chat4;
+    
+    import java.io.BufferedReader;
+    import java.io.IOException;
+    import java.io.InputStreamReader;
+    import java.net.Socket;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: MultiClient.java
+     * @time: 2019/11/19 14:57
+     * @desc: 在线聊天室：客户端
+     * 目标：加入容器实现群聊
+     */
+    
+    public class Client {
+        public static void main(String[] args) throws IOException {
+            System.out.println("-----Client-----");
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            System.out.println("请输入用户名：");
+            String name = br.readLine();
+            //  1. 建立连接：使用Socket创建客户端 + 服务的地址和端口
+            Socket client = new Socket("localhost", 8888);
+            //  2. 客户端发送消息
+            new Thread(new Send(client, name)).start();
+            new Thread(new Receive(client)).start();
+        }
+    }
+    ```
+  
+  - 工具类同上
+  
+  - 发送端
+  
+    ```java
+    package com.sxt.chat4;
+    
+    import java.io.BufferedReader;
+    import java.io.DataOutputStream;
+    import java.io.IOException;
+    import java.io.InputStreamReader;
+    import java.net.Socket;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: Send.java
+     * @time: 2019/11/25 14:37
+     * @desc: 使用多线程封装了发送端
+     */
+    
+    public class Send implements Runnable {
+        private BufferedReader console;
+        private DataOutputStream dos;
+        private Socket client;
+        private boolean isRunning;
+        private String name;
+    
+        public Send(Socket client, String name) {
+            this.client = client;
+            this.name = name;
+            console = new BufferedReader(new InputStreamReader(System.in));
+            try {
+                dos = new DataOutputStream(client.getOutputStream());
+                // 发送名称
+                send(name);
+                isRunning = true;
+            } catch (IOException e) {
+                this.release();
+            }
+    
+        }
+    
+        @Override
+        public void run() {
+            while (isRunning) {
+                String msg = getStrFromConsole();
+                if (!msg.equals("")) {
+                    send(msg);
+                }
+            }
+    
+        }
+    
+        private void send(String msg) {
+            try {
+                dos.writeUTF(msg);
+                dos.flush();
+            } catch (IOException e) {
+                release();
+            }
+        }
+    
+        private String getStrFromConsole() {
+            try {
+                return console.readLine();
+            } catch (IOException e) {
+                release();
+            }
+            return "";
+        }
+    
+        // 释放资源
+        private void release() {
+            this.isRunning = false;
+            SxtUtils.close(dos, client);
+        }
+    }
+    ```
+  
+  - 接收端
+  
+    ```java
+    package com.sxt.chat4;
+    
+    import java.io.DataInputStream;
+    import java.io.IOException;
+    import java.net.Socket;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: Receive.java
+     * @time: 2019/11/25 14:37
+     * @desc: 使用多线程封装了接收端
+     */
+    
+    public class Receive implements Runnable {
+        private Socket client;
+        private boolean isRunning;
+        private DataInputStream dis;
+    
+        public Receive(Socket client) {
+            this.client = client;
+            try {
+                dis = new DataInputStream(client.getInputStream());
+                isRunning = true;
+            } catch (IOException e) {
+                release();
+            }
+        }
+    
+        // 接受消息
+        private String receive() {
+            String msg = "";
+            try {
+                msg = dis.readUTF();
+            } catch (IOException e) {
+                release();
+            }
+            return msg;
+        }
+    
+        @Override
+        public void run() {
+            while (isRunning) {
+                String msg = receive();
+                if (!msg.equals("")) {
+                    System.out.println(msg);
+                }
+            }
+        }
+    
+        // 释放资源
+        private void release() {
+            this.isRunning = false;
+            SxtUtils.close(dis, client);
+        }
+    }
+    ```
+  
+- 
