@@ -4595,4 +4595,256 @@
     }
     ```
   
+- 实现私聊
+
+  - 修改客户端为：
+
+    ```java
+    package com.sxt.chat4;
+    
+    import java.io.DataInputStream;
+    import java.io.DataOutputStream;
+    import java.io.IOException;
+    import java.net.ServerSocket;
+    import java.net.Socket;
+    import java.util.concurrent.CopyOnWriteArrayList;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: MultiChat.java
+     * @time: 2019/11/19 14:57
+     * @desc: 在线聊天室：服务端
+     * 目标：加入容器实现群聊
+     */
+    
+    public class Chat {
+        private static CopyOnWriteArrayList<Channel> all = new CopyOnWriteArrayList<>();
+    
+        public static void main(String[] args) throws IOException {
+            System.out.println("-----Server-----");
+            //  1. 指定端口，使用ServerSocket创建服务器
+            ServerSocket server = new ServerSocket(8888);
+            //  2. 阻塞式等待连接 accept
+            while (true) {
+                Socket client = server.accept();
+                System.out.println("一个客户端建立了连接...");
+                Channel c = new Channel(client);
+                // 管理所有的成员
+                all.add(c);
+                new Thread(c).start();
+    
+            }
+        }
+    
+        // 一个客户代表一个Channel
+        static class Channel implements Runnable {
+            private DataInputStream dis;
+            private DataOutputStream dos;
+            private Socket client;
+            private boolean isRunning;
+            private String name;
+    
+            public Channel(Socket client) {
+                this.client = client;
+                try {
+                    dis = new DataInputStream(client.getInputStream());
+                    dos = new DataOutputStream(client.getOutputStream());
+                    isRunning = true;
+                    // 获取名称
+                    this.name = receive();
+                    // 欢迎你的到来
+                    this.send("欢迎你的到来");
+                    sendOthers(this.name + "来了shsxt聊天室", true);
+                } catch (IOException e) {
+                    release();
+                }
+            }
+    
+            // 接受消息
+            private String receive() {
+                String msg = "";
+                try {
+                    msg = dis.readUTF();
+                } catch (IOException e) {
+                    release();
+                }
+                return msg;
+            }
+    
+            // 发送消息
+            private void send(String msg) {
+                try {
+                    dos.writeUTF(msg);
+                    dos.flush();
+                } catch (IOException e) {
+                    release();
+                }
+            }
+    
+            // 群聊
+            private void sendOthers(String msg, boolean isSys) {
+                boolean isPrivate = msg.startsWith("@");
+                if(isPrivate){
+                    // 私聊
+                    int idx = msg.indexOf(":");
+                    // 获取目标和数据
+                    String targetName = msg.substring(1, idx);
+                    msg = msg.substring(idx+1);
+                    for(Channel other: all){
+                        if(other.name.equals(targetName)){
+                            other.send(this.name + "悄悄的对你说：" + msg);
+                            break;
+                        }
+                    }
+                }else{
+                    for(Channel other: all){
+                        if(other == this){  // 自己
+                            continue;
+                        }
+                        if(!isSys) {
+                            // 群聊消息
+                            other.send(this.name + "说：" + msg);
+                        }else{
+                            // 系统消息
+                            other.send(msg);
+                        }
+                    }
+                }
+            }
+    
+            // 释放资源
+            private void release() {
+                this.isRunning = false;
+                SxtUtils.close(dis, dos, client);
+                // 退出
+                all.remove(this);
+                sendOthers(this.name + "离开了...", true);
+            }
+    
+            @Override
+            public void run() {
+                while (isRunning) {
+                    String msg = receive();
+                    if (!msg.equals("")) {
+                        // send(msg);
+                        sendOthers(msg, false);
+                    }
+                }
+            }
+        }
+    }
+    ```
+
+## 第13章 J20飞机游戏
+
+- 绘图练习
+
+  ```java
+  package com.sxt.planegame;
+  
+  import javax.swing.*;
+  import java.awt.*;
+  import java.awt.event.WindowAdapter;
+  import java.awt.event.WindowEvent;
+  
+  /**
+   * @author: Li Tian
+   * @contact: litian_cup@163.com
+   * @software: IntelliJ IDEA
+   * @file: MyGameFrame.java
+   * @time: 2019/11/27 10:33
+   * @desc: 飞机游戏的主窗口
+   */
+  
+  public class MyGameFrame extends JFrame {
+  
+      Image test = GameUtil.getImage("images/plane.png");
+  
+      @Override
+      public void paint(Graphics g) {
+          // 自动被调用，g相当于一支画笔
+          // 把别人传进来的颜色记住，最后再改回去；字体同理呀
+          Color c = g.getColor();
+          Font f = g.getFont();
+          g.setColor(Color.BLUE);
+  
+          g.drawLine(100, 100, 300, 300);
+          g.drawRect(100, 100, 300, 300);
+          g.setColor(Color.green);
+          g.drawOval(100, 100, 300, 300);
+          g.fillRect(100, 100, 40, 40);
+          g.setColor(Color.red);
+          g.setFont(new Font("宋体", Font.BOLD, 50));
+          g.drawString("我是李英俊！", 200, 200);
+  
+          g.drawImage(test, 250, 250, null);
+  
+          g.setColor(c);
+          g.setFont(f);
+      }
+  
+      // 初始化窗口
+      public void launchFrame() {
+          this.setTitle("李英俊本俊");
+          this.setVisible(true);
+          this.setSize(500, 500);
+          this.setLocation(300, 300);
+  
+          // 点x就关闭程序了
+          this.addWindowListener(
+                  new WindowAdapter() {
+                      @Override
+                      public void windowClosing(WindowEvent e) {
+                          System.exit(0);
+                      }
+                  }
+          );
+      }
+  
+      public static void main(String[] args) {
+          MyGameFrame f = new MyGameFrame();
+          f.launchFrame();
+      }
+  }
+  ```
+
+- 工具类：显示图片
+
+  ```java
+  package com.sxt.planegame;
+  
+  import javax.imageio.ImageIO;
+  import java.awt.*;
+  import java.awt.image.BufferedImage;
+  import java.io.IOException;
+  import java.net.URL;
+  
+  /**
+   * @author: Li Tian
+   * @contact: litian_cup@163.com
+   * @software: IntelliJ IDEA
+   * @file: GameUtil.java
+   * @time: 2019/11/27 11:00
+   * @desc: 工具类
+   */
+  
+  public class GameUtil {
+      private GameUtil() {
+      }
+  
+      public static Image getImage(String path) {
+          BufferedImage bi = null;
+          try {
+              URL u = GameUtil.class.getClassLoader().getResource(path);
+              bi = ImageIO.read(u);
+          } catch (IOException e) {
+              e.printStackTrace();
+          }
+          return bi;
+      }
+  }
+  ```
+
 - 

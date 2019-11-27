@@ -83,16 +83,31 @@ public class Chat {
 
         // 群聊
         private void sendOthers(String msg, boolean isSys) {
-            for(Channel other: all){
-                if(other == this){  // 自己
-                    continue;
+            boolean isPrivate = msg.startsWith("@");
+            if(isPrivate){
+                // 私聊
+                int idx = msg.indexOf(":");
+                // 获取目标和数据
+                String targetName = msg.substring(1, idx);
+                msg = msg.substring(idx+1);
+                for(Channel other: all){
+                    if(other.name.equals(targetName)){
+                        other.send(this.name + "悄悄的对你说：" + msg);
+                        break;
+                    }
                 }
-                if(!isSys) {
-                    // 群聊消息
-                    other.send(this.name + "说：" + msg);
-                }else{
-                    // 系统消息
-                    other.send(msg);
+            }else{
+                for(Channel other: all){
+                    if(other == this){  // 自己
+                        continue;
+                    }
+                    if(!isSys) {
+                        // 群聊消息
+                        other.send(this.name + "说：" + msg);
+                    }else{
+                        // 系统消息
+                        other.send(msg);
+                    }
                 }
             }
         }

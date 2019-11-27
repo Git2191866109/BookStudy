@@ -3,6 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="664eef89-93bd-40e6-8d4f-b8b025cfb276" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/chat4/Chat$Channel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/chat4/Chat$Channel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/sxt/chat4/Chat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sxt/chat4/Chat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../【暂时】JAVA基础暂存文件.md" beforeDir="false" afterPath="$PROJECT_DIR$/../【暂时】JAVA基础暂存文件.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -49,10 +52,11 @@
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.sxt.planegame" />
       <recent name="com.sxt.udp" />
       <recent name="com.sxt.thread" />
       <recent name="" />
@@ -77,7 +81,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Client">
+  <component name="RunManager" selected="Application.GameFrame">
     <configuration name="Chat" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.sxt.chat4.Chat" />
       <module name="JAVAPro" />
@@ -105,26 +109,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MultiChat (2)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.chat3.MultiChat" />
+    <configuration name="GameFrame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.planegame.GameFrame" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.sxt.chat3.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MultiClient (1)" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.chat2.MultiClient" />
-      <module name="JAVAPro" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.sxt.chat2.*" />
+          <option name="PATTERN" value="com.sxt.planegame.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -138,6 +129,20 @@
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.sxt.chat3.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MyGameFrame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.planegame.MyGameFrame" />
+      <module name="JAVAPro" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.sxt.planegame.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -170,19 +175,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.MultiClient (1)" />
-      <item itemvalue="Application.MultiChat (2)" />
       <item itemvalue="Application.MultiClient (2)" />
       <item itemvalue="Application.Client" />
       <item itemvalue="Application.Chat" />
+      <item itemvalue="Application.MyGameFrame" />
+      <item itemvalue="Application.GameFrame" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.GameFrame" />
+        <item itemvalue="Application.MyGameFrame" />
         <item itemvalue="Application.Client" />
         <item itemvalue="Application.Chat" />
         <item itemvalue="Application.MultiClient (2)" />
-        <item itemvalue="Application.MultiChat (2)" />
-        <item itemvalue="Application.MultiClient (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -256,6 +261,10 @@
       <workItem from="1574659094325" duration="5741000" />
       <workItem from="1574667122450" duration="599000" />
       <workItem from="1574753851682" duration="5001000" />
+      <workItem from="1574764863822" duration="344000" />
+      <workItem from="1574816249382" duration="6590000" />
+      <workItem from="1574844055938" duration="36000" />
+      <workItem from="1574844237579" duration="961000" />
     </task>
     <servers />
   </component>
