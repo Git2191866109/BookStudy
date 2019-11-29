@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="664eef89-93bd-40e6-8d4f-b8b025cfb276" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../【暂时】JAVA基础暂存文件.md" beforeDir="false" afterPath="$PROJECT_DIR$/../【暂时】JAVA基础暂存文件.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -79,34 +78,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.GameFrame (1)">
-    <configuration name="Chat" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.chat4.Chat" />
-      <module name="JAVAPro" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.sxt.chat4.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Client" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.chat4.Client" />
-      <module name="JAVAPro" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.sxt.chat4.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Application.XmlTest02">
     <configuration name="GameFrame (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.sxt.planegame2.GameFrame" />
       <module name="JAVAPro" />
@@ -135,13 +107,41 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MyGameFrame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.planegame.MyGameFrame" />
+    <configuration name="ReflectTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.Server_study01.ReflectTest" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.sxt.planegame.*" />
+          <option name="PATTERN" value="com.sxt.Server_study01.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="XmlTest01" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.Server_study01.XmlTest01" />
+      <module name="JAVAPro" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.sxt.Server_study01.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="XmlTest02" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.Server_study01.XmlTest02" />
+      <module name="JAVAPro" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.sxt.Server_study01.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -174,19 +174,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.Client" />
-      <item itemvalue="Application.Chat" />
-      <item itemvalue="Application.MyGameFrame" />
       <item itemvalue="Application.GameFrame" />
       <item itemvalue="Application.GameFrame (1)" />
+      <item itemvalue="Application.ReflectTest" />
+      <item itemvalue="Application.XmlTest01" />
+      <item itemvalue="Application.XmlTest02" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.XmlTest02" />
+        <item itemvalue="Application.XmlTest01" />
+        <item itemvalue="Application.ReflectTest" />
         <item itemvalue="Application.GameFrame (1)" />
         <item itemvalue="Application.GameFrame" />
-        <item itemvalue="Application.MyGameFrame" />
-        <item itemvalue="Application.Client" />
-        <item itemvalue="Application.Chat" />
       </list>
     </recent_temporary>
   </component>
@@ -265,6 +265,7 @@
       <workItem from="1574844055938" duration="36000" />
       <workItem from="1574844237579" duration="13750000" />
       <workItem from="1574925865438" duration="193000" />
+      <workItem from="1574990622389" duration="11119000" />
     </task>
     <servers />
   </component>
