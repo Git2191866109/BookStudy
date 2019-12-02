@@ -1,6 +1,5 @@
 package com.sxt.Server_study01.servlet;
 
-import com.sxt.Server_study01.Person;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
