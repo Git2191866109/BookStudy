@@ -17,8 +17,8 @@ public class Shell extends GameObject {
     public Shell() {
         x = 200;
         y = 200;
-        width = 10;
-        height = 10;
+        width = 7;
+        height = 7;
         speed = 3;
 
         degree = Math.random() * Math.PI * 2;

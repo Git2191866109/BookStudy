@@ -1,5 +1,6 @@
 package com.sxt.Server_study01.servlet;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -21,7 +22,7 @@ import java.util.List;
  */
 
 public class XmlTest02 {
-    public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
+    public static void main(String[] args) throws Exception {
         // SAX解析
         // 1. 获取解析工厂
         SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -33,10 +34,13 @@ public class XmlTest02 {
         WebHandler handler = new WebHandler();
         parse.parse(Thread.currentThread().getContextClassLoader().getResourceAsStream("com/sxt/Server_study01/servlet/web.xml"), handler);
         // 5. 获取数据
-        List<Entity> entitys = handler.getEntitys();
-        List<Mapping> mappings = handler.getMappings();
-        System.out.println(entitys.size());
-        System.out.println(mappings.size());
+        WebContext context = new WebContext(handler.getEntitys(), handler.getMappings());
+        // 假设你输入了 /login or /g or /reg
+        String className = context.getClz("/reg");
+        Class clz = Class.forName(className);
+        Servlet servlet = (Servlet)clz.getConstructor().newInstance();
+        System.out.println(servlet);
+        servlet.service();
     }
 }
 

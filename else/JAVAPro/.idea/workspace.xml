@@ -3,7 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="664eef89-93bd-40e6-8d4f-b8b025cfb276" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/Server_study01/servlet/WebHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/Server_study01/servlet/WebHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/Server_study01/servlet/XmlTest02.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/Server_study01/servlet/XmlTest02.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/Server_study01/servlet/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/Server_study01/servlet/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/planegame2/Shell.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/planegame2/Shell.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/sxt/Server_study01/servlet/XmlTest02.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sxt/Server_study01/servlet/XmlTest02.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/sxt/Server_study01/servlet/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sxt/Server_study01/servlet/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/sxt/planegame2/Shell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sxt/planegame2/Shell.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -184,10 +190,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.XmlTest02 (1)" />
+        <item itemvalue="Application.GameFrame (1)" />
         <item itemvalue="Application.XmlTest02" />
         <item itemvalue="Application.XmlTest01" />
         <item itemvalue="Application.ReflectTest" />
-        <item itemvalue="Application.GameFrame (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -268,7 +274,8 @@
       <workItem from="1574925865438" duration="193000" />
       <workItem from="1574990622389" duration="11119000" />
       <workItem from="1575017635506" duration="412000" />
-      <workItem from="1575259108012" duration="4018000" />
+      <workItem from="1575259108012" duration="5866000" />
+      <workItem from="1575340672187" duration="7140000" />
     </task>
     <servers />
   </component>
