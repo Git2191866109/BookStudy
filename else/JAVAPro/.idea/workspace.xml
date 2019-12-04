@@ -3,13 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="664eef89-93bd-40e6-8d4f-b8b025cfb276" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/Server_study01/servlet/WebHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/Server_study01/servlet/WebHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/Server_study01/servlet/XmlTest02.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/Server_study01/servlet/XmlTest02.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/Server_study01/servlet/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/Server_study01/servlet/web.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/planegame2/Shell.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/planegame2/Shell.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sxt/Server_study01/servlet/XmlTest02.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sxt/Server_study01/servlet/XmlTest02.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sxt/Server_study01/servlet/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sxt/Server_study01/servlet/web.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sxt/planegame2/Shell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sxt/planegame2/Shell.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -59,7 +52,11 @@
     <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt\Server_study02" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.sxt.Server_study02" />
       <recent name="com.sxt.planegame" />
       <recent name="com.sxt.udp" />
       <recent name="com.sxt.thread" />
@@ -85,7 +82,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.XmlTest02 (1)">
+  <component name="RunManager" selected="Application.Server02">
     <configuration name="GameFrame (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.sxt.planegame2.GameFrame" />
       <module name="JAVAPro" />
@@ -100,13 +97,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ReflectTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.Server_study01.ReflectTest" />
+    <configuration name="Server01" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.Server_study02.Server01" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.sxt.Server_study01.*" />
+          <option name="PATTERN" value="com.sxt.Server_study02.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -114,13 +111,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="XmlTest01" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.Server_study01.XmlTest01" />
+    <configuration name="Server02" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.Server_study02.Server02" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.sxt.Server_study01.*" />
+          <option name="PATTERN" value="com.sxt.Server_study02.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -182,18 +179,18 @@
     </configuration>
     <list>
       <item itemvalue="Application.GameFrame (1)" />
-      <item itemvalue="Application.ReflectTest" />
-      <item itemvalue="Application.XmlTest01" />
       <item itemvalue="Application.XmlTest02" />
       <item itemvalue="Application.XmlTest02 (1)" />
+      <item itemvalue="Application.Server01" />
+      <item itemvalue="Application.Server02" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Server02" />
+        <item itemvalue="Application.Server01" />
         <item itemvalue="Application.XmlTest02 (1)" />
         <item itemvalue="Application.GameFrame (1)" />
         <item itemvalue="Application.XmlTest02" />
-        <item itemvalue="Application.XmlTest01" />
-        <item itemvalue="Application.ReflectTest" />
       </list>
     </recent_temporary>
   </component>
@@ -275,7 +272,7 @@
       <workItem from="1574990622389" duration="11119000" />
       <workItem from="1575017635506" duration="412000" />
       <workItem from="1575259108012" duration="5866000" />
-      <workItem from="1575340672187" duration="7140000" />
+      <workItem from="1575340672187" duration="12926000" />
     </task>
     <servers />
   </component>
