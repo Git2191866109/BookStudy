@@ -52,8 +52,12 @@
     <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt\Server_study02" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt\Server_study01\servlet" />
+      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt\planegame2" />
+      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt\chat4" />
+      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt\chat3" />
+      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.sxt.Server_study02" />
@@ -62,12 +66,8 @@
       <recent name="com.sxt.thread" />
       <recent name="" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt\Server_study01\servlet" />
-      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt\planegame2" />
-      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt\chat4" />
-      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt\chat3" />
-      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt\Server_study02" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -82,21 +82,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Server02">
-    <configuration name="GameFrame (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.planegame2.GameFrame" />
-      <module name="JAVAPro" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.sxt.planegame2.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Application.Server04">
     <configuration name="Server01" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.sxt.Server_study02.Server01" />
       <module name="JAVAPro" />
@@ -125,13 +111,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="XmlTest02 (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.Server_study01.servlet.XmlTest02" />
+    <configuration name="Server03" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.Server_study02.Server03" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.sxt.Server_study01.servlet.*" />
+          <option name="PATTERN" value="com.sxt.Server_study02.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -139,13 +125,27 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="XmlTest02" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.Server_study01.XmlTest02" />
+    <configuration name="Server04" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.Server_study02.Server04" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.sxt.Server_study01.*" />
+          <option name="PATTERN" value="com.sxt.Server_study02.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="XmlTest02 (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.Server_study01.servlet.XmlTest02" />
+      <module name="JAVAPro" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.sxt.Server_study01.servlet.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -178,19 +178,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.GameFrame (1)" />
-      <item itemvalue="Application.XmlTest02" />
       <item itemvalue="Application.XmlTest02 (1)" />
       <item itemvalue="Application.Server01" />
       <item itemvalue="Application.Server02" />
+      <item itemvalue="Application.Server03" />
+      <item itemvalue="Application.Server04" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Server04" />
+        <item itemvalue="Application.Server03" />
         <item itemvalue="Application.Server02" />
         <item itemvalue="Application.Server01" />
         <item itemvalue="Application.XmlTest02 (1)" />
-        <item itemvalue="Application.GameFrame (1)" />
-        <item itemvalue="Application.XmlTest02" />
       </list>
     </recent_temporary>
   </component>
@@ -272,7 +272,8 @@
       <workItem from="1574990622389" duration="11119000" />
       <workItem from="1575017635506" duration="412000" />
       <workItem from="1575259108012" duration="5866000" />
-      <workItem from="1575340672187" duration="12926000" />
+      <workItem from="1575340672187" duration="13523000" />
+      <workItem from="1575508533846" duration="4762000" />
     </task>
     <servers />
   </component>
