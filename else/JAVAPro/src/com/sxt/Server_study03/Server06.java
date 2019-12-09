@@ -1,4 +1,6 @@
-package com.sxt.Server_study02;
+package com.sxt.Server_study03;
+
+import com.sxt.tcp.Server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -10,13 +12,13 @@ import java.net.Socket;
  * @software: IntelliJ IDEA
  * @file: Server06.java
  * @time: 2019/12/4 9:26
- * @desc: 封装请求信息中参数转成map
+ * @desc: 加入了Servlet解耦了业务代码
  */
 
-public class Server05 {
+public class Server06 {
     private ServerSocket serverSocket;
     public static void main(String[] args) {
-        Server05 server = new Server05();
+        Server06 server = new Server06();
         server.start();
     }
 
@@ -37,21 +39,21 @@ public class Server05 {
             Socket client = serverSocket.accept();
             System.out.println("一个客户端建立了连接...");
             // 获取请求协议
-            Request2 request = new Request2(client);
-
+            Request request = new Request(client);
             Response response = new Response(client);
 
             // 关注了内容
-            response.print("<html>");
-            response.print("<head>");
-            response.print("<title>");
-            response.print("服务器响应成功");
-            response.print("</title>");
-            response.print("</head>");
-            response.print("<body>");
-            response.print("终于回来了..." + request.getParameter("uname"));
-            response.print("</body>");
-            response.print("</html>");
+            Servlet servlet = null;
+            if(request.getUrl().equals("login")){
+                servlet = new LoginServlet();
+            }else if (request.getUrl().equals("reg")){
+                servlet = new RegisterServlet();
+            }else {
+                // 首页
+            }
+
+            servlet.service(request, response);
+
 
             // 关注了状态码
             response.pushToBrowser(200);

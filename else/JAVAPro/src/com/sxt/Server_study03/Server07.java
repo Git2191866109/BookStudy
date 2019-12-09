@@ -1,4 +1,4 @@
-package com.sxt.Server_study02;
+package com.sxt.Server_study03;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -10,13 +10,13 @@ import java.net.Socket;
  * @software: IntelliJ IDEA
  * @file: Server06.java
  * @time: 2019/12/4 9:26
- * @desc: 封装请求信息中参数转成map
+ * @desc: 整合配置文件
  */
 
-public class Server05 {
+public class Server07 {
     private ServerSocket serverSocket;
     public static void main(String[] args) {
-        Server05 server = new Server05();
+        Server07 server = new Server07();
         server.start();
     }
 
@@ -37,24 +37,18 @@ public class Server05 {
             Socket client = serverSocket.accept();
             System.out.println("一个客户端建立了连接...");
             // 获取请求协议
-            Request2 request = new Request2(client);
-
+            Request request = new Request(client);
             Response response = new Response(client);
 
-            // 关注了内容
-            response.print("<html>");
-            response.print("<head>");
-            response.print("<title>");
-            response.print("服务器响应成功");
-            response.print("</title>");
-            response.print("</head>");
-            response.print("<body>");
-            response.print("终于回来了..." + request.getParameter("uname"));
-            response.print("</body>");
-            response.print("</html>");
-
-            // 关注了状态码
-            response.pushToBrowser(200);
+            Servlet servlet = WebApp.getServletFromUrl(request.getUrl());
+            if(null != servlet){
+                servlet.service(request, response);
+                // 关注了状态码
+                response.pushToBrowser(200);
+            }else {
+                // 错误页面...
+                response.pushToBrowser(404);
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
