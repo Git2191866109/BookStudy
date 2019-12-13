@@ -1,7 +1,9 @@
 package com.sxt.Server_study03;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -36,11 +38,14 @@ public class Dispatcher implements Runnable {
     public void run() {
         try {
             if (null == request.getUrl() || request.getUrl().equals("")) {
-//                InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("index.html");
-//                response.print(new String(is.readAllBytes()));
-//                response.println(new String(Files.readAllBytes(Paths.get("index.html"))));
+                InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("index.html");
+                BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                String line = null;
+                while((line = br.readLine()) != null){
+                    response.println(line);
+                }
+                br.close();
                 response.pushToBrowser(200);
-//                is.close();
                 return;
             }
             Servlet servlet = WebApp.getServletFromUrl(request.getUrl());
@@ -49,12 +54,18 @@ public class Dispatcher implements Runnable {
                 // 关注了状态码
                 response.pushToBrowser(200);
             } else {
-//                InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("error.html");
-//                response.print(new String(is.readAllBytes()));
+                InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("error.html");
+                System.out.println(is);
+                BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                String line = null;
+                while((line = br.readLine()) != null){
+                    response.println(line);
+                }
+                br.close();
                 response.pushToBrowser(404);
-//                is.close();
             }
         } catch (Exception e) {
+            e.printStackTrace();
             try {
                 response.print("你好我不好，我会马上好");
                 response.pushToBrowser(500);
