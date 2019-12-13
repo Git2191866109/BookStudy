@@ -41,6 +41,9 @@ public class WebApp {
     public static Servlet getServletFromUrl(String url) {
         // 假设你输入了 /login or /g or /reg
         String className = context.getClz("/" + url);
+        if (className == null){
+            return null;
+        }
         Class clz = null;
         try {
             clz = Class.forName(className);

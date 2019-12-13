@@ -47,7 +47,7 @@ public class Request {
 
     public Request(InputStream is) {
         parameterMap = new HashMap<>();
-        byte[] datas = new byte[1024 * 1024];
+        byte[] datas = new byte[1024 * 1024 * 1024];
         int len;
         try {
             len = is.read(datas);
@@ -61,11 +61,11 @@ public class Request {
     }
 
     private void parseRequestInfo() {
-        System.out.println("---分解---");
-        System.out.println("1. 获取请求方式：开头到第一个/");
+//        System.out.println("---分解---");
+//        System.out.println("1. 获取请求方式：开头到第一个/");
         this.method = this.requestInfo.substring(0, this.requestInfo.indexOf("/")).toLowerCase().trim();
-        System.out.println("2. 获取请求url：第一个/ 到HTTP/");
-        System.out.println("可能包含请求参数?前面的url");
+//        System.out.println("2. 获取请求url：第一个/ 到HTTP/");
+//        System.out.println("可能包含请求参数?前面的url");
         // 1. 获取/的位置
         int startIdx = this.requestInfo.indexOf("/") + 1;
         // 2. 获取HTTP/的位置
@@ -82,7 +82,7 @@ public class Request {
         }
         System.out.println(this.url);
 
-        System.out.println("3. 获取请求参数：若果Get已经获取，如果post可能在请求体中");
+//        System.out.println("3. 获取请求参数：若果Get已经获取，如果post可能在请求体中");
         if (method.equals("post")) {
             String qStr = this.requestInfo.substring(this.requestInfo.lastIndexOf(CRLF)).trim();
             if (null == queryStr) {

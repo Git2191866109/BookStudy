@@ -1,10 +1,7 @@
 package com.sxt.Server_study03;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.Socket;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 /**
  * @author: Li Tian
@@ -15,12 +12,12 @@ import java.nio.file.Paths;
  * @desc: 分发器
  */
 
-public class Dispatcher implements Runnable {
+public class Dispatcher1 implements Runnable {
     private Socket client;
     private Request request;
     private Response response;
 
-    public Dispatcher(Socket client) {
+    public Dispatcher1(Socket client) {
         this.client = client;
         try {
             // 获取请求和响应
@@ -35,28 +32,17 @@ public class Dispatcher implements Runnable {
     @Override
     public void run() {
         try {
-            if (null == request.getUrl() || request.getUrl().equals("")) {
-//                InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("index.html");
-//                response.print(new String(is.readAllBytes()));
-//                response.println(new String(Files.readAllBytes(Paths.get("index.html"))));
-                response.pushToBrowser(200);
-//                is.close();
-                return;
-            }
             Servlet servlet = WebApp.getServletFromUrl(request.getUrl());
             if (null != servlet) {
                 servlet.service(request, response);
                 // 关注了状态码
                 response.pushToBrowser(200);
             } else {
-//                InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("error.html");
-//                response.print(new String(is.readAllBytes()));
+                // 错误页面...
                 response.pushToBrowser(404);
-//                is.close();
             }
-        } catch (Exception e) {
+        }catch (Exception e){
             try {
-                response.print("你好我不好，我会马上好");
                 response.pushToBrowser(500);
             } catch (IOException ex) {
                 ex.printStackTrace();

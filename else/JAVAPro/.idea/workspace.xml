@@ -3,6 +3,17 @@
   <component name="ChangeListManager">
     <list default="true" id="664eef89-93bd-40e6-8d4f-b8b025cfb276" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/Server_study03/Dispatcher.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/Server_study03/Dispatcher.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/Server_study03/LoginServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/Server_study03/LoginServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/Server_study03/Request.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/Server_study03/Request.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/Server_study03/Server08.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/Server_study03/Server08.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/Server_study03/WebApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/Server_study03/WebApp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/Server_study03/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/Server_study03/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/sxt/Server_study03/Dispatcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sxt/Server_study03/Dispatcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/sxt/Server_study03/LoginServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sxt/Server_study03/LoginServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/sxt/Server_study03/Request.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sxt/Server_study03/Request.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/sxt/Server_study03/WebApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sxt/Server_study03/WebApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/sxt/Server_study03/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sxt/Server_study03/login.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -53,10 +64,12 @@
     <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src" />
+    <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt\Server_study03" />
-      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt\Server_study02" />
+      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt" />
+      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt\Server_study01\servlet" />
+      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt\planegame2" />
+      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt\chat4" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.sxt.Server_study03" />
@@ -65,12 +78,10 @@
       <recent name="com.sxt.udp" />
       <recent name="com.sxt.thread" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src" />
       <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt\Server_study03" />
-      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt" />
-      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt\Server_study01\servlet" />
-      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt\planegame2" />
-      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt\chat4" />
+      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt\Server_study02" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -86,20 +97,6 @@
     </option>
   </component>
   <component name="RunManager" selected="Application.Server08">
-    <configuration name="Server04" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.Server_study02.Server04" />
-      <module name="JAVAPro" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.sxt.Server_study02.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Server05" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.sxt.Server_study02.Server05" />
       <module name="JAVAPro" />
@@ -156,6 +153,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Server09" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.Server_study03.Server09" />
+      <module name="JAVAPro" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.sxt.Server_study03.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
@@ -181,19 +192,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.Server04" />
       <item itemvalue="Application.Server05" />
       <item itemvalue="Application.Server06" />
       <item itemvalue="Application.Server07" />
       <item itemvalue="Application.Server08" />
+      <item itemvalue="Application.Server09" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Server08" />
+        <item itemvalue="Application.Server09" />
         <item itemvalue="Application.Server07" />
         <item itemvalue="Application.Server06" />
         <item itemvalue="Application.Server05" />
-        <item itemvalue="Application.Server04" />
       </list>
     </recent_temporary>
   </component>
@@ -281,6 +292,7 @@
       <workItem from="1575617587774" duration="139000" />
       <workItem from="1575863991412" duration="5083000" />
       <workItem from="1576139542998" duration="994000" />
+      <workItem from="1576215136846" duration="7646000" />
     </task>
     <servers />
   </component>
