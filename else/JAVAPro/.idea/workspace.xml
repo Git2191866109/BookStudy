@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="664eef89-93bd-40e6-8d4f-b8b025cfb276" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/Server_study03/Dispatcher.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/Server_study03/Dispatcher.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/Server_study03/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/Server_study03/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sxt/Server_study03/Dispatcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sxt/Server_study03/Dispatcher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sxt/Server_study03/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sxt/Server_study03/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../【自学】6. JDBC.md" beforeDir="false" afterPath="$PROJECT_DIR$/../【自学】6. JDBC.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -276,6 +272,7 @@
       <workItem from="1576139542998" duration="994000" />
       <workItem from="1576215136846" duration="7646000" />
       <workItem from="1576230006826" duration="1741000" />
+      <workItem from="1576406800537" duration="72000" />
     </task>
     <servers />
   </component>
