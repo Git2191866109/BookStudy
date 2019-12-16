@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="664eef89-93bd-40e6-8d4f-b8b025cfb276" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/../【自学】6. JDBC.md" beforeDir="false" afterPath="$PROJECT_DIR$/../【自学】6. JDBC.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../【自学】5. JAVA高级.md" beforeDir="false" afterPath="$PROJECT_DIR$/../【自学】5. JAVA高级.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -28,6 +29,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
+        <option value="AnnotationType" />
         <option value="Class" />
       </list>
     </option>
@@ -85,14 +87,14 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Server09">
-    <configuration name="Server06" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.Server_study03.Server06" />
+  <component name="RunManager" selected="Application.Demo03">
+    <configuration name="Demo01" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.test.annotation.Demo01" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.sxt.Server_study03.*" />
+          <option name="PATTERN" value="com.sxt.test.annotation.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -100,13 +102,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Server07" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.Server_study03.Server07" />
+    <configuration name="Demo03" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.test.annotation.Demo03" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.sxt.Server_study03.*" />
+          <option name="PATTERN" value="com.sxt.test.annotation.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -170,19 +172,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.Server06" />
-      <item itemvalue="Application.Server07" />
       <item itemvalue="Application.Server08" />
       <item itemvalue="Application.Server09" />
       <item itemvalue="JavaScript Debug.login.html" />
+      <item itemvalue="Application.Demo01" />
+      <item itemvalue="Application.Demo03" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Demo03" />
+        <item itemvalue="Application.Demo01" />
         <item itemvalue="Application.Server09" />
         <item itemvalue="JavaScript Debug.login.html" />
         <item itemvalue="Application.Server08" />
-        <item itemvalue="Application.Server07" />
-        <item itemvalue="Application.Server06" />
       </list>
     </recent_temporary>
   </component>
@@ -273,6 +275,7 @@
       <workItem from="1576215136846" duration="7646000" />
       <workItem from="1576230006826" duration="1741000" />
       <workItem from="1576406800537" duration="72000" />
+      <workItem from="1576459024800" duration="5924000" />
     </task>
     <servers />
   </component>
