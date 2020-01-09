@@ -3,6 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="664eef89-93bd-40e6-8d4f-b8b025cfb276" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/test/bean/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/test/bean/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/test/reflection/Demo02.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JAVAPro/com/sxt/test/reflection/Demo02.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/sxt/test/bean/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sxt/test/bean/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../【自学】5. JAVA高级.md" beforeDir="false" afterPath="$PROJECT_DIR$/../【自学】5. JAVA高级.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -54,10 +58,12 @@
     <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
+    <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src" />
       <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt\Server_study03" />
-      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt\Server_study02" />
+      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt" />
+      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt\Server_study01\servlet" />
+      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt\planegame2" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.sxt.Server_study03" />
@@ -66,12 +72,10 @@
       <recent name="com.sxt.udp" />
       <recent name="com.sxt.thread" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
+    <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src" />
       <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt\Server_study03" />
-      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt" />
-      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt\Server_study01\servlet" />
-      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt\planegame2" />
+      <recent name="D:\李添的数据哦！！！\BookStudy\else\JAVAPro\src\com\sxt\Server_study02" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -86,35 +90,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Demo02">
-    <configuration name="Demo01 (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.test.reflection.Demo01" />
-      <module name="JAVAPro" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.sxt.test.reflection.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Demo01" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.test.annotation.Demo01" />
-      <module name="JAVAPro" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.sxt.test.annotation.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Application.Demo1">
     <configuration name="Demo02" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.sxt.test.reflection.Demo02" />
       <module name="JAVAPro" />
@@ -129,13 +105,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Demo03" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.test.annotation.Demo03" />
+    <configuration name="Demo1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.test.testDynamicCompile.Demo1" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.sxt.test.annotation.*" />
+          <option name="PATTERN" value="com.sxt.test.testDynamicCompile.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -143,13 +119,41 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Server09" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sxt.Server_study03.Server09" />
+    <configuration name="Demo3" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.test.reflection.Demo3" />
       <module name="JAVAPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.sxt.Server_study03.*" />
+          <option name="PATTERN" value="com.sxt.test.reflection.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Demo4" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.test.reflection.Demo4" />
+      <module name="JAVAPro" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.sxt.test.reflection.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Demo5" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sxt.test.annotation.Demo5" />
+      <module name="JAVAPro" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.sxt.test.annotation.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -182,19 +186,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.Server09" />
-      <item itemvalue="Application.Demo01" />
-      <item itemvalue="Application.Demo03" />
-      <item itemvalue="Application.Demo01 (1)" />
       <item itemvalue="Application.Demo02" />
+      <item itemvalue="Application.Demo3" />
+      <item itemvalue="Application.Demo4" />
+      <item itemvalue="Application.Demo5" />
+      <item itemvalue="Application.Demo1" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Demo1" />
+        <item itemvalue="Application.Demo5" />
+        <item itemvalue="Application.Demo4" />
+        <item itemvalue="Application.Demo3" />
         <item itemvalue="Application.Demo02" />
-        <item itemvalue="Application.Demo01 (1)" />
-        <item itemvalue="Application.Demo03" />
-        <item itemvalue="Application.Demo01" />
-        <item itemvalue="Application.Server09" />
       </list>
     </recent_temporary>
   </component>
@@ -287,7 +291,9 @@
       <workItem from="1576406800537" duration="72000" />
       <workItem from="1576459024800" duration="5924000" />
       <workItem from="1576579672365" duration="1940000" />
-      <workItem from="1578377850396" duration="3211000" />
+      <workItem from="1578377850396" duration="9351000" />
+      <workItem from="1578550455945" duration="109000" />
+      <workItem from="1578550582566" duration="3794000" />
     </task>
     <servers />
   </component>

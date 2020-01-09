@@ -14,6 +14,7 @@ public class User {
     private int age;
     private String uname;
 
+    // javabean必须要有无参的构造方法！为了反射的方便
     public User(){
     }
 
