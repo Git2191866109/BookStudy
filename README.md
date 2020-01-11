@@ -64,12 +64,13 @@
 - [Java基础学习笔记](https://www.cnblogs.com/lyjun/p/11956413.html)：[av59529105](https://www.bilibili.com/video/av59529105/)
 - Java高级学习笔记：[av59529105](https://www.bilibili.com/video/av59529105/)
 
-## tools：自己写的小工具
+## tools：自己写的小工具以及一些教程
 
 - **AlterFilename**：批量更改文件名的后缀（包括遍历内部文件夹）
 - **MLtools**：机器学习（分类）小工具
-- **idea_active**：idea永久激活方式和教程
+- **idea_active**：idea永久激活方式和教程，pycharm一样
 - **ArticleSeperate**：根据章节名把文章分成两部分
+- **plugins for qBittorrent**：[小孩子不可以看哦](https://www.52pojie.cn/forum.php?mod=viewthread&tid=952711&page=1)
 
 ------
 
