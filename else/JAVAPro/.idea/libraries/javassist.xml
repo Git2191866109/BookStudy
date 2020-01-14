@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="javassist">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../一些java组件/jboss-javassist-javassist-1507091/javassist.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
