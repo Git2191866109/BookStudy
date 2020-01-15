@@ -71,6 +71,7 @@
 - **idea_active**：idea永久激活方式和教程，pycharm一样
 - **ArticleSeperate**：根据章节名把文章分成两部分
 - **plugins for qBittorrent**：[小孩子不可以看哦](https://www.52pojie.cn/forum.php?mod=viewthread&tid=952711&page=1)
+- **Caltools**：小学生作业专用程序，如求20以内的加减运算
 
 ------
 
