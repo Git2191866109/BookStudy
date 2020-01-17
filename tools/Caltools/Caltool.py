@@ -32,11 +32,14 @@ class Caltool:
         self.xuhao = 0
         # 最后结果
         self.strings = ''
+        # 计算式统计，防止重复
+        self.lists = []
 
     def reset(self):
         self.xuhao = 0
         self.strings = ''
         self.sum = 0
+        self.lists = []
 
     def check(self):
         if self.count == self.xuhao:
@@ -103,6 +106,11 @@ class Caltool:
 
         ope = random.choice(self.operator)
 
+        # 初始化
+        ti = None
+        result = None
+        string = None
+
         # 判断
         if ope == '+':
             result = x + y
@@ -121,7 +129,16 @@ class Caltool:
         else:
             pass
 
-        return ti, result, string
+        # 检查是否超纲
+        if result > self.number_limit:
+            return self.next_ti()
+        else:
+            # 检查是否重复
+            if ti not in self.lists:
+                self.lists.append(ti)
+                return ti, result, string
+            else:
+                return self.next_ti()
 
 
 if __name__ == '__main__':
