@@ -14,7 +14,7 @@ public interface ICar {
 }
 
 // 真实对象
-class Car extends SuperCar implements ICar{
+class Car implements ICar{
 
     @Override
     public void move() {
