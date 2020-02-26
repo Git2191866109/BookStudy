@@ -72,6 +72,7 @@
 - **ArticleSeperate**：根据章节名把文章分成两部分
 - **plugins for qBittorrent**：[小孩子不可以看哦](https://www.52pojie.cn/forum.php?mod=viewthread&tid=952711&page=1)
 - **Caltools**：小学生作业专用程序，如求20以内的加减运算
+- **ImporvedAdaboost**：改进Adaboost算法，利用minist（改成二分类）测试改进效果
 
 ------
 
