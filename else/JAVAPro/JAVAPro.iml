@@ -10,5 +10,6 @@
     <orderEntry type="library" name="commons-io-2.6" level="project" />
     <orderEntry type="library" name="quartz" level="project" />
     <orderEntry type="library" name="javassist" level="project" />
+    <orderEntry type="library" name="mysql-connector-java-8.0.7-dmr" level="project" />
   </component>
 </module>
