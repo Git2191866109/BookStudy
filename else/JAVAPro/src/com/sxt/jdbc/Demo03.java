@@ -35,7 +35,11 @@ public class Demo03 {
             ps.setObject(3, new java.sql.Date(System.currentTimeMillis()));
 
             System.out.println("插入一行记录");
-            ps.execute();
+            // 返回是否有结果集
+            // ps.execute();
+            // 返回更新的行数
+            int count = ps.executeUpdate();
+            System.out.println(count);
 
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
