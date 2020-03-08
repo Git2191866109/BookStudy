@@ -2,6 +2,8 @@
 
 李英俊努力努力再努力！！！
 
+[TOC]
+
 ## Book1：《Python编程从入门到实践》
 
 - 抱歉这本书并没有留下书评和学习笔记，只有代码。
@@ -53,16 +55,29 @@
 
 ## Book5：《Hadoop权威指南》
 
+## else：视频学习
 
+### 1. 机器学习算法工程师面试考点笔记
 
-## else：其它非书本操作
+### [2. Linux学习笔记](https://blog.csdn.net/qq_21579045/article/details/95605401)
 
-- 机器学习算法工程师面试考点笔记
-- [Linux学习笔记](https://blog.csdn.net/qq_21579045/article/details/95605401)：[av21303002](https://www.bilibili.com/video/av21303002)
-- [MySQL基础学习笔记](https://blog.csdn.net/qq_21579045/article/details/98111827)：[av59623481](https://www.bilibili.com/video/av59623481)
-- [MySQL高级学习笔记](https://blog.csdn.net/qq_21579045/article/details/99702766)：[av59623481](https://www.bilibili.com/video/av59623481)
-- [Java基础学习笔记](https://www.cnblogs.com/lyjun/p/11956413.html)：[av59529105](https://www.bilibili.com/video/av59529105/)
-- Java高级学习笔记：[av59529105](https://www.bilibili.com/video/av59529105/)
+- https://www.bilibili.com/video/av21303002
+
+### [3. MySQL基础学习笔记](https://blog.csdn.net/qq_21579045/article/details/98111827)
+
+- https://www.bilibili.com/video/av59623481
+
+### [4. MySQL高级学习笔记](https://blog.csdn.net/qq_21579045/article/details/99702766)
+
+- https://www.bilibili.com/video/av59623481
+
+### [5. Java基础学习笔记](https://www.cnblogs.com/lyjun/p/11956413.html)
+
+- https://www.bilibili.com/video/av59529105/
+
+### 6. Java高级学习笔记
+
+- https://www.bilibili.com/video/av59529105/
 
 ## tools：自己写的小工具以及一些教程
 
