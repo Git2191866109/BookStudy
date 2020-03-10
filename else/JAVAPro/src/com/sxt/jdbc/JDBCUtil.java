@@ -15,12 +15,12 @@ import java.util.Properties;
 
 public class JDBCUtil {
     // 可以帮助我们读取和处理资源文件中的信息
-    static Properties pros = null;
+    private static Properties pros = null;
     static {
         /*静态代码块：只有在加载JDBCUtil类的时候调用一次*/
         pros = new Properties();
         try {
-            pros.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("df.properties"));
+            pros.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("com/sxt/jdbc/db.properties"));
         } catch (IOException e) {
             e.printStackTrace();
         }
