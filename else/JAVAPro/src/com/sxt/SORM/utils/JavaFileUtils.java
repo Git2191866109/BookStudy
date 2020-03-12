@@ -2,8 +2,15 @@ package com.sxt.SORM.utils;
 
 import com.sxt.SORM.bean.ColumnInfo;
 import com.sxt.SORM.bean.JavaFieldGetSet;
+import com.sxt.SORM.bean.TableInfo;
+import com.sxt.SORM.core.DBManager;
 import com.sxt.SORM.core.MySqlTypeConvertor;
+import com.sxt.SORM.core.TableContext;
 import com.sxt.SORM.core.TypeConvertor;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author: Li Tian
@@ -44,9 +51,57 @@ public class JavaFileUtils {
         return jfgs;
     }
 
+    /**
+     * 根据表信息生成java类的源代码
+     * @param tableInfo 表信息
+     * @param convertor 数据类型转化器
+     * @return java类的源代码
+     */
+    public static String createJavaSrc(TableInfo tableInfo, TypeConvertor convertor){
+        Map<String, ColumnInfo> columns = tableInfo.getColumns();
+        List<JavaFieldGetSet> javaFields = new ArrayList<>();
+
+        for(ColumnInfo c: columns.values()){
+            javaFields.add(createFieldGetSetSRC(c, convertor));
+        }
+        StringBuilder src = new StringBuilder();
+
+        // 生成package语句
+        src.append("package " + DBManager.getConf().getPoPackage() + ";\n\n");
+        // 生成import语句
+        src.append("import java.sql.*;\n");
+        src.append("import java.util.*;\n\n");
+        // 生成类声明语句
+        src.append("public class " + StringUtils.firstChar2UpperCase(tableInfo.getTname()) + " {\n\n");
+        // 生成属性列表
+        for(JavaFieldGetSet f: javaFields){
+            src.append(f.getFieldInfo());
+        }
+        src.append("\n\n");
+        // 生成set方法列表
+        for(JavaFieldGetSet f: javaFields){
+            src.append(f.getSetInfo());
+        }
+        // 生成get方法列表
+        for(JavaFieldGetSet f: javaFields){
+            src.append(f.getGetInfo());
+        }
+        // 生成类结束
+        src.append("}\n");
+        System.out.println(src);
+        return src.toString();
+    }
+
     public static void main(String[] args){
+        // 测试每一个表的field，set、get方法源码生成
         ColumnInfo ci = new ColumnInfo("username", "int", 0);
         JavaFieldGetSet f = createFieldGetSetSRC(ci, new MySqlTypeConvertor());
         System.out.println(f);
+        System.out.println("\n--------------------" + "分割线" + "--------------------\n");
+
+        // 测试每一个表的从头到尾完全源码生成
+        Map<String, TableInfo> map = TableContext.tables;
+        TableInfo t = map.get("emp");
+        createJavaSrc(t, new MySqlTypeConvertor());
     }
 }

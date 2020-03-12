@@ -32,7 +32,7 @@ public class TableContext {
             // 初始化获得的表信息
             Connection conn = DBManager.getConn();
             DatabaseMetaData dbmd = conn.getMetaData();
-            ResultSet tableSet = dbmd.getTables(null, "%", "%", new String[]{"TABLE"});
+            ResultSet tableSet = dbmd.getTables("", "%", "%", new String[] {"TABLE"});
 
             while(tableSet.next()){
                 // 循环每个表名
@@ -40,7 +40,7 @@ public class TableContext {
                 TableInfo ti = new TableInfo(tableName, new ArrayList<ColumnInfo>(), new HashMap<String, ColumnInfo>());
                 tables.put(tableName, ti);
                 // 查询表中的所有字段
-                ResultSet set = dbmd.getColumns(null, "%", tableName, "%");
+                ResultSet set = dbmd.getColumns("", "%", tableName, "%");
                 while(set.next()){
                     // 循环每个列名
                     ColumnInfo ci = new ColumnInfo(set.getString("COLUMN_NAME"), set.getString("TYPE_NAME"), 0);
@@ -48,7 +48,7 @@ public class TableContext {
                 }
 
                 // 查询表中的主键
-                System.out.println(tableName);
+                // System.out.println(tableName);
                 ResultSet set2 = dbmd.getPrimaryKeys("", "%", tableName);
                 while (set2.next()){
                     ColumnInfo ci2 = (ColumnInfo) ti.getColumns().get(set2.getObject("COLUMN_NAME"));
