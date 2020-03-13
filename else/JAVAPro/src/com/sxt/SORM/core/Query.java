@@ -36,7 +36,7 @@ public interface Query {
      * @param id    主键的值
      */
     // delete from User where id = 2;
-    public int delete(Class clazz, int id);
+    public void delete(Class clazz, Object id);
 
     /**
      * 删除对象在数据库中对应的记录（对象所在类对应到表，对象的主键对应到的记录）

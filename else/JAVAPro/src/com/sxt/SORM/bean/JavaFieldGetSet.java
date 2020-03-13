@@ -52,9 +52,9 @@ public class JavaFieldGetSet {
 
     @Override
     public String toString() {
-        System.out.println(fieldInfo);
-        System.out.println(getInfo);
-        System.out.println(setInfo);
+        // System.out.println(fieldInfo);
+        // System.out.println(getInfo);
+        // System.out.println(setInfo);
         return super.toString();
     }
 }
