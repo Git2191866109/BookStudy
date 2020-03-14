@@ -31,7 +31,7 @@ public interface Query {
 
     /**
      * 删除clazz表示类对应的表中的记录（指定主键id的记录）
-     *
+     * 把对象中不为null的属性往数据库中存储！如果数字为null则放0
      * @param clazz 跟表对应的类的Class对象
      * @param id    主键的值
      */
