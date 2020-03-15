@@ -5,11 +5,10 @@ import com.sxt.SORM.bean.TableInfo;
 import com.sxt.SORM.po.Emp;
 import com.sxt.SORM.utils.JDBCUtils;
 import com.sxt.SORM.utils.ReflectUtils;
+import com.sxt.SORM.vo.EmpVO;
 
 import java.lang.reflect.Field;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +22,34 @@ import java.util.List;
  */
 
 public class MysqlQuery implements Query {
+
     public static void main(String[] args) {
+        Object obj = new MysqlQuery().queryValue("select count(*) from emp where salary>?", new Object[]{1000});
+        System.out.println(obj);
+    }
+
+    /**
+     * 复杂多行查询测试
+     */
+    public static void testQueryRows() {
+        List<Emp> list = new MysqlQuery().queryRows("select id,empname,age from emp where age>? and salary<?", Emp.class,
+                new Object[]{1, 9000});
+        for (Emp e : list) {
+            System.out.println(e.getEmpname());
+        }
+
+        String sql2 = "select e.id,e.empname,salary+bonus 'xinshui',age,d.dname 'deptName',d.address 'deptAddr' from emp e"
+                + " " + "join dept d on e.deptId=d.id;";
+        List<EmpVO> list2 = new MysqlQuery().queryRows(sql2, EmpVO.class, null);
+        for (EmpVO e : list2) {
+            System.out.println(e.getEmpname() + "-" + e.getDeptAddr() + "-" + e.getXinshui());
+        }
+    }
+
+    /**
+     * 增删改操作测试
+     */
+    public static void testDML() {
         Emp e = new Emp();
         e.setEmpname("Tom");
         e.setBirthday(new java.sql.Date(System.currentTimeMillis()));
@@ -138,21 +164,76 @@ public class MysqlQuery implements Query {
 
     @Override
     public List queryRows(String sql, Class clazz, Object[] params) {
-        return null;
+        Connection conn = DBManager.getConn();
+        // 存放查询结果的容器
+        List list = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            ps = conn.prepareStatement(sql);
+            // 给sql设置参数，就是？位置的参数
+            JDBCUtils.handleParams(ps, params);
+            rs = ps.executeQuery();
+            ResultSetMetaData metaData = rs.getMetaData();
+            // 多行
+            while (rs.next()) {
+                if (list == null) {
+                    list = new ArrayList();
+                }
+                // 调用javabean的无参构造器
+                Object rowObj = clazz.newInstance();
+                // 多列 select username, pwd, age from user where id>? and age>?
+                for (int i = 0; i < metaData.getColumnCount(); i++) {
+                    // username
+                    String columnName = metaData.getColumnLabel(i + 1);
+                    Object columnValue = rs.getObject(i + 1);
+
+                    // 调用rowObj对象的setUsername(String uname)方法，将columnValue的值设置进去
+                    ReflectUtils.invokeSet(rowObj, columnName, columnValue);
+                }
+                list.add(rowObj);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(ps, conn);
+        }
+        return list;
     }
 
     @Override
-    public List queryUniqueRows(String sql, Class clazz, Object[] params) {
-        return null;
+    public Object queryUniqueRows(String sql, Class clazz, Object[] params) {
+        List list = queryRows(sql, clazz, params);
+        return (list == null && list.size() > 0) ? null : list.get(0);
     }
 
     @Override
-    public List queryValue(String sql, Object[] params) {
-        return null;
+    public Object queryValue(String sql, Object[] params) {
+        Connection conn = DBManager.getConn();
+        // 存储查询结果的对象
+        Object value = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            ps = conn.prepareStatement(sql);
+            // 给sql设置参数，就是？位置的参数
+            JDBCUtils.handleParams(ps, params);
+            rs = ps.executeQuery();
+            // 多行
+            while (rs.next()) {
+                // select count(*) from user
+                value = rs.getObject(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(ps, conn);
+        }
+        return value;
     }
 
     @Override
     public Number queryNumber(String sql, Object[] params) {
-        return null;
+        return (Number) queryValue(sql, params);
     }
 }

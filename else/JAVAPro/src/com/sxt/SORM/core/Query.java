@@ -73,7 +73,7 @@ public interface Query {
      * @param params sql的参数
      * @return 返回查询到的结果
      */
-    public List queryUniqueRows(String sql, Class clazz, Object[] params);
+    public Object queryUniqueRows(String sql, Class clazz, Object[] params);
 
     /**
      * 查询返回一个值（一行一列），并将该值返回
@@ -82,7 +82,7 @@ public interface Query {
      * @param params sql的参数
      * @return 返回查询到的结果
      */
-    public List queryValue(String sql, Object[] params);
+    public Object queryValue(String sql, Object[] params);
 
     /**
      * 查询返回一个数字（一行一列），并将该值返回
