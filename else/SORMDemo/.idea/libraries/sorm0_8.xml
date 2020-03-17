@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="sorm0.8">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../sorm0.8/sorm0.8.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

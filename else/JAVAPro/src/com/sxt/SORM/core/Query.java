@@ -19,14 +19,15 @@ import java.util.List;
  * @desc: |负责查询（对外提供服务的核心类）
  */
 
-public abstract class Query {
+public abstract class Query implements Cloneable {
 
     /**
-     *  采用模板方法模式将JDBC操作封装成模板，变于重用
-     * @param sql sql语句
+     * 采用模板方法模式将JDBC操作封装成模板，变于重用
+     *
+     * @param sql    sql语句
      * @param params sql的参数
-     * @param clazz 记录要封装到的java类
-     * @param back CallBack的实现类，实现回调
+     * @param clazz  记录要封装到的java类
+     * @param back   CallBack的实现类，实现回调
      * @return 返回查询结果
      */
     public Object executeQueryTemplate(String sql, Object[] params, Class clazz, CallBack back) {
@@ -231,7 +232,21 @@ public abstract class Query {
      */
     public Object queryUniqueRows(String sql, Class clazz, Object[] params) {
         List list = queryRows(sql, clazz, params);
-        return (list == null && list.size() > 0) ? null : list.get(0);
+        return (list != null || list.size() > 0) ? list.get(0) : null;
+    }
+
+    /**
+     * 根据主键的值直接查找对应的对象
+     * @param clazz
+     * @param id
+     * @return
+     */
+    public Object queryById(Class clazz, Object id){
+        // select * from emp where id=?
+        TableInfo tableInfo = TableContext.poClassTableMap.get(clazz);
+        ColumnInfo onlyPriKey = tableInfo.getOnlyPriKey();
+        String sql = "select * from " + tableInfo.getTname() +  " where " + onlyPriKey.getName() + "=?";
+        return queryUniqueRows(sql, clazz, new Object[]{id});
     }
 
     /**
@@ -279,4 +294,9 @@ public abstract class Query {
      * @return
      */
     public abstract Object queryPagenate(int pageNum, int size);
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }
