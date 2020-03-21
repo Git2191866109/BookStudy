@@ -1,10 +1,7 @@
 package com.litian.jdbc;
 
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.Driver;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Properties;
 
 
@@ -18,6 +15,122 @@ import java.util.Properties;
  */
 
 public class JDBCTest {
+
+    public static void main(String[] args) throws Exception {
+        // new JDBCTest().testGetConnection();
+        // new JDBCTest().testDriverManager();
+        // Connection conn = new JDBCTest().getConnection2();
+        // System.out.println(conn);
+        new JDBCTest().testStatement();
+        // new JDBCTest().testResultSet();
+    }
+
+    /**
+     * ResultSet：结果集。封装了使用JDBC进行查询的结果。
+     * 1. 调用Statement对象的executeQuery(sql)方法
+     * 2. ResultSet返回的实际上就是一张数据表。有一个指针指向数据表的第一行的前面。
+     * 可以调用next()方法检测下一行是否有效。若有效，该方法返回true，且指针下移。
+     * 相当于Iterator对象的hasNext()和next()方法的结合体
+     * 3. 当指针对应到一行时，可以通过嗲用getXXX(index)或getXXX(columnName)获取
+     * 每一列的值。如：getInt(1)，getString("name")
+     * 4. 关闭ResultSet
+     */
+    public void testResultSet(){
+        // 获取各项记录，并打印
+        Connection conn = null;
+        Statement statement = null;
+        ResultSet rs = null;
+        try {
+            // 1. 获取Connection
+            conn = JDBCTools.getConnection();
+            // 2. 获取Statement
+            statement = conn.createStatement();
+            // 3. 准备SQL
+            String sql = "select id, username, pwd, regTime, lastLoginTime from t_user";
+            // 4. 执行查询，得到ResultSet
+            rs = statement.executeQuery(sql);
+            // 5. 处理ResultSet
+            while(rs.next()){
+                int id = rs.getInt(1);
+                String username = rs.getString(2);
+                String pwd = rs.getString(3);
+                Date regTime = rs.getDate(4);
+                Timestamp lastLoginTime = rs.getTimestamp(5);
+                System.out.println(id + "-->" + username + "-->" + pwd + "-->" + regTime + "-->" + lastLoginTime);
+            }
+            // 6. 关闭数据库资源
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            JDBCTools.release(rs, statement, conn);
+        }
+    }
+
+    /**
+     * 通用的更新的方法：insert/update/delete
+     * 版本1
+     */
+    public void update(String sql) {
+        Connection conn = null;
+        Statement statement = null;
+
+        try {
+            conn = getConnection2();
+            statement = conn.createStatement();
+            statement.executeUpdate(sql);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            JDBCTools.release(statement, conn);
+        }
+    }
+
+
+    /**
+     * 通过JDBC向指定的数据表中插入一条记录
+     * 1. Statement：用于执行sql语句的对象
+     * 1.1 通过Connection的createStatement()方法来获取
+     * 1.2 通过executeUpdate(sql)可以执行SQL语句
+     * 1.3 传入的sql可以是insert, update或delete，但不能是select
+     * 2. Connection、Statement都是应用程序和数据库服务器的连接资源。使用后一定要关闭。
+     * 2.1 需要再finally中关闭
+     * 3. 关闭顺序：先获取的后关，后获取的先关
+     */
+    public void testStatement() {
+        Connection conn = null;
+        Statement statement = null;
+        try {
+            // 1. 获取数据库连接
+            conn = getConnection2();
+            // 2. 准备插入的SQL语句
+            String sql = "insert into t_user (username, pwd) values('测试', 3352);";
+            String sql2 = "update t_user set username='傻瓜' where id = 20017";
+            // 3. 执行插入
+            // 3.1 获取操作sql语句的Statement对象
+            statement = conn.createStatement();
+            // 3.2 调用Statement对象的executeUpdate(sql)执行SQL语句
+            statement.executeUpdate(sql2);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (statement != null) {
+                    // 4. 关闭Statement对象
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (statement != null) {
+                    // 5. 关闭Connection对象
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     public Connection getConnection2() throws Exception {
         // 1. 准备连接数据库的4个字符串。
@@ -42,7 +155,7 @@ public class JDBCTest {
      * DriverManager是驱动的管理类
      * 1. 可以通过重载的getConnection()方法获取数据库连接。较为方便
      * 2. 可以同时管理多个驱动程序：若注册了多个数据库连接，则调动getConnection()方法时
-     *    传入的参数不同，则返回不同的数据库连接
+     * 传入的参数不同，则返回不同的数据库连接
      */
     public void testDriverManager() throws Exception {
         // 1. 准备连接数据库的4个字符串
@@ -115,13 +228,6 @@ public class JDBCTest {
 
     public void testGetConnection() throws Exception {
         System.out.println(getConnection());
-    }
-
-    public static void main(String[] args) throws Exception {
-        // new JDBCTest().testGetConnection();
-        // new JDBCTest().testDriverManager();
-        Connection conn = new JDBCTest().getConnection2();
-        System.out.println(conn);
     }
 
 }
