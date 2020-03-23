@@ -66,24 +66,6 @@ public class JDBCTest {
         }
     }
 
-    /**
-     * 通用的更新的方法：insert/update/delete
-     * 版本1
-     */
-    public void update(String sql) {
-        Connection conn = null;
-        Statement statement = null;
-
-        try {
-            conn = getConnection2();
-            statement = conn.createStatement();
-            statement.executeUpdate(sql);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            JDBCTools.release(statement, conn);
-        }
-    }
 
 
     /**

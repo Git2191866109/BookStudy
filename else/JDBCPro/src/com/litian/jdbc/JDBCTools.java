@@ -85,4 +85,48 @@ public class JDBCTools {
         return DriverManager.getConnection(jdbcUrl, user, password);
     }
 
+    /**
+     * 通用的更新的方法：insert/update/delete
+     * 版本1
+     */
+    public static void update(String sql) {
+        Connection conn = null;
+        Statement statement = null;
+
+        try {
+            conn = new JDBCTest().getConnection2();
+            statement = conn.createStatement();
+            statement.executeUpdate(sql);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            JDBCTools.release(statement, conn);
+        }
+    }
+
+    /**
+     * 执行sql语句，使用PreparedStatement
+     *
+     * @param sql  sql
+     * @param args 填写sql占位符的可变参数
+     */
+    public static void update(String sql, Object... args) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = JDBCTools.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+
+            for (int i = 0; i < args.length; i++) {
+                preparedStatement.setObject(i + 1, args[i]);
+            }
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            JDBCTools.release(preparedStatement, connection);
+        }
+    }
+
 }
