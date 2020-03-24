@@ -1,6 +1,8 @@
 package com.litian.jdbc;
 
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -15,9 +17,12 @@ import java.util.Scanner;
 public class JDBCTest2 {
 
     public static void main(String[] args) {
-        new JDBCTest2().testAddNewUser();
+        // new JDBCTest2().testAddNewUser();
         // new JDBCTest2().testPreparedStatement();
+        new JDBCTest2().testGet();
+        // new JDBCTest2().testResultSetMetaData();
     }
+
 
     public void testAddNewUser() {
         User user = getUserFromConsole();
@@ -109,5 +114,97 @@ public class JDBCTest2 {
             JDBCTools.release(rs, ps, conn);
         }
         return u;
+    }
+
+    public void testGet() {
+        String sql = "select id, username, pwd, regTime, lastLoginTime from t_user where id = ?";
+        User user = get(User.class, sql, 1);
+        System.out.println(user);
+
+        String sql2 = "select id, username, pwd from t_user where id = ?";
+        User user2 = get(User.class, sql2, 2);
+        System.out.println(user2);
+    }
+
+    public void testResultSetMetaData() {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            String sql = "select id, username, pwd, regTime, lastLoginTime from t_user where id = ?";
+            conn = JDBCTools.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, 1);
+            rs = ps.executeQuery();
+            Map<String, Object> values = new HashMap<>();
+
+            // 1. 得到ResultSetMetaData对象
+            ResultSetMetaData rsmd = rs.getMetaData();
+
+            while (rs.next()) {
+                // 2. 打印每一列的列名
+                for (int i = 0; i < rsmd.getColumnCount(); i++) {
+                    String columnLabel = rsmd.getColumnLabel(i + 1);
+                    Object columnValue = rs.getObject(columnLabel);
+                    values.put(columnLabel, columnValue);
+                }
+            }
+            System.out.println(values);
+            Class clazz = User.class;
+            User object = (User) clazz.newInstance();
+            for (Map.Entry<String, Object> entry : values.entrySet()) {
+                String fieldName = entry.getKey();
+                Object fieldValue = entry.getValue();
+                System.out.println(fieldName + ": " + fieldValue);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            JDBCTools.release(rs, ps, conn);
+        }
+    }
+
+    public <T> T get(Class<T> clazz, String sql, Object... args) {
+        T entity = null;
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = JDBCTools.getConnection();
+            ps = conn.prepareStatement(sql);
+            for (int i = 0; i < args.length; i++) {
+                ps.setObject(i + 1, args[i]);
+            }
+            rs = ps.executeQuery();
+            Map<String, Object> values = new HashMap<>();
+            ResultSetMetaData rsmd = rs.getMetaData();
+
+            if (rs.next()) {
+                // 利用反射创建对象
+                entity = clazz.newInstance();
+                // 通过解析sql语句来判断到底选择了哪些列，以及需要为entity对象的哪些属性赋值
+                for (int i = 0; i < rsmd.getColumnCount(); i++) {
+                    String columnLabel = rsmd.getColumnLabel(i + 1);
+                    Object columnValue = rs.getObject(columnLabel);
+                    values.put(columnLabel, columnValue);
+                }
+            }
+            for (Map.Entry<String, Object> entry : values.entrySet()) {
+                String fieldName = entry.getKey();
+                Object fieldValue = entry.getValue();
+                System.out.println(fieldName + ": " + fieldValue);
+            }
+
+            // 这里要加入ReflectionUtils方法，将map的内容写入entity中，并返回entity
+
+            // 6. 关闭数据库资源
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            JDBCTools.release(rs, ps, conn);
+        }
+        return entity;
     }
 }
