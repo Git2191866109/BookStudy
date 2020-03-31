@@ -836,50 +836,55 @@
       <ColumnKind>normal</ColumnKind>
       <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
     </column>
-    <key id="210" parent="203" name="PRIMARY">
+    <column id="210" parent="203" name="pic">
+      <Position>6</Position>
+      <DataType>mediumblob|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="211" parent="203" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="211" parent="204" name="id">
+    <column id="212" parent="204" name="id">
       <Position>1</Position>
       <DataType>int(10)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="212" parent="204" name="username">
+    <column id="213" parent="204" name="username">
       <Position>2</Position>
       <DataType>varchar(30)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="213" parent="204" name="pwd">
+    <column id="214" parent="204" name="pwd">
       <Position>3</Position>
       <DataType>varchar(30)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="214" parent="204" name="regTime">
+    <column id="215" parent="204" name="regTime">
       <Position>4</Position>
       <DataType>date|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="215" parent="204" name="lastLoginTime">
+    <column id="216" parent="204" name="lastLoginTime">
       <Position>5</Position>
       <DataType>timestamp|0s</DataType>
       <ColumnKind>normal</ColumnKind>
       <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
     </column>
-    <column id="216" parent="204" name="myInfo">
+    <column id="217" parent="204" name="myInfo">
       <Position>6</Position>
       <DataType>text|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="217" parent="204" name="headImg">
+    <column id="218" parent="204" name="headImg">
       <Position>7</Position>
       <DataType>blob|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="218" parent="204" name="PRIMARY">
+    <key id="219" parent="204" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
