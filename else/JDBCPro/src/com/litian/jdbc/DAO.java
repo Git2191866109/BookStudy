@@ -36,7 +36,24 @@ public class DAO {
         } finally {
             JDBCTools.release(null, ps, conn);
         }
+    }
 
+    // 外部来处理Connection
+    void update(Connection conn, String sql, Object... args) {
+        PreparedStatement ps = null;
+
+        try {
+            ps = conn.prepareStatement(sql);
+
+            for (int i = 0; i < args.length; i++) {
+                ps.setObject(i + 1, args[i]);
+            }
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            JDBCTools.release(null, ps, null);
+        }
     }
 
     // 查询一条记录，返回对应的对象

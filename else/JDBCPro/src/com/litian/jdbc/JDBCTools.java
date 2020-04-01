@@ -52,7 +52,7 @@ public class JDBCTools {
             e.printStackTrace();
         }
         try {
-            if (statement != null) {
+            if (conn != null) {
                 conn.close();
             }
         } catch (SQLException e) {
