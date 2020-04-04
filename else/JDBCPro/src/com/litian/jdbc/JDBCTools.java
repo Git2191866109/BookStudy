@@ -17,6 +17,46 @@ import java.util.Properties;
 public class JDBCTools {
 
     /**
+     * 处理数据库事务：提交事务
+     */
+    public static void commit(Connection conn){
+        if(conn != null){
+            try {
+                conn.commit();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * 回滚事务
+     */
+    public static void rollback(Connection conn){
+        if(conn != null){
+            try {
+                conn.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * 开始事务
+     * @param conn
+     */
+    public static void beginTx(Connection conn){
+        if(conn != null){
+            try {
+                conn.setAutoCommit(false);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
      * 关闭Statement和Connection的方法
      */
     public static void release(Statement statement, Connection conn) {
