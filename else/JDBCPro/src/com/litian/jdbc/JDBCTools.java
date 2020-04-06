@@ -1,5 +1,8 @@
 package com.litian.jdbc;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+
+import javax.sql.DataSource;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
@@ -16,11 +19,22 @@ import java.util.Properties;
 
 public class JDBCTools {
 
+    private static DataSource ds = null;
+
+    // 数据库连接池应只被初始化一次。
+    static {
+        ds = new ComboPooledDataSource("mysql-config");
+    }
+
+    public static Connection getDSConnection() throws Exception {
+        return ds.getConnection();
+    }
+
     /**
      * 处理数据库事务：提交事务
      */
-    public static void commit(Connection conn){
-        if(conn != null){
+    public static void commit(Connection conn) {
+        if (conn != null) {
             try {
                 conn.commit();
             } catch (SQLException e) {
@@ -32,8 +46,8 @@ public class JDBCTools {
     /**
      * 回滚事务
      */
-    public static void rollback(Connection conn){
-        if(conn != null){
+    public static void rollback(Connection conn) {
+        if (conn != null) {
             try {
                 conn.rollback();
             } catch (SQLException e) {
@@ -44,10 +58,11 @@ public class JDBCTools {
 
     /**
      * 开始事务
+     *
      * @param conn
      */
-    public static void beginTx(Connection conn){
-        if(conn != null){
+    public static void beginTx(Connection conn) {
+        if (conn != null) {
             try {
                 conn.setAutoCommit(false);
             } catch (SQLException e) {
@@ -93,6 +108,8 @@ public class JDBCTools {
         }
         try {
             if (conn != null) {
+                // 数据库连接池的Connection对象进行close时
+                // 并不是真的进行关闭，而是把该数据库连接归还到数据库连接池中。
                 conn.close();
             }
         } catch (SQLException e) {
