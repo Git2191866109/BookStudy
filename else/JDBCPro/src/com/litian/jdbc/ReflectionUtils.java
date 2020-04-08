@@ -150,7 +150,6 @@ public class ReflectionUtils {
      * 如: public EmployeeDao extends BaseDao<Employee, String>
      *
      * @param clazz
-     * @param index
      * @return
      */
     public static Class getSuperClassGenricType(Class clazz, int index) {
@@ -169,5 +168,18 @@ public class ReflectionUtils {
         if (!(params[index] instanceof Class))
             return Object.class;
         return (Class) params[index];
+    }
+
+    /**
+     * 通过反射,获得Class定义中声明的父类的泛型参数的类型.
+     * eg.
+     * public UserDao extends HibernateDao<User>
+     *
+     * @param clazz The class to introspect
+     * @return the first generic declaration, or Object.class if cannot be determined
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> Class<T> getSuperClassGenricType(final Class clazz) {
+        return getSuperClassGenricType(clazz, 0);
     }
 }
