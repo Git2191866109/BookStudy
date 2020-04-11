@@ -9,11 +9,48 @@
         <servlet-name>helloServlet</servlet-name>
         <!-- Servlet 的全类名 -->
         <servlet-class>com.litian.test.HelloServlet</servlet-class>
+
+        <!-- 配置Servlet的初始化参数，且节点必须在load-on-startup节点的前面 -->
+        <init-param>
+            <!-- 参数名 -->
+            <param-name>user</param-name>
+            <!-- 参数值 -->
+            <param-value>root</param-value>
+        </init-param>
+        <init-param>
+            <param-name>password</param-name>
+            <param-value>1230</param-value>
+        </init-param>
+
+        <!-- 可以指定Servlet被创建的时机 -->
+        <load-on-startup>5</load-on-startup>
+
     </servlet>
     <servlet-mapping>
         <!-- 需要和某一个Servlet节点的servlet-name子节点的文本节点一致 -->
         <servlet-name>helloServlet</servlet-name>
         <!-- 映射具体的访问路径：/ 代表当前WEB应用的根目录 -->
         <url-pattern>/hello</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <!-- 需要和某一个Servlet节点的servlet-name子节点的文本节点一致 -->
+        <servlet-name>helloServlet</servlet-name>
+        <!-- 映射具体的访问路径：/ 代表当前WEB应用的根目录 -->
+        <url-pattern>/hello2</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <!-- Servlet 注册的名字 -->
+        <servlet-name>secondServlet</servlet-name>
+        <!-- Servlet 的全类名 -->
+        <servlet-class>com.litian.test.SecondServlet</servlet-class>
+        <!-- 可以指定Servlet被创建的时机 -->
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <!-- 需要和某一个Servlet节点的servlet-name子节点的文本节点一致 -->
+        <servlet-name>secondServlet</servlet-name>
+        <!-- 映射具体的访问路径：/ 代表当前WEB应用的根目录 -->
+        <url-pattern>*.html</url-pattern>
     </servlet-mapping>
 </web-app>

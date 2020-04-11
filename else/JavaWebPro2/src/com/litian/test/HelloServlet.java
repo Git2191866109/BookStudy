@@ -2,6 +2,7 @@ package com.litian.test;
 
 import javax.servlet.*;
 import java.io.IOException;
+import java.util.Enumeration;
 
 /**
  * @author: Li Tian
@@ -21,6 +22,16 @@ public class HelloServlet implements Servlet {
     @Override
     public void init(ServletConfig servletConfig) throws ServletException {
         System.out.println("初始化中...");
+        String user = servletConfig.getInitParameter("user");
+        System.out.println("user: " + user);
+        Enumeration<String> names = servletConfig.getInitParameterNames();
+        while(names.hasMoreElements()){
+            String name = names.nextElement();
+            String value = servletConfig.getInitParameter(name);
+            System.out.println(name + "-->" + value);
+        }
+        String servletName = servletConfig.getServletName();
+        System.out.println(servletName);
     }
 
     @Override
