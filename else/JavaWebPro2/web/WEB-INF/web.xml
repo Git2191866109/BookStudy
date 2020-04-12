@@ -3,6 +3,18 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+
+    <!-- 获取WEB应用程序的初始化参数 -->
+    <context-param>
+        <param-name>driver</param-name>
+        <param-value>com.mysql.cj.jdbc.Driver</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>jdbcUrl</param-name>
+        <param-value>jdbc:mysql://localhost:3306/testjdbc?serverTimezone=GMT%2B8</param-value>
+    </context-param>
+
     <!-- 配置和映射Servlet -->
     <servlet>
         <!-- Servlet 注册的名字 -->
@@ -39,18 +51,20 @@
         <url-pattern>/hello2</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <!-- Servlet 注册的名字 -->
-        <servlet-name>secondServlet</servlet-name>
-        <!-- Servlet 的全类名 -->
-        <servlet-class>com.litian.test.SecondServlet</servlet-class>
-        <!-- 可以指定Servlet被创建的时机 -->
-        <load-on-startup>2</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <!-- 需要和某一个Servlet节点的servlet-name子节点的文本节点一致 -->
-        <servlet-name>secondServlet</servlet-name>
-        <!-- 映射具体的访问路径：/ 代表当前WEB应用的根目录 -->
-        <url-pattern>*.html</url-pattern>
-    </servlet-mapping>
+<!--    <servlet>-->
+<!--        &lt;!&ndash; Servlet 注册的名字 &ndash;&gt;-->
+<!--        <servlet-name>secondServlet</servlet-name>-->
+<!--        &lt;!&ndash; Servlet 的全类名 &ndash;&gt;-->
+<!--        <servlet-class>com.litian.test.SecondServlet</servlet-class>-->
+<!--        &lt;!&ndash; 可以指定Servlet被创建的时机 &ndash;&gt;-->
+<!--        <load-on-startup>2</load-on-startup>-->
+<!--    </servlet>-->
+
+<!--    <servlet-mapping>-->
+<!--        &lt;!&ndash; 需要和某一个Servlet节点的servlet-name子节点的文本节点一致 &ndash;&gt;-->
+<!--        <servlet-name>secondServlet</servlet-name>-->
+<!--        &lt;!&ndash; 映射具体的访问路径：/ 代表当前WEB应用的根目录 &ndash;&gt;-->
+<!--        <url-pattern>*.html</url-pattern>-->
+<!--    </servlet-mapping>-->
+
 </web-app>
