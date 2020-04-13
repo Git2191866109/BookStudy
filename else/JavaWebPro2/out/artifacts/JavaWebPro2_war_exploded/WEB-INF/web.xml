@@ -67,4 +67,14 @@
 <!--        <url-pattern>*.html</url-pattern>-->
 <!--    </servlet-mapping>-->
 
+    <servlet>
+        <servlet-name>loginServlet</servlet-name>
+        <servlet-class>com.litian.test.LoginServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>loginServlet</servlet-name>
+        <url-pattern>/loginServLet</url-pattern>
+    </servlet-mapping>
+
 </web-app>
