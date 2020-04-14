@@ -17,7 +17,7 @@
     <!-- 配置Servlet -->
     <servlet>
         <servlet-name>log</servlet-name>
-        <servlet-class>com.litian.test.LoginServlet</servlet-class>
+        <servlet-class>com.litian.test.LoginServlet4</servlet-class>
     </servlet>
 
     <servlet-mapping>
