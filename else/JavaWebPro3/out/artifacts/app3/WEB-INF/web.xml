@@ -24,4 +24,17 @@
         <servlet-name>log</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>hellojsp</servlet-name>
+        <jsp-file>/hello.jsp</jsp-file>
+        <init-param>
+            <param-name>test</param-name>
+            <param-value>testValue</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>hellojsp</servlet-name>
+        <url-pattern>/hellojsp</url-pattern>
+    </servlet-mapping>
 </web-app>
