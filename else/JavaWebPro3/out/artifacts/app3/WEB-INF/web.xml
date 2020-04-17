@@ -37,4 +37,15 @@
         <servlet-name>hellojsp</servlet-name>
         <url-pattern>/hellojsp</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ForwardServlet</servlet-name>
+        <servlet-class>com.litian.test.ForwardServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ForwardServlet</servlet-name>
+        <url-pattern>/ForwardServlet</url-pattern>
+    </servlet-mapping>
+
 </web-app>
