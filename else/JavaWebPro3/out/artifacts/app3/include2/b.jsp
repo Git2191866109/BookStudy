@@ -8,12 +8,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>a1</title>
+    <title>b2</title>
 </head>
 <body>
-<h3>aaa1 page</h3>
-<% String ss = "what!";%>
-<%-- 在a.jsp 中包含b.jsp --%>
-<%@ include file="b.jsp" %>
+<h3>bbb2 page</h3>
+<%= request.getParameter("username") %>
 </body>
 </html>

@@ -8,9 +8,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>b</title>
+    <title>b1</title>
 </head>
 <body>
-<h3>bbb page</h3>
+<h3>bbb1 page</h3>
+<%--<%= ss %>--%>
 </body>
 </html>
