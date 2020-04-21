@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="MVCApp">
+    <output-path>$PROJECT_DIR$/out/artifacts/MVCApp</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="MVCPro/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="MVCPro" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

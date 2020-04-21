@@ -11,21 +11,25 @@
 @desc: 处理两个表，根据关键词进行左连接。关键词可能有两个或者一个，不填写关键词可自动识别两个表相同的列名进行合并
         打包代码：pyinstaller -w -F -i pic.ico excelDeal_v1.0.py
 
-        【20200325更新】 增加内连接和左外连接的选择
+        【20200421更新】 增加报错信息，修改信息颜色  v1.1
+        【20200325更新】 增加内连接和左外连接的选择  v1.0
         1. 修改页面布局
         2. 增加连接方法的选择
+
 """
 
 import pandas as pd
 import tkinter as tk
 import threading
+import traceback
+import os
 from tkinter.filedialog import askopenfilename, askdirectory
 
 
 def visualize():
     """生成可视化界面"""
     root = tk.Tk()
-    root.title('表格合并工具v1.0【作者：李英俊小朋友】')
+    root.title('表格合并工具v1.1【作者：李英俊小朋友】')
     root.geometry()
     root.resizable(width=False, height=False)
 
@@ -69,6 +73,14 @@ def visualize():
         :param way: 连接方式，默认为左外连接
         :return:
         """
+
+        # 检查文件名是否有处理结果
+        p1_name = os.path.basename(path1)
+        p2_name = os.path.basename(path2)
+        if p1_name == '处理结果.xlsx' or p2_name == '处理结果.xlsx':
+            write_info('【报错啦！】文件名不能叫处理结果哦！')
+            return -1
+
         try:
             d1 = pd.read_excel(path1, dtype=str)
             d2 = pd.read_excel(path2, dtype=str)
@@ -91,27 +103,33 @@ def visualize():
                 left = common_names
                 right = common_names
 
+                # 测试特征自动匹配的情况
+                # print(left_columns, ',', right_columns)
+                # print(left, ',', right)
+
             d = pd.merge(d1, d2, how=way, left_on=left, right_on=right)
             d.to_excel(save_path + '/处理结果.xlsx', index=False)
 
-            write_info('运行完毕！快去看看保存路径下生成的文件吧【处理结果.xlsx】')
-        except:
-            write_info("检查一下数据或者哪里没填，报错了哦！")
+            write_info('【运行完毕！】快去看看保存路径下生成的文件吧：处理结果.xlsx', fg='green')
+            return 1
+        except Exception as e:
+            write_info("【报错啦！】merge过程出错！这要联系李英俊才可以解决哦！")
+            return -2
 
     def select_file1():
         path1_file.set(askopenfilename())
         e1.configure(fg='black')
-        write_info('写入文件1成功！')
+        write_info('写入文件1成功！', 'green')
 
     def select_file2():
         path2_file.set(askopenfilename())
         e2.configure(fg='black')
-        write_info('写入文件2成功！')
+        write_info('写入文件2成功！', 'green')
 
     def select_dir():
         save_file.set(askdirectory())
         e3.configure(fg='black')
-        write_info('写入保存路径成功！')
+        write_info('写入保存路径成功！', 'green')
 
     def clear_entry45(event=None):
         # 删除entry4、5中内容
@@ -128,7 +146,7 @@ def visualize():
         e6.delete(0, "end")
 
     def run():
-        write_info('正在运行中，请耐心等候...（数据量太大会卡哦，不用担心，在运行呢！）')
+        write_info('正在运行中，请耐心等候...（数据量太大会卡哦，不用担心，在运行呢！）', 'green')
         try:
             words_1 = e4.get().split(' ')
             words_2 = e5.get().split(' ')
@@ -137,11 +155,11 @@ def visualize():
                       (save_file.get(), path1_file.get(), path2_file.get(), words_1, words_2, var_ratio.get()))
         except Exception as e:
             # print(e)
-            write_info("检查一下数据或者哪里没填，报错了哦！")
+            write_info("【报错啦！】检查一下数据或者哪里没填，报错了哦！")
 
-    def write_info(info):
+    def write_info(info, fg='red'):
         """写入各种反馈信息"""
-        e6.configure(fg='red', state='normal')
+        e6.configure(fg=fg, state='normal')
         e6.delete(0, "end")
         e6.insert(0, info)
         e6.configure(state='readonly')
@@ -152,7 +170,7 @@ def visualize():
             t = threading.Thread(target=func, args=args)
             t.start()
         except Exception:
-            write_info("检查一下数据或者哪里没填，报错了哦！")
+            write_info("【报错啦！】检查一下数据或者哪里没填，报错了哦！")
 
     l1 = tk.Label(root, text='表格1路径', width=label_width, height=label_height, font=font_title)
     l1.grid(row=0, column=0, sticky='wesn')

@@ -57,27 +57,19 @@
 
 ## else：视频学习
 
-### 1. 机器学习算法工程师面试考点笔记
+### [1. Linux学习笔记](https://blog.csdn.net/qq_21579045/article/details/95605401)
 
-### [2. Linux学习笔记](https://blog.csdn.net/qq_21579045/article/details/95605401)
+### [2. MySQL基础学习笔记](https://blog.csdn.net/qq_21579045/article/details/98111827)
 
-- https://www.bilibili.com/video/av21303002
+### [3. MySQL高级学习笔记](https://blog.csdn.net/qq_21579045/article/details/99702766)
 
-### [3. MySQL基础学习笔记](https://blog.csdn.net/qq_21579045/article/details/98111827)
+### [4. Java基础学习笔记](https://www.cnblogs.com/lyjun/p/11956413.html)
 
-- https://www.bilibili.com/video/av59623481
+### [5. Java高级学习笔记](https://www.cnblogs.com/lyjun/p/12524331.html)
 
-### [4. MySQL高级学习笔记](https://blog.csdn.net/qq_21579045/article/details/99702766)
+### [6. JDBC学习笔记](https://blog.csdn.net/qq_21579045/article/details/105386353)
 
-- https://www.bilibili.com/video/av59623481
-
-### [5. Java基础学习笔记](https://www.cnblogs.com/lyjun/p/11956413.html)
-
-- https://www.bilibili.com/video/av59529105/
-
-### 6. Java高级学习笔记
-
-- https://www.bilibili.com/video/av59529105/
+### 7. JavaWeb学习笔记
 
 ## tools：自己写的小工具以及一些教程
 
@@ -89,6 +81,9 @@
 - **Caltools**：小学生作业专用程序，如求20以内的加减运算
 - **ImporvedAdaboost**：改进Adaboost算法，利用minist（改成二分类）测试改进效果
 - **ExcelDeal**：实现两个表的左外连接和内连接，默认识别两个表的相同字段
+- **ExcelSplit**：
+  1. 实现根据表的某一特征，将该特征多值的一行拆分多行单值
+  2. 输入基础特征+目标特征，输出基础特征+目标特征的统计分析（不重复则取值，相同重复则取值，不同重复则全都要）
 
 ------
 
