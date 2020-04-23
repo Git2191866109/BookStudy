@@ -104,8 +104,8 @@ def visualize():
                 right = common_names
 
                 # 测试特征自动匹配的情况
-                # print(left_columns, ',', right_columns)
-                # print(left, ',', right)
+                print(left_columns, ',', right_columns)
+                print(left, ',', right)
 
             d = pd.merge(d1, d2, how=way, left_on=left, right_on=right)
             d.to_excel(save_path + '/处理结果.xlsx', index=False)
@@ -114,6 +114,7 @@ def visualize():
             return 1
         except Exception as e:
             write_info("【报错啦！】merge过程出错！这要联系李英俊才可以解决哦！")
+            print(e.args[0])
             return -2
 
     def select_file1():

@@ -29,11 +29,12 @@ request.getAttribute("lists")
     List<Student> stus = (List<Student>) request.getAttribute("students");
 %>
 
-<table>
+<table border="1" cellpadding="10", cellspacing="0">
     <tr>
         <th>id</th>
         <th>user</th>
         <th>password</th>
+        <th>Delete</th>
     </tr>
     <%
         for (Student st : stus) {
@@ -42,6 +43,7 @@ request.getAttribute("lists")
         <td><%= st.getId() %></td>
         <td><%= st.getUser() %></td>
         <td><%= st.getPassword() %></td>
+        <td><a href="deleteStudent?id=<%=st.getId()%>">Delete</a></td>
     </tr>
 
     <%

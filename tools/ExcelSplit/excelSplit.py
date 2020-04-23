@@ -17,6 +17,13 @@ import os
 
 
 def excelSplit(file_path, aim_column_index,  split_label='；'):
+    """
+    分离行业代码和行业分类
+    :param file_path:  文件路径
+    :param aim_column_index:  行业分类和行业代码所在列
+    :param split_label:  分离标记
+    :return:
+    """
     data = pd.read_excel(file_path)
     values = data.values
     header = data.columns.tolist()
@@ -28,11 +35,21 @@ def excelSplit(file_path, aim_column_index,  split_label='；'):
         hangye_daima = line[aim_column_index[1]].split(split_label)
 
         # 遍历行业
-        for fl, dm in zip(hangye_fenlei, hangye_daima):
-            new_line = line.copy()
-            new_line[aim_column_index[0]] = fl
-            new_line[aim_column_index[1]] = dm
-            aim_data.append(new_line)
+        # 如果行业分类数量和行业代码一致，就正常操作
+        if len(hangye_fenlei) == len(hangye_daima):
+            for fl, dm in zip(hangye_fenlei, hangye_daima):
+                new_line = line.copy()
+                new_line[aim_column_index[0]] = fl
+                new_line[aim_column_index[1]] = dm
+                aim_data.append(new_line)
+
+        # 如果不一致，则填写 “待核实”
+        else:
+            for fl in hangye_fenlei:
+                new_line = line.copy()
+                new_line[aim_column_index[0]] = fl
+                new_line[aim_column_index[1]] = '待核实'
+                aim_data.append(new_line)
 
     df = pd.DataFrame(aim_data, columns=header)
     return df
