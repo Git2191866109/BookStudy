@@ -18,26 +18,31 @@ import java.util.List;
 public class CustomerDAOJdbcImpl extends DAO<Customer> implements CustomerDao {
     @Override
     public List<Customer> getAll() {
-        return null;
+        String sql = "select id, name, address, phone from customers";
+        return getForList(sql);
     }
 
     @Override
     public void save(Customer c) {
-
+        String sql = "insert into customers(name, address, phone) values (?, ?, ?)";
+        update(sql, c.getName(), c.getAddress(), c.getPhone());
     }
 
     @Override
     public Customer get(Integer id) {
-        return null;
+        String sql = "select id, name, address, phone from customers where id = ?";
+        return get(sql, id);
     }
 
     @Override
     public void delete(Integer id) {
-
+        String sql = "delete from customers where id = ?";
+        update(sql, id);
     }
 
     @Override
     public long getCountWithNames(String name) {
-        return 0;
+        String sql = "select count(id) from customers where name = ?";
+        return getForValue(sql, name);
     }
 }

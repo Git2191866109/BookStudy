@@ -30,7 +30,11 @@ public class JdbcUtils {
      * @param conn
      */
     public static void releaseConnection(Connection conn) {
-
+        try {
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 
