@@ -1,5 +1,10 @@
 package com.litian.mvc.servlet;
 
+import com.litian.mvc.dao.CriteriaCustomer;
+import com.litian.mvc.dao.CustomerDao;
+import com.litian.mvc.dao.impl.CustomerDAOJdbcImpl;
+import com.litian.mvc.domain.Customer;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -7,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * @author: Li Tian
@@ -20,6 +26,8 @@ import java.lang.reflect.Method;
 // @WebServlet(name = "CustomerServlet", urlPatterns = "/customerServlet")
 @WebServlet(name = "CustomerServlet", urlPatterns = "*.do")
 public class CustomerServlet extends HttpServlet {
+    private CustomerDao dao = new CustomerDAOJdbcImpl();
+
     /*
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String method = request.getParameter("method");
@@ -66,8 +74,21 @@ public class CustomerServlet extends HttpServlet {
         System.out.println("delete");
     }
 
-    private void query(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("query");
+    private void query(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // 获取模糊查询的请求参数
+        String name = request.getParameter("name");
+        String phone = request.getParameter("phone");
+        String address = request.getParameter("address");
+        // 把请求参数封装为一个CriteriaCustomer
+        CriteriaCustomer cc = new CriteriaCustomer(name, address, phone);
+
+        // 1. 调用CustomerDao的getAll（划去）->getForListWithCriteriaCustomer得到Customer的集合
+        // List<Customer> customers = dao.getAll();
+        List<Customer> customers = dao.getForListWithCriteriaCustomer(cc);
+        // 2. 把Customer的集合放入request中
+        request.setAttribute("customers", customers);
+        // 3. 转发页面到index.jsp中（不能使用重定向）
+        request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 
     private void add(HttpServletRequest request, HttpServletResponse response) {

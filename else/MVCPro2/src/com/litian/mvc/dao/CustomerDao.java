@@ -14,6 +14,13 @@ import java.util.List;
  */
 
 public interface CustomerDao {
+    /**
+     * 返回满足查询条件的list
+     * @param cc 封装了查询条件
+     * @return
+     */
+    public List<Customer> getForListWithCriteriaCustomer(CriteriaCustomer cc);
+
     public List<Customer> getAll();
 
     public void save(Customer c);

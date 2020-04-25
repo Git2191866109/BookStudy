@@ -1,5 +1,6 @@
 package com.litian.mvc.dao.impl;
 
+import com.litian.mvc.dao.CriteriaCustomer;
 import com.litian.mvc.dao.CustomerDao;
 import com.litian.mvc.domain.Customer;
 import org.junit.jupiter.api.Test;
@@ -52,5 +53,12 @@ class CustomerDAOJdbcImplTest {
     void getCountWithNames() {
         long count = dao.getCountWithNames("ABC");
         System.out.println(count);
+    }
+
+    @Test
+    void getForListWithCriteriaCustomer() {
+        CriteriaCustomer cc = new CriteriaCustomer("k", null, null);
+        List<Customer> customers = dao.getForListWithCriteriaCustomer(cc);
+        System.out.println(customers);
     }
 }

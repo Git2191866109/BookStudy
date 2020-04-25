@@ -1,5 +1,6 @@
 package com.litian.mvc.dao.impl;
 
+import com.litian.mvc.dao.CriteriaCustomer;
 import com.litian.mvc.dao.CustomerDao;
 import com.litian.mvc.dao.DAO;
 import com.litian.mvc.domain.Customer;
@@ -16,6 +17,15 @@ import java.util.List;
  */
 
 public class CustomerDAOJdbcImpl extends DAO<Customer> implements CustomerDao {
+    @Override
+    public List<Customer> getForListWithCriteriaCustomer(CriteriaCustomer cc) {
+        String sql = "select id, name, address, phone from customers where name like ? and address like ? and phone like ?";
+        // return getForList(sql, cc.getName() == null? "%%": "%" + cc.getName() + "%");
+        // 修改了CriteriaCustomer的getter方法：使其返回的字符串中有"%%"
+        // 若返回值为null则返回"%%"，若不为null，则返回"%" + 字段本身的值 + "%"
+        return getForList(sql, cc.getName(), cc.getAddress(), cc.getPhone());
+    }
+
     @Override
     public List<Customer> getAll() {
         String sql = "select id, name, address, phone from customers";
