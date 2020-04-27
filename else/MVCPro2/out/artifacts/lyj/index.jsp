@@ -10,6 +10,16 @@
 <html>
 <head>
     <title>首页</title>
+    <script type="text/javascript" src="scripts/jquery-3.5.0.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $(".delete").click(function () {
+                var content = $(this).parent().parent().find("td:eq(1)").text().replace('\n', '').trim();
+                return confirm("确定要删除【" + content + "】的信息吗？");
+                // return confirm("aaa" + content + "end");
+            });
+        })
+    </script>
 </head>
 <body>
 <form action="query.do" method="post">
@@ -38,7 +48,7 @@
     List<Customer> customers = (List<Customer>) request.getAttribute("customers");
     if (customers != null && customers.size() > 0) {
 %>
-<hr>
+<br>
 <br>
 <table border="1" cellspacing="0" cellpadding="10">
     <tr>
@@ -62,7 +72,7 @@
         </td>
         <td><%=customer.getPhone()%>
         </td>
-        <td><a href="">UPDATE</a> / <a href="">DELETE</a></td>
+        <td><a href="">UPDATE</a> / <a href="delete.do?id=<%=customer.getId()%>" class="delete">DELETE</a></td>
     </tr>
 
     <%

@@ -70,8 +70,19 @@ public class CustomerServlet extends HttpServlet {
         System.out.println("update");
     }
 
-    private void delete(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("delete");
+    private void delete(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String idStr = request.getParameter("id");
+        int id = 0;
+
+        // try catch的作用：防止idStr不能转为int类型
+        // 若不能转，则id=0时，无法进行任何的删除操作
+        try {
+            id = Integer.parseInt(idStr);
+            dao.delete(id);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        response.sendRedirect("query.do");
     }
 
     private void query(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
