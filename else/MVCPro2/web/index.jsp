@@ -30,15 +30,15 @@
         </tr>
         <tr>
             <td>Address:</td>
-            <td><input type="text" name="name"/></td>
+            <td><input type="text" name="address"/></td>
         </tr>
         <tr>
             <td>Phone:</td>
-            <td><input type="text" name="name"/></td>
+            <td><input type="text" name="phone"/></td>
         </tr>
         <tr>
             <td><input type="submit" value="Query"></td>
-            <td><a href="">Add New Customer</a></td>
+            <td><a href="newcustomer.jsp">Add New Customer</a></td>
         </tr>
     </table>
 </form>
@@ -72,7 +72,7 @@
         </td>
         <td><%=customer.getPhone()%>
         </td>
-        <td><a href="">UPDATE</a> / <a href="delete.do?id=<%=customer.getId()%>" class="delete">DELETE</a></td>
+        <td><a href="edit.do?id=<%=customer.getId()%>">修改</a> / <a href="delete.do?id=<%=customer.getId()%>" class="delete">删除</a></td>
     </tr>
 
     <%
