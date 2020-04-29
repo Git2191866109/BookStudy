@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/../Caltools/.idea/Caltools.iml" filepath="$PROJECT_DIR$/../Caltools/.idea/Caltools.iml" />
       <module fileurl="file://$PROJECT_DIR$/../ExcelDeal/.idea/ExcelDeal.iml" filepath="$PROJECT_DIR$/../ExcelDeal/.idea/ExcelDeal.iml" />
       <module fileurl="file://$PROJECT_DIR$/../ExcelSplit/.idea/ExcelSplit.iml" filepath="$PROJECT_DIR$/../ExcelSplit/.idea/ExcelSplit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../MLtools/.idea/MLtools.iml" filepath="$PROJECT_DIR$/../MLtools/.idea/MLtools.iml" />
     </modules>
   </component>
 </project>

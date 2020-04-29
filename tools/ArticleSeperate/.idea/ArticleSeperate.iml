@@ -7,5 +7,6 @@
     <orderEntry type="module" module-name="Caltools" />
     <orderEntry type="module" module-name="ExcelDeal" />
     <orderEntry type="module" module-name="ExcelSplit" />
+    <orderEntry type="module" module-name="MLtools" />
   </component>
 </module>

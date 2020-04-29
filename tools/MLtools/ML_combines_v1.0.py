@@ -6,7 +6,7 @@
 @author: Li Tian
 @contact: 694317828@qq.com
 @software: pycharm
-@file: ML_combines.py
+@file: ML_combines_v1.0.py
 @time: 2019/9/23 8:53
 @desc: 机器学习工具集合，直接写一个类，传参训练集，验证集就能生成报告
 """
