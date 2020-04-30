@@ -12,10 +12,5 @@
 </head>
 <body>
 <h4>对不起，找不到您请求的页面！</h4>
-<br>
-<%
-    String code = request.getParameter("code");
-%>
-错误描述为：<%=code%>
 </body>
 </html>

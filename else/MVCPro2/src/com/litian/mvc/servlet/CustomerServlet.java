@@ -62,45 +62,75 @@ public class CustomerServlet extends HttpServlet {
         } catch (Exception e) {
             // e.printStackTrace();
             // 对没有的方法可以由一些良好的响应（重定向）
-            resp.sendRedirect("error.jsp?code=CannotFindMethod");
+            resp.sendRedirect("error.jsp");
         }
     }
 
+    /**
+     * 在收到修改请求之后，将请求和参数id转发到updatecustomer.jsp页面，如果id为无效值则转发到error.jsp
+     *
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws ServletException
+     */
+    private void edit(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String forwardPath = "/error.jsp";
+
         // 1. 获取请求参数id
-
+        String idStr = request.getParameter("id");
+        int id = -1;
         // 2. 调用CustomerDAO的get方法获取和id对应的Customer对象customer
-
-        // 3. 将customer放入request中
+        try {
+            Customer cc = dao.get(Integer.parseInt(idStr));
+            if (cc != null) {
+                forwardPath = "/updatecustomer.jsp";
+                // 3. 将customer放入request中
+                request.setAttribute("customer", cc);
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
 
         // 4. 响应updatecustomer.jsp页面：转发
+        request.getRequestDispatcher(forwardPath).forward(request, response);
+    }
 
-
-    private void update(HttpServletRequest request, HttpServletResponse response) {
+    private void update(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         // 1. 获取表单参数：id，name，address，phone，oldName
+        String id = request.getParameter("id");
+        String name = request.getParameter("name");
+        String phone = request.getParameter("phone");
+        String address = request.getParameter("address");
+        String oldName = request.getParameter("oldName");
 
         // 2. 比较name和oldName是否相同：若相同说明name可用。
         // 2.1 若不相同，调用CustomerDao的getCountWithName方法获取name在数据库中是否存在
+        // 不分大小写
+        if (!oldName.equalsIgnoreCase(name)) {
+            long count = dao.getCountWithNames(name);
+            // 2.2 若返回值大于0，则响应 updatecustomer.jsp页面：
+            // 通过转发的方式来响应 updatecustomer.jsp
+            if (count > 0) {
+                // 2.2.1 要求在 updatecustomer.jsp页面显示一个错误消息：该用户名已被占用，请重新选择！
+                // 在request中放入一个属性message：该用户名已被占用，请重新选择！
+                // 在页面上通过request.getAttribute("message")的方式来显示
+                request.setAttribute("message", "该用户名【" + name + "】已被占用，请重新选择！");
 
-        // 2.2 若返回值大于0，则响应 updatecustomer.jsp页面：
-        // 通过转发的方式来响应 updatecustomer.jsp
-        if (count > 0) {
-            // 2.2.1 要求在 updatecustomer.jsp页面显示一个错误消息：该用户名已被占用，请重新选择！
-            // 在request中放入一个属性message：该用户名已被占用，请重新选择！
-            // 在页面上通过request.getAttribute("message")的方式来显示
-            request.setAttribute("message", "该用户名【" + name + "】已被占用，请重新选择！");
-
-            // 2.2.2 updatecustomer.jsp的表单值可以回显。
-            // 其中：address和phone显示提交表单的新的值，而name显示oldName而不是新提交的name
-            // 2.2.3 结束方法：return
-            request.getRequestDispatcher("/newcustomer.jsp").forward(request, response);
-            return;
+                // 2.2.2 updatecustomer.jsp的表单值可以回显。
+                // 其中：address和phone显示提交表单的新的值，而name显示oldName而不是新提交的name
+                request.getRequestDispatcher("/updatecustomer.jsp").forward(request, response);
+                // 2.2.3 结束方法：return
+                return ;
+            }
         }
         // 3. 若验证通过，则把表单参数封装为一个Customer对象customer
         Customer cc = new Customer(name, address, phone);
+        cc.setId(Integer.parseInt(id));
         // 4. 调用CustomerDao的update方法执行更新操作
-        dao.save(cc);
+        dao.update(cc);
         // 5. 重定向到query.do
-        response.sendRedirect("success.jsp");
+        response.sendRedirect("query.do");
     }
 
     private void delete(HttpServletRequest request, HttpServletResponse response) throws IOException {
