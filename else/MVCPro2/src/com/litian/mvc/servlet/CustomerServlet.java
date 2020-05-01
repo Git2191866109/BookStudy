@@ -2,6 +2,7 @@ package com.litian.mvc.servlet;
 
 import com.litian.mvc.dao.CriteriaCustomer;
 import com.litian.mvc.dao.CustomerDao;
+import com.litian.mvc.dao.factory.CustomerDAOFactory;
 import com.litian.mvc.dao.impl.CustomerDAOJdbcImpl;
 import com.litian.mvc.domain.Customer;
 
@@ -26,7 +27,8 @@ import java.util.List;
 // @WebServlet(name = "CustomerServlet", urlPatterns = "/customerServlet")
 @WebServlet(name = "CustomerServlet", urlPatterns = "*.do")
 public class CustomerServlet extends HttpServlet {
-    private CustomerDao dao = new CustomerDAOJdbcImpl();
+    // private CustomerDao dao = new CustomerDAOJdbcImpl();
+    private CustomerDao dao = CustomerDAOFactory.getInstance().getCustomerDAO();
 
     /*
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
