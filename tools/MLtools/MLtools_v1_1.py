@@ -66,7 +66,7 @@ class MLTools:
 
         data = pd.DataFrame(result, columns=items)
         data.set_index('model_name', inplace=True)
-        print(data)
+        return data
 
     def evaluate_adjust_model(self, X, y):
         """
@@ -76,7 +76,7 @@ class MLTools:
         result = []
         items = None
 
-        # 获取未调参的模型的结果
+        # 获取网格调参的模型的结果
         for model_name, model in self.models.items():
             eval = model.score_model(model.paramsAdjustment_byGridSearch(X, y), X, y)
             r = [model_name] + list(eval.values())
@@ -86,4 +86,22 @@ class MLTools:
 
         data = pd.DataFrame(result, columns=items)
         data.set_index('model_name', inplace=True)
-        print(data)
+        return data
+
+    def evaluate(self, X, y):
+        """
+        建立未调参和网格调参后的模型，获取交叉验证的评价指标
+        :param X:
+        :param y:
+        :return:
+        """
+
+        # 所有模型未调参结果
+        un_paramed_result = self.evaluate_origin_model(X, y)
+        # 网格调参后结果
+        paramed_result = self.evaluate_adjust_model(X, y)
+
+        print(un_paramed_result)
+        print(paramed_result)
+
+

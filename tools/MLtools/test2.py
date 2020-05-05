@@ -24,7 +24,7 @@ digits_names = digits['target_names']
 
 shape = digits_data.shape
 X = np.array(digits_data).reshape(shape[0], shape[1] * shape[2])
-a, b = 3, 5
+a, b = 4, 9
 index1 = digits_target == a
 index2 = digits_target == b
 X = np.r_[X[index1], X[index2]]
@@ -35,4 +35,7 @@ names = [str(a), str(b)]
 # MLTools().evaluate_adjust_model(X, y)
 
 # 测试数据分析的热力图
-PreAnalysis('./test/').correlationMatrix(X)
+# PreAnalysis('./test/').correlationMatrix(X)
+
+# 测试Adaboost的调参过程是否正常
+MLTools().evaluate(X, y)
