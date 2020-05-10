@@ -22,7 +22,7 @@
 
 import matplotlib.pyplot as plt
 import seaborn as sns; sns.set(style="ticks", color_codes=True)
-
+import os
 from TimeTool import TimeTool
 
 
@@ -84,7 +84,9 @@ class MyMatplotlib:
         if figname is None:
             figname = TimeTool().getCurrentTime() + '.jpg'
         plt.tight_layout()
-        plt.savefig(self.save_path + figname)
+        f = os.path.join(self.save_path, figname)
+        plt.savefig(f, bbox_inches='tight')
+        return f
 
     def plot_heatmap(self, mat, annot=False, change_ticks_fontsize=False, rotation_ticks=False):
         # 获取fig和ax
@@ -111,9 +113,9 @@ class MyMatplotlib:
             label_x = ax.get_xticklabels()
             plt.setp(label_x, rotation=90)
 
-        self.savefig()
+        return self.savefig()
 
-    def plot_pair(self, mat, hue=True, reg=False, keep_legend=False, vars=None):
+    def plot_pair(self, mat, hue=False, reg=False, keep_legend=False, vars=None):
         """
         绘制矩阵图
         :param mat: X, y

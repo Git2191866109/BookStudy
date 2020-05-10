@@ -33,7 +33,7 @@ class MLTools:
         self.m9 = ms.MyXGBoost()
         self.m10 = ms.MyAdaboost()
 
-        self.models = OrderedDict([
+        self.models_dict = OrderedDict([
             (self.m1.name, self.m1),
             (self.m2.name, self.m2),
             (self.m3.name, self.m3),
@@ -46,7 +46,11 @@ class MLTools:
             (self.m10.name, self.m10)
         ])
 
-        self.model_names = list(self.models.keys())
+        self.model_names = list(self.models_dict.keys())
+
+    def init_models(self):
+        for m in self.models_dict.values():
+            m.init_model()
 
     def evaluate_origin_model(self, X, y):
         """
@@ -103,5 +107,3 @@ class MLTools:
 
         print(un_paramed_result)
         print(paramed_result)
-
-

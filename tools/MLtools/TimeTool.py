@@ -12,6 +12,7 @@
 """
 
 import time
+import random
 
 
 class TimeTool:
@@ -20,3 +21,9 @@ class TimeTool:
 
     def getCurrentTime(self):
         return time.strftime("%Y-%m-%d-%H-%M-%S")
+
+    def getct(self):
+        return time.strftime("%Y-%m-%d-%H-%M-%S") + str(random.random())
+
+    def getTimeTag(self):
+        return time.strftime("%H:%M:%S  %Y/%m/%d")

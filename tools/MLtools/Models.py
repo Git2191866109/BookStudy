@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# coding=utf-8 
+# coding=utf-8
 
 """
 @author: Li Tian
@@ -46,12 +46,13 @@ class MyMNB(MyModel):
         self.is_ensemble = False
         self.chinese_name = "多项式朴素贝叶斯"
         self.english_name = "Multinomial Naive Bayes Classifier"
-        self.model = MultinomialNB()
-
         self.parameters = OrderedDict([
             # alpha：拉普拉修/Lidstone平滑参数,浮点型,可选项,默认1.0
-             ('alpha', [0, 0.25, 0.5, 0.75, 1])
+            ('alpha', [0, 0.25, 0.5, 0.75, 1])
         ])
+
+    def init_model(self):
+        self.model = MultinomialNB()
 
 
 # 2. Gaussian Naive Bayes Classifier / 高斯朴素贝叶斯
@@ -62,10 +63,12 @@ class MyGNB(MyModel):
         self.is_ensemble = False
         self.chinese_name = "高斯朴素贝叶斯"
         self.english_name = "Gaussian Naive Bayes Classifier"
-        self.model = GaussianNB()
 
         # 几乎没有参数可调
         self.parameters = None
+
+    def init_model(self):
+        self.model = GaussianNB()
 
 
 # 3. KNN Classifier / K最近邻
@@ -76,12 +79,14 @@ class MyKNN(MyModel):
         self.is_ensemble = False
         self.chinese_name = "K最近邻"
         self.english_name = "KNN Classifier"
-        self.model = KNeighborsClassifier()
 
         self.parameters = OrderedDict([
             # n_neighbors: int, 可选参数(默认为 5)，每个点与周围多少个点进行比较
-             ('n_neighbors', range(1, 10, 1))
+            ('n_neighbors', range(1, 10, 1))
         ])
+
+    def init_model(self):
+        self.model = KNeighborsClassifier()
 
 
 # 4. Logistic Regression Classifier / 逻辑回归
@@ -92,7 +97,6 @@ class MyLR(MyModel):
         self.is_ensemble = False
         self.chinese_name = "逻辑回归"
         self.english_name = "Logistic Regression Classifier"
-        self.model = LogisticRegression()
 
         self.parameters = OrderedDict([
             # 正则化一般选择l2就ok了
@@ -103,6 +107,9 @@ class MyLR(MyModel):
             ('C', [0.1, 1, 10])
         ])
 
+    def init_model(self):
+        self.model = LogisticRegression()
+
 
 # 5. SVM Classifier / 支持向量机
 class MySVM(MyModel):
@@ -112,7 +119,6 @@ class MySVM(MyModel):
         self.is_ensemble = False
         self.chinese_name = "支持向量机"
         self.english_name = "Support Vector Machine"
-        self.model = SVC()
 
         self.parameters = OrderedDict([
             # C表示模型对误差的惩罚系数，C越大，模型越容易过拟合；C越小，模型越容易欠拟合
@@ -121,6 +127,9 @@ class MySVM(MyModel):
             # gamma越小，模型的泛化性变好，但过小，模型实际上会退化为线性模型；gamma越大，理论上SVM可以拟合任何非线性数据
             ('gamma', [1, 0.1, 0.01])
         ])
+
+    def init_model(self):
+        self.model = SVC()
 
 
 # 6. Decision Tree Classifier / 决策树
@@ -131,7 +140,6 @@ class MyDT(MyModel):
         self.is_ensemble = False
         self.chinese_name = "决策树"
         self.english_name = "Decision Tree Classifier"
-        self.model = DecisionTreeClassifier()
 
         self.parameters = OrderedDict([
             # 特征选择标准，可以使用"gini"或者"entropy"，前者代表基尼系数，后者代表信息增益
@@ -142,6 +150,9 @@ class MyDT(MyModel):
             ('min_samples_split', list(range(2, 10, 1))[::-1])
         ])
 
+    def init_model(self):
+        self.model = DecisionTreeClassifier()
+
 
 # 7. Random Forest Classifier / 随机森林
 class MyRF(MyModel):
@@ -151,7 +162,6 @@ class MyRF(MyModel):
         self.is_ensemble = True
         self.chinese_name = "随机森林"
         self.english_name = "Random Forest Classifier"
-        self.model = RandomForestClassifier()
 
         self.parameters = OrderedDict([
             # 集成模型数量越小越简单
@@ -161,6 +171,9 @@ class MyRF(MyModel):
             # 最小样本分割数越大越简单
             ('min_samples_split', list(range(2, 10, 1))[::-1])
         ])
+
+    def init_model(self):
+        self.model = RandomForestClassifier()
 
 
 # 8. GBDT(Gradient Boosting Decision Tree) Classifier / 梯度提升决策树
@@ -171,7 +184,6 @@ class MyGBDT(MyModel):
         self.is_ensemble = True
         self.chinese_name = "梯度提升决策树"
         self.english_name = "Gradient Boosting Decision Tree Classifier"
-        self.model = GradientBoostingClassifier()
 
         self.parameters = OrderedDict([
             # 集成模型数量越小越简单
@@ -181,6 +193,9 @@ class MyGBDT(MyModel):
             # 最小样本分割数越大越简单
             ('min_samples_split', list(range(2, 10, 1))[::-1])
         ])
+
+    def init_model(self):
+        self.model = GradientBoostingClassifier()
 
 
 # 9. XGBoost / 极端梯度提升
@@ -191,7 +206,6 @@ class MyXGBoost(MyModel):
         self.is_ensemble = True
         self.chinese_name = "极端梯度提升树"
         self.english_name = "XGBoost"
-        self.model = XGBClassifier()
 
         self.parameters = OrderedDict([
             # 集成模型数量越小越简单
@@ -201,6 +215,9 @@ class MyXGBoost(MyModel):
             # 最小样本分割数越大越简单
             ('min_samples_split', list(range(2, 10, 1))[::-1])
         ])
+
+    def init_model(self):
+        self.model = XGBClassifier()
 
 
 # 10. AdaBoost Classifier / 自适应提升法
@@ -212,7 +229,6 @@ class MyAdaboost(MyModel):
         self.is_ensemble = True
         self.chinese_name = "自适应提升算法"
         self.english_name = "Adaptive Boosting"
-        self.model = AdaBoostClassifier(base_estimator=DecisionTreeClassifier())
 
         self.parameters = OrderedDict([
             # 集成模型数量越小越简单
@@ -223,3 +239,5 @@ class MyAdaboost(MyModel):
             ('base_estimator__min_samples_split', list(range(2, 10, 1))[::-1])
         ])
 
+    def init_model(self):
+        self.model = AdaBoostClassifier(base_estimator=DecisionTreeClassifier())

@@ -11,6 +11,9 @@
 @desc: 降维工具
         [PCA](https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html?highlight=pca#sklearn.decomposition.PCA)
         [isinstance类型检测方法](https://www.runoob.com/python/python-func-isinstance.html)
+
+        [常用降维方法](https://www.jianshu.com/p/ad2ac2bda87b)
+        [PCA和FA的区别](https://blog.csdn.net/yujianmin1990/article/details/49247307)
 """
 
 from sklearn.decomposition import PCA
