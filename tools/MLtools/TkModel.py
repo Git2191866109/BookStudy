@@ -165,6 +165,15 @@ class TkModel():
         # 根据是否有 label|Label 分辨是否是监督学习
         self.has_label = None
 
+        """调用外界类的应用，单例模式"""
+        # 使用什么功能，1：数据预处理，2：分类
+        self.func_state = 0
+        # 使用该功能的什么方法
+        self.which_f = 0
+
+        # 工具类的引用，在使用的时候创建，只创建一次
+        self.tool = None
+
         """工具区的变量"""
         # 全局变量
         self.path_dict = {}
@@ -173,7 +182,7 @@ class TkModel():
         root_name = '点我点我我是结果'
         # 数据预处理文件名
         pa_path = '数据预处理'
-        pa_path_in = ['热力图', '矩阵图']
+        pa_path_in = ['特征矩阵图', '相关性分析']
         # 初始化list和dict
         for p in pa_path_in:
             pp = root_name + '/' + pa_path + '/' + p
@@ -264,6 +273,9 @@ class TkModel():
         image = Image.open(path)
         photo = ImageTk.PhotoImage(resize_img(image))
         self.t_print.image_create('end', image=photo)
+
+        # 两个图片之间留白
+        self.info(' ', False)
 
         # 因为保存图片需要时间，而获取路径时间更快，因此，这里暂停半分钟显示
         time.sleep(500)
@@ -711,12 +723,65 @@ class TkModel():
 
         self.thread_it(actual_func, [])
 
+    def run_func(self):
+        """数据处理工具"""
+
+        def inner_info(n2, n1=None):
+            if n1 is not None and n2 is not None:
+                self.info('--> 2. 正在运行【' + n1 + '】功能中的【' + n2 + '】方法...', False, focus_words='auto')
+
+            # 工具类的数据只赋值一次
+            if self.tool.X is None:
+                self.tool.set_X(self.X)
+            # 在运行工具的时候，需要设置工具类的保存路径，这里不能只赋值一次，因为每个方法的保存路径不同
+            self.tool.set_savepath(self.path_dict[n2])
+            # 设置好参数后开始运行
+            self.tool.aim(self.which_f)
+
+        def inner_run():
+            # 检查数据和路径
+            self.info('--> 1. 正在检查数据和路径是否合法...', False)
+            self.check_data_path()
+
+            if self.func_state == 1:
+                # 选择了功能区中的数据预处理
+                n1 = '数据预处理'
+                self.tool = PreAnalysis(None)
+                if self.which_f == 1:
+                    # 使用特征矩阵图
+                    n2 = '特征矩阵图'
+                    inner_info(n1, n2)
+                elif self.which_f == 2:
+                    # 使用相关性分析
+
+                    # 检查是否是分类，分类多一个图
+                    if self.has_label:
+                        self.info('由于您输入的数据自动检测到是【分类】问题，因此自动生成了按类分析的图...', False, focus_words='auto')
+                        
+                    n2 = '相关性分析'
+                    inner_info(n1, n2)
+
+
+
+            self.info('--> 3. 计算完毕...', False, bg_color='Yellow')
+            # 运行结束后绘图
+            self.pic(self.tool.fig_path)
+
+        self.thread_it(inner_run, [])
+
+    def set_state(self, state, which):
+        """调用什么功能的什么方法"""
+        self.func_state = state
+        self.which_f = which
+        self.run_func()
+
     def thread_it(self, func, args):
         """创建多线程任务"""
         try:
             t = threading.Thread(target=func, args=args)
             t.start()
             # t.join()
+
         except Exception as e:
             self.info("-x->【错误】创建线程报错，错误代码：【code_1】", False, focus_words='auto')
 
@@ -741,7 +806,7 @@ class TkModel():
         # self.set_label('【数据预处理】')
         name = '数据分析和预处理'
         labels = ['数据分析', '特征矩阵图', '相关性分析', '缺失值分析', '异常值分析']
-        all_func = [None, None, self.run_pa_hotmap] + list(range(len(labels) - 3))
+        all_func = [None, lambda: self.set_state(1, 1), lambda: self.set_state(1, 2)] + list(range(len(labels) - 3))
         f1, new_row = self.set_buttons(labels, all_func, name)
 
         labels = ['数据清洗', '缺失值处理', '删除记录', '均值填充', '常数填充', '最近邻插补']
@@ -777,14 +842,14 @@ class TkModel():
         self.baseFrame_end_pack(f1)
 
         """创建分类学习"""
-        name = '机器学习：分类'        # ' | 评价指标：f1_macro | 抽样方式：分层抽样'
+        name = '机器学习：分类'  # ' | 评价指标：f1_macro | 抽样方式：分层抽样'
         mt = MLTools()
         model_names = mt.model_names
         check_names = ['简单建模', '分步调参', '网格调参']
         self.init_checkValues(check_names)
 
         labels = ['常用分类', '查看参数默认配置和说明'] + check_names
-        f1, new_row = self.set_check(labels, all_func, name, rowspan=len(model_names)+1)
+        f1, new_row = self.set_check(labels, all_func, name, rowspan=len(model_names) + 1)
 
         start = 0
         labels = [None] + model_names[start: start + 4]

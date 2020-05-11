@@ -148,4 +148,4 @@ class MyMatplotlib:
             g._legend.remove()
         # plt.legend(fontsize=self.legend_size, shadow=False, loc='upper', ncol=3)
 
-        self.savefig()
+        return self.savefig()

@@ -28,10 +28,45 @@ from TimeTool import TimeTool
 class PreAnalysis:
     def __init__(self, save_path):
         self.save_path = save_path
+        self.fig_path = None
+        self.X = None
+        self.y = None
+        self.hue = None
+        # 功能集成：字典
+        self.funcs = {
+            '特征矩阵图': self.correlationPair,
+            '相关性分析': self.correlationHotMap,
+        }
+
+    def set_savepath(self, new_savepath):
+        self.save_path = new_savepath
+
+    def set_X(self, X):
+        self.X = X
+
+    def set_y(self, y):
+        self.y = y
+
+    def aim(self, t=0):
+        """
+        通过t来控制运行所有程序还是哪一个
+        :param t:
+            1：返回矩阵分析图的调用和参数
+            2. 返回相关性分析的调用和参数，默认两个都生成
+               根据是否是监督学习，选择性生成，非监督学习就不能
+        :return:
+        """
+
+        if t == 1:
+            self.correlationPair(self.X)
+        elif t == 2:
+            self.correlationHotMap(self.X)
+
 
     def correlationHotMap(self, X, column_names=None, annot=False, change_ticks_fontsize=False, rotation_ticks=False):
         """
         关联矩阵分析-->热力图
+        热力图没有label，不分因此只要X不要y
         :param X: 二维矩阵
         :param column_names: 属性的列名，如果没有传入列名的话，自动生成列名
         :param annot: 是否在格子里标注数据
@@ -53,14 +88,14 @@ class PreAnalysis:
         corr_mat.to_excel(file_savePath)
 
         # 绘制热力图
-        fig_path = MyMatplotlib(self.save_path).plot_heatmap(corr_mat, annot, change_ticks_fontsize, rotation_ticks)
-        return fig_path
+        self.fig_path = MyMatplotlib(self.save_path).plot_heatmap(corr_mat, annot, change_ticks_fontsize, rotation_ticks)
 
-    def correlationPair(self, X, y, names=None, hue=False, reg=False, keep_legend=False, vars=None):
+    def correlationPair(self, X, y=None, names=None, hue=False, reg=False, keep_legend=False, vars=None):
         """
         所有变量中任意两个变量之间的图形， 用矩阵图探索多维数据不同维度间的相关性
         这里由于可以，对不同的类进行分析， 所以可以传入y
         实际使用时，可以通过plot_pair函数的传参来设置，仅分析属性，还是连类别也分析
+        需要根据y是否存在分为监督学习还是非监督学习
         :param X:
         :param y:
         :param names: 列名，属性名
@@ -75,10 +110,12 @@ class PreAnalysis:
             df = X
         else:
             df = pd.DataFrame(X, columns=names)
-        labels = [str(i) for i in y]
-        df['label'] = labels
+
+        if y is not None:
+            labels = [str(i) for i in y]
+            df['label'] = labels
+        else:
+            hue = False
 
         # 绘制矩阵图
-        MyMatplotlib(self.save_path).plot_pair(df, hue, reg, keep_legend, vars)
-
-
+        self.fig_path = MyMatplotlib(self.save_path).plot_pair(df, hue, reg, keep_legend, vars)
