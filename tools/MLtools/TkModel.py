@@ -55,7 +55,8 @@ import threading
 import pandas as pd
 from PIL import Image, ImageTk
 
-from MLtools_v1_1 import MLTools
+from DimensionReduction import MyPCA
+from MLTools import MLTools
 from PreAnalysis import PreAnalysis
 from TimeTool import TimeTool
 
@@ -180,6 +181,7 @@ class TkModel():
         self.path_list = []
         # 文件名
         root_name = '点我点我我是结果'
+
         # 数据预处理文件名
         pa_path = '数据预处理'
         pa_path_in = ['特征矩阵图', '相关性分析']
@@ -187,6 +189,15 @@ class TkModel():
         for p in pa_path_in:
             pp = root_name + '/' + pa_path + '/' + p
             self.path_list.append(pp)
+
+        # 降维
+        pa_path = '降维'
+        pa_path_in = ['主成分分析']
+        # 初始化list和dict
+        for p in pa_path_in:
+            pp = root_name + '/' + pa_path + '/' + p
+            self.path_list.append(pp)
+
         # 机器学习建模文件名
 
         """一些辅助变量"""
@@ -194,6 +205,8 @@ class TkModel():
         self.old_tags = []
         # 保存上一个时间记录，同时的操作不显示时间
         self.old_time = None
+        # 保存临时图片显示
+        self.photos = []
 
         # 统计数据分割的次数和路径建立的次数
         self.xy_sep_time = 0
@@ -257,7 +270,7 @@ class TkModel():
         self.data_seperate()
         self.build_path()
 
-    def pic(self, path):
+    def show_pic(self, path):
         """插入图片到text中"""
 
         def resize_img(image):
@@ -269,22 +282,16 @@ class TkModel():
             new_image = image.resize((target_width, h2), Image.ANTIALIAS)
             return new_image
 
-        self.t_print.configure(state=tk.NORMAL)
         image = Image.open(path)
-        photo = ImageTk.PhotoImage(resize_img(image))
-        self.t_print.image_create('end', image=photo)
+        self.photos.append(ImageTk.PhotoImage(resize_img(image)))
+        self.t_print.image_create('end', image=self.photos[-1])
 
         # 两个图片之间留白
-        self.info(' ', False)
-
-        # 因为保存图片需要时间，而获取路径时间更快，因此，这里暂停半分钟显示
-        time.sleep(500)
+        self.info(' ', False, print_time=False)
         self.t_print.see(tk.END)
-        self.t_print.configure(state=tk.DISABLED)
 
-    def info(self, inf: str, is_update: bool = True, focus_words: list or str = None, fg_color: str = None,
-             bg_color: str = None,
-             font_type: str = None, font_size: int or None = None):
+    def info(self, inf, is_update=True, focus_words=None, fg_color=None, bg_color=None, font_type=None,
+             font_size=None, print_time=True):
         """
         写入右边信息，报错啊，运行到哪里了呀，等等
         支持多个重点内容，但不能重复，重点内容的传入为list
@@ -295,9 +302,9 @@ class TkModel():
         :param bg_color:
         :param font_type:
         :param font_size:
+        :param print_time: 是否输出时间，默认是输出的
         :return:
         """
-        self.t_print.configure(state=tk.NORMAL)
         # 如果添加新的内容需要删除之前的内容，并删除之前内容保留下来的tags
         if is_update:
             self.t_print.delete('1.0', 'end')
@@ -363,14 +370,14 @@ class TkModel():
             # justify=tk.CENTER
         )
         tag_info = TimeTool().getTimeTag()
-        if tag_info != self.old_time:
+        if tag_info != self.old_time and print_time:
             self.t_print.insert("end", tag_info, "tag_time")
             self.t_print.insert("end", '\n')
             self.old_time = tag_info
 
         """这里开始正式写入内容"""
         # 若没有需要重点标明的内容
-        if focus_words is None:
+        if focus_words is None or len(focus_words) == 0:
             self.t_print.insert("end", inf, tag_name)
             self.t_print.insert("end", '\n')
         else:
@@ -388,7 +395,6 @@ class TkModel():
 
         # text显示最新内容
         self.t_print.see(tk.END)
-        self.t_print.configure(state=tk.DISABLED)
 
     def temp_frame(self, base_frame, width, height, bd=0):
         f = tk.Frame(base_frame, height=height, width=width, bd=bd)
@@ -696,47 +702,35 @@ class TkModel():
 
         return f1, start_row + 1
 
-    def run_pa_hotmap(self):
-        """
-        数据预处理前期工作
-        多线程
-        与功能区button绑定
-        :return:
-        """
-        self.info('---> 正在计算和绘制热力图，请稍后...', fg_color='green')
-
-        def actual_func():
-            # 检查数据和路径
-            self.info('--> 1. 正在检查数据和路径是否合法...', False)
-            self.check_data_path()
-
-            self.info('--> 2. 计算和绘制热力图中...', False)
-            try:
-                pa = PreAnalysis(self.path_dict['热力图'])
-                fig_path = pa.correlationHotMap(self.X)
-                self.info('--> 3. 热力图绘制完毕...', False, bg_color='Yellow')
-                # 插入图片
-                self.pic(fig_path)
-            except Exception as e:
-                self.info('-x->【错误】无法正常运行热力图计算，报错：', False, 'auto')
-                self.info(str(e), False, fg_color='red')
-
-        self.thread_it(actual_func, [])
-
     def run_func(self):
         """数据处理工具"""
 
-        def inner_info(n2, n1=None):
+        def inner_info(n1, n2):
             if n1 is not None and n2 is not None:
                 self.info('--> 2. 正在运行【' + n1 + '】功能中的【' + n2 + '】方法...', False, focus_words='auto')
 
             # 工具类的数据只赋值一次
             if self.tool.X is None:
                 self.tool.set_X(self.X)
+            if self.tool.y is None:
+                self.tool.set_y(self.y)
             # 在运行工具的时候，需要设置工具类的保存路径，这里不能只赋值一次，因为每个方法的保存路径不同
             self.tool.set_savepath(self.path_dict[n2])
             # 设置好参数后开始运行
             self.tool.aim(self.which_f)
+            if self.tool.return_inf is not None:
+                self.info(self.tool.return_inf, False, focus_words='auto', fg_color='black')
+            # 运行结束后绘图
+            if self.tool.fig_path is not None:
+                self.show_pic(self.tool.fig_path)
+
+        def extra_inner_info(n, name):
+            self.info('--> 2.' + str(n) + ' 由于您输入的数据自动检测到是【分类】问题，因此自动生成了【' + name + '】的图...', False, focus_words='auto')
+            self.tool.aim(self.which_f)
+            if self.tool.return_inf is not None:
+                self.info(self.tool.return_inf, False, focus_words='auto', fg_color='black')
+            if self.tool.fig_path is not None:
+                self.show_pic(self.tool.fig_path)
 
         def inner_run():
             # 检查数据和路径
@@ -751,21 +745,28 @@ class TkModel():
                     # 使用特征矩阵图
                     n2 = '特征矩阵图'
                     inner_info(n1, n2)
-                elif self.which_f == 2:
-                    # 使用相关性分析
 
                     # 检查是否是分类，分类多一个图
                     if self.has_label:
-                        self.info('由于您输入的数据自动检测到是【分类】问题，因此自动生成了按类分析的图...', False, focus_words='auto')
-                        
+                        self.which_f = 1.1
+                        extra_inner_info(1, '按类标记')
+                        self.which_f = 1.2
+                        extra_inner_info(2, '分类线性回归')
+
+                elif self.which_f == 2:
+                    # 使用相关性分析
                     n2 = '相关性分析'
                     inner_info(n1, n2)
 
+            elif self.func_state == 2:
+                # 选择了功能区的降维
+                n1 = '降维'
+                if self.which_f == 1.1:
+                    n2 = '主成分分析'
+                    self.tool = MyPCA(None)
+                    inner_info(n1, n2)
 
-
-            self.info('--> 3. 计算完毕...', False, bg_color='Yellow')
-            # 运行结束后绘图
-            self.pic(self.tool.fig_path)
+            self.info('--> 3. 计算完毕...', False)
 
         self.thread_it(inner_run, [])
 
@@ -818,7 +819,7 @@ class TkModel():
         f1, new_row = self.set_ratios(labels, all_func, name, self.data_stand, base_frame=f1, start_row=new_row)
 
         labels = ['数据降维', '主成分分析', 'PCA', 'IPCA', 'RPCA', 'KPCA']
-        all_func = [None] * 2 + list(range(len(labels) - 2))
+        all_func = [None, lambda: self.set_state(2, 1.1)] + list(range(len(labels) - 2))
         f1, new_row = self.set_ratios(labels, all_func, name, self.pca_select, base_frame=f1, start_row=new_row,
                                       rowspan=4)
 
@@ -856,10 +857,6 @@ class TkModel():
         all_func = [None] * len(labels)
         f1, new_row = self.set_buttons(labels, all_func, name, base_frame=f1, start_row=new_row)
         start += 4
-
-        # labels = [None] + model_names[start: start + 3]
-        # f1, new_row = self.set_buttons(labels, all_func, name, base_frame=f1, start_row=new_row)
-        # start += 3
 
         labels = [None] + model_names[start:]
         all_func = [None] * len(labels)

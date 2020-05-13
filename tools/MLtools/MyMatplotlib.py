@@ -115,7 +115,7 @@ class MyMatplotlib:
 
         return self.savefig()
 
-    def plot_pair(self, mat, hue=False, reg=False, keep_legend=False, vars=None):
+    def plot_pair(self, mat, hue, reg=False, vars=None):
         """
         绘制矩阵图
         :param mat: X, y
@@ -134,8 +134,6 @@ class MyMatplotlib:
 
         if hue:
             params['hue'] = column_names[-1]
-        else:
-            params['vars'] = column_names[:-1]
         if reg:
             params['kind'] = 'reg'
         if vars is not None:
@@ -144,7 +142,7 @@ class MyMatplotlib:
         g = sns.pairplot(**params)
 
         # 有hue并不要legend，才有不显示图例的可能
-        if not keep_legend and hue:
+        if hue:
             g._legend.remove()
         # plt.legend(fontsize=self.legend_size, shadow=False, loc='upper', ncol=3)
 

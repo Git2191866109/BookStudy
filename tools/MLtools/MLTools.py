@@ -6,7 +6,7 @@
 @author: Li Tian
 @contact: litian_cup@163.com
 @software: pycharm
-@file: MLtools_v1_1.py
+@file: MLTools.py
 @time: 2020/5/3 19:29
 @desc: 改名为MLtools，重构代码
         各种函数调用工具
@@ -17,6 +17,25 @@
 import Models as ms
 from collections import OrderedDict
 import pandas as pd
+
+
+class Tools:
+    def __init__(self, save_path):
+        self.save_path = save_path
+        self.fig_path = None
+        self.return_inf = None
+        self.X = None
+        self.y = None
+        self.column_names = None
+
+    def set_X(self, X):
+        self.X = X
+
+    def set_y(self, y):
+        self.y = y
+
+    def set_savepath(self, sp):
+        self.save_path = sp
 
 
 class MLTools:
@@ -61,7 +80,7 @@ class MLTools:
         items = None
 
         # 获取未调参的模型的结果
-        for model_name, model in self.models.items():
+        for model_name, model in self.models_dict.items():
             eval = model.score_model(model.model, X, y)
             r = [model_name] + list(eval.values())
             result.append(r)
@@ -81,7 +100,7 @@ class MLTools:
         items = None
 
         # 获取网格调参的模型的结果
-        for model_name, model in self.models.items():
+        for model_name, model in self.models_dict.items():
             eval = model.score_model(model.paramsAdjustment_byGridSearch(X, y), X, y)
             r = [model_name] + list(eval.values())
             result.append(r)

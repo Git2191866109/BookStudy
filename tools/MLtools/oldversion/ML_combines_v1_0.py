@@ -332,7 +332,7 @@ def example1():
     iris_target = iris['target']
     iris_names = iris['target_names']
     X_train, X_test, y_train, y_test = train_test_split(iris_data, iris_target, test_size=0.2, random_state=42)
-    model_building(X_train, y_train, X_test, y_test, save_path='./models/', target_names=iris_names)
+    model_building(X_train, y_train, X_test, y_test, save_path='../models/', target_names=iris_names)
 
 
 def example2():
@@ -354,7 +354,7 @@ def example2():
     names = [str(a), str(b)]
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-    model_building(X_train, y_train, X_test, y_test, save_path='./models2/', target_names=names)
+    model_building(X_train, y_train, X_test, y_test, save_path='../models2/', target_names=names)
 
 
 if __name__ == '__main__':

@@ -20,10 +20,13 @@ class TimeTool:
         pass
 
     def getCurrentTime(self):
-        return time.strftime("%Y-%m-%d-%H-%M-%S")
+        # 后面是毫秒
+        x = time.time()
+        ms = int((x - int(x)) * 1000)
+        return time.strftime("%Y-%m-%d-%H-%M-%S-" + str(ms))
 
     def getct(self):
-        return time.strftime("%Y-%m-%d-%H-%M-%S") + str(random.random())
+        return time.strftime("%Y-%m-%d-%H-%M-%S-") + str(random.random())
 
     def getTimeTag(self):
         return time.strftime("%H:%M:%S  %Y/%m/%d")

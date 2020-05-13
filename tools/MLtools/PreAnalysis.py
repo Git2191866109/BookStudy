@@ -21,16 +21,14 @@ import os
 
 import pandas as pd
 
+from MLTools import Tools
 from MyMatplotlib import MyMatplotlib
 from TimeTool import TimeTool
 
 
-class PreAnalysis:
+class PreAnalysis(Tools):
     def __init__(self, save_path):
-        self.save_path = save_path
-        self.fig_path = None
-        self.X = None
-        self.y = None
+        super().__init__(save_path)
         self.hue = None
         # 功能集成：字典
         self.funcs = {
@@ -38,30 +36,25 @@ class PreAnalysis:
             '相关性分析': self.correlationHotMap,
         }
 
-    def set_savepath(self, new_savepath):
-        self.save_path = new_savepath
-
-    def set_X(self, X):
-        self.X = X
-
-    def set_y(self, y):
-        self.y = y
-
     def aim(self, t=0):
         """
         通过t来控制运行所有程序还是哪一个
         :param t:
-            1：返回矩阵分析图的调用和参数
-            2. 返回相关性分析的调用和参数，默认两个都生成
+            1：返回矩阵分析图的调用和参数，默认两个都生成
                根据是否是监督学习，选择性生成，非监督学习就不能
+            2. 返回相关性分析的调用和参数，
         :return:
         """
 
+        self.return_inf = None
         if t == 1:
             self.correlationPair(self.X)
+        elif t == 1.1:
+            self.correlationPair(self.X, self.y, hue=True)
+        elif t == 1.2:
+            self.correlationPair(self.X, self.y, hue=True, reg=True)
         elif t == 2:
             self.correlationHotMap(self.X)
-
 
     def correlationHotMap(self, X, column_names=None, annot=False, change_ticks_fontsize=False, rotation_ticks=False):
         """
@@ -74,6 +67,8 @@ class PreAnalysis:
         :param rotation_ticks: 是否旋转ticks（名字太长了就要这样做）
         :return:
         """
+
+        func_name = '相关性分析'
 
         # 将二维矩阵转化为DataFrame
         if isinstance(X, pd.DataFrame):
@@ -88,9 +83,11 @@ class PreAnalysis:
         corr_mat.to_excel(file_savePath)
 
         # 绘制热力图
-        self.fig_path = MyMatplotlib(self.save_path).plot_heatmap(corr_mat, annot, change_ticks_fontsize, rotation_ticks)
+        self.fig_path = MyMatplotlib(self.save_path).plot_heatmap(corr_mat, annot, change_ticks_fontsize,
+                                                                  rotation_ticks)
+        return None
 
-    def correlationPair(self, X, y=None, names=None, hue=False, reg=False, keep_legend=False, vars=None):
+    def correlationPair(self, X, y=None, names=None, hue=False, reg=False, vars=None):
         """
         所有变量中任意两个变量之间的图形， 用矩阵图探索多维数据不同维度间的相关性
         这里由于可以，对不同的类进行分析， 所以可以传入y
@@ -101,21 +98,21 @@ class PreAnalysis:
         :param names: 列名，属性名
         :param hue: 是否分类
         :param reg:
-        :param keep_legend:
         :param vars:
         :return:
         """
+        func_name = '特征矩阵图'
+
         # 将二维矩阵转化为DataFrame
         if isinstance(X, pd.DataFrame):
             df = X
         else:
             df = pd.DataFrame(X, columns=names)
 
-        if y is not None:
+        if hue:
             labels = [str(i) for i in y]
             df['label'] = labels
-        else:
-            hue = False
 
         # 绘制矩阵图
-        self.fig_path = MyMatplotlib(self.save_path).plot_pair(df, hue, reg, keep_legend, vars)
+        self.fig_path = MyMatplotlib(self.save_path).plot_pair(df, hue, reg, vars)
+        return None
