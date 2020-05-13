@@ -9,21 +9,77 @@
 @file: PreAnalysis.py
 @time: 2020/5/4 11:23
 @desc: 对数据进行各种预分析，比如关联性分析等
-        [特征关联](https://blog.csdn.net/FrankieHello/article/details/81604806)
-        [数据预处理流程](https://www.jianshu.com/p/2339b0005405)
-        [数据预处理全过程](https://blog.csdn.net/Monk_donot_know/article/details/86479176?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase)
+        1. 数据分析，预处理
+            [特征关联](https://blog.csdn.net/FrankieHello/article/details/81604806)
+            [数据预处理流程](https://www.jianshu.com/p/2339b0005405)
+            [数据预处理全过程](https://blog.csdn.net/Monk_donot_know/article/details/86479176?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase)
 
-        [缺失值处理方法](https://baijiahao.baidu.com/s?id=1665989715432866346&wfr=spider&for=pc)
-            检查缺失值的两种方式：缺失热图/相关图，缺失树状图
+            [缺失值处理方法](https://baijiahao.baidu.com/s?id=1665989715432866346&wfr=spider&for=pc)
+                检查缺失值的两种方式：缺失热图/相关图，缺失树状图
+
+        2. 降维
+            [PCA](https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html?highlight=pca#sklearn.decomposition.PCA)
+            [isinstance类型检测方法](https://www.runoob.com/python/python-func-isinstance.html)
+
+            [常用降维方法](https://www.jianshu.com/p/ad2ac2bda87b)
+            [PCA和FA的区别](https://blog.csdn.net/yujianmin1990/article/details/49247307)
+
+        3. 数据转换
 
 """
 import os
-
 import pandas as pd
-
-from MLTools import Tools
+from sklearn.decomposition import PCA
+import copy
 from MyMatplotlib import MyMatplotlib
 from TimeTool import TimeTool
+from sklearn.preprocessing import MinMaxScaler
+
+
+class Tools:
+    def __init__(self, save_path):
+        self.save_path = save_path
+        self.fig_path = None
+        self.return_inf = None
+        self.X = None
+        self.y = None
+        self.column_names = None
+
+    def set_X(self, X):
+        self.X = X
+
+    def set_y(self, y):
+        self.y = y
+
+    def set_savepath(self, sp):
+        self.save_path = sp
+
+
+class DataTransfer(Tools):
+    def __init__(self, save_path):
+        super().__init__(save_path)
+
+    def aim(self, t=0):
+        self.fig_path = None
+        self.return_inf = None
+
+        if t == 1:
+            # 最大最小值标准化
+            self.myMaxMinScaler(self.X, self.y)
+
+    def myMaxMinScaler(self, X, y=None):
+        name = '最大最小值标准化'
+        scaler = MinMaxScaler()
+        new_X = scaler.fit_transform(X)
+        df = pd.DataFrame(new_X, columns=X.columns)
+
+        if y is not None:
+            df['label'] = y
+
+        excel_name = '[' + name + ']-' + TimeTool().getCurrentTime() + '.xls'
+        file_savePath = os.path.join(self.save_path, excel_name)
+
+        df.to_excel(file_savePath, index=False)
 
 
 class PreAnalysis(Tools):
@@ -116,3 +172,80 @@ class PreAnalysis(Tools):
         # 绘制矩阵图
         self.fig_path = MyMatplotlib(self.save_path).plot_pair(df, hue, reg, vars)
         return None
+
+
+class DimensionReduction(Tools):
+    def __init__(self, save_path):
+        super().__init__(save_path)
+        # 降维方法名
+        self.name = None
+        # 随机种子
+        self.random_state = 42
+        # 模型类
+        self.model = None
+        # 若未给出，生成80%，90%，95%三个级别的数据
+        self.p_list = [0.8, 0.9, 0.95]
+
+        # 子类初始化
+        try:
+            # 固定每个模型的随机种子
+            self.model.set_params(**{'random_state': self.random_state})
+        except:
+            pass
+
+
+class MyPCA(DimensionReduction):
+    """对相关系性较高的特征进行降维处理"""
+
+    def __init__(self, path):
+        super().__init__(path)
+        self.name = 'PCA'
+        self.model = PCA()
+
+    def aim(self, t=0):
+        """
+        通过t来控制运行所有程序还是哪一个
+        :return:
+        """
+        # 获取投射到新空间后每个特征的方差
+        ii = self.get_vr(self.X)
+        self.get_aim_percent(self.X, self.y)
+        self.return_inf = '---> 原始数据投射到新空间后每个特征的方差为：\n' + ii + '\n'
+        # 根据不同的信息保留比例获取操作后的数据
+        self.return_inf += '---> 已保存阈值设置为【0.8, 0.9, 0.95】降维后的数据...'
+
+    def get_vr(self, X):
+        """获取保留的各个特征的方差"""
+        model = copy.deepcopy(self.model)
+        model.fit(X)
+        ii = model.explained_variance_ratio_.tolist()
+        ii = ["{:.4f}".format(s) for s in ii]
+        return '       | ' + ' | '.join(ii) + ' |'
+
+    def get_aim_percent(self, X, y, p=None):
+        """
+        获取保留p（1>p>0）以上信息的数据
+        随着p的增大，保留的维度越高，数据越多
+        """
+        model = copy.deepcopy(self.model)
+        if p is None:
+            # 若未给出，生成80%，90%，95%三个级别的数据
+            p = self.p_list
+        else:
+            if isinstance(p, float):
+                p = [p]
+
+        # 保存降维后的数据，并根据是否有y整合为新的数据
+        for per in p:
+            params = {'n_components': per}
+            model.set_params(**params)
+            new_data = model.fit_transform(X)
+            df = pd.DataFrame(new_data)
+            excel_name = '[' + str(per) + ']' + TimeTool().getCurrentTime() + '.xls'
+
+            file_savePath = os.path.join(self.save_path, excel_name)
+
+            if y is not None:
+                df['label'] = y
+
+            df.to_excel(file_savePath, index=False)

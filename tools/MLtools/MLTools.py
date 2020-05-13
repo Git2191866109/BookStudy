@@ -19,25 +19,6 @@ from collections import OrderedDict
 import pandas as pd
 
 
-class Tools:
-    def __init__(self, save_path):
-        self.save_path = save_path
-        self.fig_path = None
-        self.return_inf = None
-        self.X = None
-        self.y = None
-        self.column_names = None
-
-    def set_X(self, X):
-        self.X = X
-
-    def set_y(self, y):
-        self.y = y
-
-    def set_savepath(self, sp):
-        self.save_path = sp
-
-
 class MLTools:
 
     def __init__(self):

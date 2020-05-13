@@ -55,7 +55,7 @@ import threading
 import pandas as pd
 from PIL import Image, ImageTk
 
-from DimensionReduction import MyPCA
+from PreAnalysis import MyPCA, DataTransfer
 from MLTools import MLTools
 from PreAnalysis import PreAnalysis
 from TimeTool import TimeTool
@@ -182,21 +182,26 @@ class TkModel():
         # 文件名
         root_name = '点我点我我是结果'
 
+        def path_list_generate(pa_path, pa_path_in):
+            # 初始化list和dict
+            for p in pa_path_in:
+                pp = root_name + '/' + pa_path + '/' + p
+                self.path_list.append(pp)
+
         # 数据预处理文件名
         pa_path = '数据预处理'
         pa_path_in = ['特征矩阵图', '相关性分析']
-        # 初始化list和dict
-        for p in pa_path_in:
-            pp = root_name + '/' + pa_path + '/' + p
-            self.path_list.append(pp)
+        path_list_generate(pa_path, pa_path_in)
 
         # 降维
         pa_path = '降维'
         pa_path_in = ['主成分分析']
-        # 初始化list和dict
-        for p in pa_path_in:
-            pp = root_name + '/' + pa_path + '/' + p
-            self.path_list.append(pp)
+        path_list_generate(pa_path, pa_path_in)
+
+        # 数据转换
+        pa_path = '数据转换'
+        pa_path_in = ['最大最小值标准化']
+        path_list_generate(pa_path, pa_path_in)
 
         # 机器学习建模文件名
 
@@ -759,6 +764,14 @@ class TkModel():
                     inner_info(n1, n2)
 
             elif self.func_state == 2:
+                # 选择了功能区的标准化
+                n1 = '数据转换'
+                self.tool = DataTransfer(None)
+                if self.which_f == 1:
+                    n2 = '最大最小值标准化'
+                    inner_info(n1, n2)
+
+            elif self.func_state == 3:
                 # 选择了功能区的降维
                 n1 = '降维'
                 if self.which_f == 1.1:
@@ -815,11 +828,11 @@ class TkModel():
         f1, new_row = self.set_ratios(labels, all_func, name, self.missing_data, base_frame=f1, start_row=new_row)
 
         labels = ['数据转换', '数据标准化', '离差标准化', '标准差标准化', '小数定标标准化']
-        all_func = [None] * 2 + list(range(len(labels) - 2))
+        all_func = [None, lambda: self.set_state(2, 1)] + list(range(len(labels) - 2))
         f1, new_row = self.set_ratios(labels, all_func, name, self.data_stand, base_frame=f1, start_row=new_row)
 
         labels = ['数据降维', '主成分分析', 'PCA', 'IPCA', 'RPCA', 'KPCA']
-        all_func = [None, lambda: self.set_state(2, 1.1)] + list(range(len(labels) - 2))
+        all_func = [None, lambda: self.set_state(3, 1.1)] + list(range(len(labels) - 2))
         f1, new_row = self.set_ratios(labels, all_func, name, self.pca_select, base_frame=f1, start_row=new_row,
                                       rowspan=4)
 
