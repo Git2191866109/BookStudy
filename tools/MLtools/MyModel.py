@@ -22,7 +22,6 @@
 from sklearn.model_selection import cross_val_score
 import numpy as np
 import pandas as pd
-import itertools
 from sklearn.model_selection import GridSearchCV
 from collections import OrderedDict
 import copy
@@ -45,12 +44,6 @@ class MyModel:
         self.parameters = None
         # 随机种子
         self.random_state = 42
-        # 图片保存路径
-        self.pic_savePath = './pics/'
-        # 模型保存路径
-        self.model_savePath = './models/'
-        # 报告保存路径
-        self.report_savePath = './reports/'
 
         # 子类初始化
         try:
@@ -179,9 +172,10 @@ class MyModel:
             better_param = better_params[name]
 
             # 这里简单处理了可能存在的嵌套参数的问题
-            pp.plot_plot(name.replace('base_estimator__', ''), values, scores, name.replace('base_estimator__', ''), 'score', better_param)
+            pp.plot_plot(name.replace('base_estimator__', ''), values, scores, name.replace('base_estimator__', ''),
+                         'score', better_param)
 
-    def paramsAdjustment_byGridSearch(self, X, y, params=None, cv=3, scoring=None):
+    def paramsAdjustment_byGridSearch(self, X, y, save_path_name, params=None, cv=3, scoring=None):
         """
         网格调参
         参考连接：[中文博客](https://blog.csdn.net/weixin_41988628/article/details/83098130)
@@ -205,10 +199,10 @@ class MyModel:
         if params is None:
             return self.model
 
-        grid = GridSearchCV(model, params, cv=cv, scoring=scoring)
+        grid = GridSearchCV(model, params, cv=cv, scoring=scoring, return_train_score=True)
         grid.fit(X, y)
         cv_results = pd.DataFrame(grid.cv_results_)
-        cv_results.to_excel('./test/网格调参测试结果.xls', index_label='编号')
+        cv_results.to_excel(save_path_name, index_label='编号')
         # print(grid.best_params_)
         # print(grid.best_score_)
         return grid.best_estimator_

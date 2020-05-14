@@ -13,15 +13,26 @@
         注意：
             1. collections.OrderDict不能用OrderDict({})，否则会依然没有顺序
                [参考链接](https://cloud.tencent.com/developer/ask/53926)
+            2. [pd.join、pd.merge](https://www.jianshu.com/p/8344df71b2b3)
+            3. [f1报错](https://blog.csdn.net/a6840231/article/details/88416338)
+                简单来说就是，实际的y在预测的结果中有的没有预测到，即标签为y_的没有在预测结果中出现，这种情况，该类的f1_score=0.0
+            4. [numpy报错：DeprecationWarning: The truth value of an empty array is ambiguous. Returning False, but in future this will result in an error. Use `array.size > 0` to check that an array is not empty.](https://blog.csdn.net/qq_41103544/article/details/81561539?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase)
 """
+import os
+import joblib
+
 import Models as ms
 from collections import OrderedDict
 import pandas as pd
 
+from PreAnalysis import Tools
+from TimeTool import TimeTool
 
-class MLTools:
 
-    def __init__(self):
+class MLTools(Tools):
+
+    def __init__(self, save_path):
+        super().__init__(save_path)
         self.m1 = ms.MyMNB()
         self.m2 = ms.MyGNB()
         self.m3 = ms.MyKNN()
@@ -32,6 +43,15 @@ class MLTools:
         self.m8 = ms.MyGBDT()
         self.m9 = ms.MyXGBoost()
         self.m10 = ms.MyAdaboost()
+
+        # 图片保存路径
+        self.pic_savePath = None
+        # 模型保存路径
+        self.model_savePath = None
+        # 中间过程，中间结果等路径
+        self.middle_savePath = None
+        # 报告保存路径
+        self.report_savePath = None
 
         self.models_dict = OrderedDict([
             (self.m1.name, self.m1),
@@ -50,7 +70,57 @@ class MLTools:
 
     def init_models(self):
         for m in self.models_dict.values():
-            m.init_model()
+            if m is not None:
+                m.init_model()
+                m.model.fit(self.X, self.y)
+
+    def init_save_paths(self):
+        # 图片保存路径
+        self.pic_savePath = os.path.join(self.save_path, 'pics')
+        # 模型保存路径
+        self.model_savePath = os.path.join(self.save_path, 'models')
+        # 中间过程，中间结果等路径
+        self.middle_savePath = os.path.join(self.save_path, 'middle')
+        # 报告保存路径
+        self.report_savePath = os.path.join(self.save_path, 'reports')
+        for p in [self.pic_savePath, self.model_savePath, self.middle_savePath, self.report_savePath]:
+            if not os.path.exists(p):
+                os.makedirs(p)
+
+    def aim(self, t=0):
+        self.fig_path = None
+        self.return_inf = None
+        # 初始化保存路径
+        self.init_save_paths()
+
+        if t == 0:
+            # 初始化模型
+            self.init_models()
+            # 运行所有模型，并对进行网格调参
+            self.evaluate_oa_model(self.X, self.y)
+
+    def save_model(self, model, save_path):
+        """
+        保存指定模型
+        :param model:
+        :param save_path: 保存路径，包括了名字
+        :return:
+        """
+        joblib.dump(model, save_path)
+
+    def evaluate_oa_model(self, X, y):
+        """
+        调参和未调参都要，调参用的是网格调参
+        :param X:
+        :param y:
+        :return:
+        """
+        df1 = self.evaluate_origin_model(X, y)
+        df2 = self.evaluate_adjust_model(X, y)
+        df = df1.join(df2, lsuffix='_未调参', rsuffix='_网格调参')
+
+        excel_name_final = '网格调参优化结果-' + TimeTool().getCurrentTime() + '.xls'
+        df.to_excel(os.path.join(self.report_savePath, excel_name_final))
 
     def evaluate_origin_model(self, X, y):
         """
@@ -62,11 +132,15 @@ class MLTools:
 
         # 获取未调参的模型的结果
         for model_name, model in self.models_dict.items():
-            eval = model.score_model(model.model, X, y)
-            r = [model_name] + list(eval.values())
-            result.append(r)
-            if items is None:
-                items = ['model_name'] + list(eval.keys())
+            if model is not None:
+                # 保存模型
+                model_save_name = os.path.join(self.model_savePath, model_name + '-未调参.m')
+                self.save_model(model, model_save_name)
+                eval = model.score_model(model.model, X, y)
+                r = [model_name] + list(eval.values())
+                result.append(r)
+                if items is None:
+                    items = ['model_name'] + list(eval.keys())
 
         data = pd.DataFrame(result, columns=items)
         data.set_index('model_name', inplace=True)
@@ -74,7 +148,7 @@ class MLTools:
 
     def evaluate_adjust_model(self, X, y):
         """
-        使用所有的模型，【调参】，进行分类，并输出评价指标
+        使用所有的模型，【网格调参】，进行分类，并输出评价指标
         :return:
         """
         result = []
@@ -82,14 +156,22 @@ class MLTools:
 
         # 获取网格调参的模型的结果
         for model_name, model in self.models_dict.items():
-            eval = model.score_model(model.paramsAdjustment_byGridSearch(X, y), X, y)
-            r = [model_name] + list(eval.values())
-            result.append(r)
-            if items is None:
-                items = ['model_name'] + list(eval.keys())
+            if model is not None:
+                excel_name = '【' + model_name + '】模型-网格调参报告-' + TimeTool().getCurrentTime() + '.xls'
+                save_name = os.path.join(self.middle_savePath, excel_name)
+                best_model = model.paramsAdjustment_byGridSearch(X, y, save_name)
+                # 保存最佳模型
+                model_save_name = os.path.join(self.model_savePath, model_name + '-网格调参优化.m')
+                self.save_model(best_model, model_save_name)
+                eval = model.score_model(best_model, X, y)
+                r = [model_name] + list(eval.values())
+                result.append(r)
+                if items is None:
+                    items = ['model_name'] + list(eval.keys())
 
         data = pd.DataFrame(result, columns=items)
         data.set_index('model_name', inplace=True)
+
         return data
 
     def evaluate(self, X, y):

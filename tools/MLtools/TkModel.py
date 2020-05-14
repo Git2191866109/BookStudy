@@ -203,6 +203,11 @@ class TkModel():
         pa_path_in = ['最大最小值标准化']
         path_list_generate(pa_path, pa_path_in)
 
+        # 分类
+        pa_path = '分类'
+        pa_path_in = ['全部实现']
+        path_list_generate(pa_path, pa_path_in)
+
         # 机器学习建模文件名
 
         """一些辅助变量"""
@@ -779,6 +784,14 @@ class TkModel():
                     self.tool = MyPCA(None)
                     inner_info(n1, n2)
 
+            elif self.func_state == 4:
+                # 选择了功能区的分类
+                n1 = '分类'
+                if self.which_f == 0:
+                    n2 = '全部实现'
+                    self.tool = MLTools(None)
+                    inner_info(n1, n2)
+
             self.info('--> 3. 计算完毕...', False)
 
         self.thread_it(inner_run, [])
@@ -857,12 +870,13 @@ class TkModel():
 
         """创建分类学习"""
         name = '机器学习：分类'  # ' | 评价指标：f1_macro | 抽样方式：分层抽样'
-        mt = MLTools()
+        mt = MLTools('')
         model_names = mt.model_names
         check_names = ['简单建模', '分步调参', '网格调参']
         self.init_checkValues(check_names)
 
         labels = ['常用分类', '查看参数默认配置和说明'] + check_names
+        all_func = [lambda: self.set_state(4, 0), None] + [None] * (len(labels) - 2)
         f1, new_row = self.set_check(labels, all_func, name, rowspan=len(model_names) + 1)
 
         start = 0
