@@ -45,8 +45,8 @@ class MyMatplotlib:
         # 3. word一行放一张
         self.font_ticks1, self.font_labels1 = 20, 26
         # 4. 热力图
-        self.font_ticks_heatmap = 14
-        self.labelsize_heatmap = 10
+        self.font_ticks_heatmap = 13
+        self.labelsize_heatmap = 13
         # 5. 图例字体大小
         self.legend_size = 'large'
 
@@ -57,20 +57,21 @@ class MyMatplotlib:
     def plot_barh(self, ):
         pass
 
-    def plot_plot(self, theme, X_list, y_list, X_label, y_label, best_X=None):
+    def plot_plot(self, theme, X_list, y_list, X_label, y_label, best_X=None, is_save=False):
         """
         plt.plot绘图
         :param best_X: 最佳值
         """
-        save_path = self.save_path + theme + '.jpg'
         fig = plt.figure(figsize=self.figsize, dpi=self.dpi)
         plt.plot(X_list, y_list, '-o')
         plt.xlabel(X_label, fontsize=self.font_labels1)
         plt.ylabel(y_label, fontsize=self.font_labels1)
         plt.xticks(fontsize=self.font_ticks1)
         plt.yticks(fontsize=self.font_ticks1)
-        plt.tight_layout()
-        plt.savefig(save_path)
+        if is_save:
+            save_path = self.save_path + theme + '.jpg'
+            plt.tight_layout()
+            plt.savefig(save_path)
 
     def get_ax(self):
         f, ax = plt.subplots(figsize=self.figsize_heatmap, dpi=self.dpi)
@@ -88,10 +89,10 @@ class MyMatplotlib:
         plt.savefig(f, bbox_inches='tight')
         return f
 
-    def plot_heatmap(self, mat, annot=False, change_ticks_fontsize=False, rotation_ticks=False):
+    def plot_heatmap(self, mat, annot=False, cmap=None, change_ticks_fontsize=False, rotation_ticks=False, vmax=None, vmin=None, center=None):
         # 获取fig和ax
         f, ax = self.get_ax()
-        sns.heatmap(mat, square=True, ax=ax, robust=True, linewidths=.5, annot=annot, annot_kws={'size': self.labelsize_heatmap})
+        sns.heatmap(mat, square=True, cmap=None, center=center, vmax=vmax, vmin=vmin, ax=ax, robust=True, linewidths=.5, annot=annot, annot_kws={'size': self.labelsize_heatmap})
 
         if change_ticks_fontsize:
             # 设置ticks的刻度字体大小

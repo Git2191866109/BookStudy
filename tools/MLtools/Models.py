@@ -240,4 +240,4 @@ class MyAdaboost(MyModel):
         ])
 
     def init_model(self):
-        self.model = AdaBoostClassifier(base_estimator=DecisionTreeClassifier())
+        self.model = AdaBoostClassifier(base_estimator=DecisionTreeClassifier(class_weight='balanced', max_depth=2), n_estimators=200)

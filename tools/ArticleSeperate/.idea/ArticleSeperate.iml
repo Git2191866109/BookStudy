@@ -8,5 +8,9 @@
     <orderEntry type="module" module-name="ExcelDeal" />
     <orderEntry type="module" module-name="ExcelSplit" />
     <orderEntry type="module" module-name="MLtools" />
+    <orderEntry type="module" module-name="WorkSpaceSDC" />
+    <orderEntry type="module" module-name="源码" />
+    <orderEntry type="module" module-name="源码" />
+    <orderEntry type="module" module-name="ImporvedAdaboost" />
   </component>
 </module>

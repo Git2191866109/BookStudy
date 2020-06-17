@@ -24,7 +24,9 @@ import joblib
 import Models as ms
 from collections import OrderedDict
 import pandas as pd
+from sklearn.ensemble import VotingClassifier
 
+from MyModel import MyModel
 from PreAnalysis import Tools
 from TimeTool import TimeTool
 
@@ -53,6 +55,10 @@ class MLTools(Tools):
         # 报告保存路径
         self.report_savePath = None
 
+        # 集成模型
+        self.ensemble_name = ['随机森林', 'Adaboost', 'GBDT', 'XGBoost']
+        self.ensemble_set = []
+
         self.models_dict = OrderedDict([
             (self.m1.name, self.m1),
             (self.m2.name, self.m2),
@@ -72,7 +78,12 @@ class MLTools(Tools):
         for m in self.models_dict.values():
             if m is not None:
                 m.init_model()
+                print('正在初始化:', m.name)
                 m.model.fit(self.X, self.y)
+
+    def init_ensemble_set(self):
+        """初始化集成模型架构内容"""
+        self.ensemble_set = []
 
     def init_save_paths(self):
         # 图片保存路径
@@ -122,57 +133,116 @@ class MLTools(Tools):
         excel_name_final = '网格调参优化结果-' + TimeTool().getCurrentTime() + '.xls'
         df.to_excel(os.path.join(self.report_savePath, excel_name_final))
 
-    def evaluate_origin_model(self, X, y):
+    def evaluate_origin_model(self, X, y, is_ensemble=True):
         """
         使用所有的模型，【不调参】，进行分类，并输出评价指标
         :return:
         """
         result = []
         items = None
+        #
 
         # 获取未调参的模型的结果
-        for model_name, model in self.models_dict.items():
+        for model_name, model_class in self.models_dict.items():
+            model = model_class.model
+            print('正在建立未调参的', model_name, '模型...')
             if model is not None:
                 # 保存模型
                 model_save_name = os.path.join(self.model_savePath, model_name + '-未调参.m')
                 self.save_model(model, model_save_name)
-                eval = model.score_model(model.model, X, y)
-                r = [model_name] + list(eval.values())
+
+                # 根据是否集成
+                if is_ensemble:
+                    self.fill_ensemble_set(model_name, model_save_name)
+
+                r, eval = self.score_model(model, model_name, X, y)
                 result.append(r)
                 if items is None:
                     items = ['model_name'] + list(eval.keys())
 
+        # 根据是否集成加上最终集成model
+        if is_ensemble:
+            r = self.ensemble_model(X, y, '-未调参.m')
+            result.append(r)
+
         data = pd.DataFrame(result, columns=items)
         data.set_index('model_name', inplace=True)
+
         return data
 
-    def evaluate_adjust_model(self, X, y):
+    def evaluate_adjust_model(self, X, y, is_ensemble=True):
         """
         使用所有的模型，【网格调参】，进行分类，并输出评价指标
         :return:
         """
         result = []
-        items = None23psx8
-
+        items = None
         # 获取网格调参的模型的结果
-        for model_name, model in self.models_dict.items():
-            if model is not None:
+        for model_name, model_class in self.models_dict.items():
+            print('正在建立网格调参的', model_name, '模型...')
+            model = model_class.model
+            if model_class is not None:
                 excel_name = '【' + model_name + '】模型-网格调参报告-' + TimeTool().getCurrentTime() + '.xls'
                 save_name = os.path.join(self.middle_savePath, excel_name)
-                best_model = model.paramsAdjustment_byGridSearch(X, y, save_name)
+                best_model = model_class.paramsAdjustment_byGridSearch(X, y, save_name)
                 # 保存最佳模型
                 model_save_name = os.path.join(self.model_savePath, model_name + '-网格调参优化.m')
                 self.save_model(best_model, model_save_name)
-                eval = model.score_model(best_model, X, y)
-                r = [model_name] + list(eval.values())
+
+                # 根据是否集成
+                if is_ensemble:
+                    self.fill_ensemble_set(model_name, model_save_name)
+
+                r, eval = self.score_model(best_model, model_name, X, y)
                 result.append(r)
                 if items is None:
                     items = ['model_name'] + list(eval.keys())
+
+        # 根据是否集成加上最终集成model
+        if is_ensemble:
+            r = self.ensemble_model(X, y, '-网格调参优化.m')
+            result.append(r)
 
         data = pd.DataFrame(result, columns=items)
         data.set_index('model_name', inplace=True)
 
         return data
+
+    def ensemble_model(self, X, y, houzhui, is_weights=False):
+        print('正在集成模型...')
+        # 根据是否集成加上最终集成model
+        model_name = '集成模型'
+
+        if is_weights:
+            weights = [1, 1, 3, 5]
+        else:
+            weights = None
+        voting_clf = VotingClassifier(self.ensemble_set, voting='soft', weights=weights)
+        voting_clf.fit(X, y)
+
+        model_save_name = os.path.join(self.model_savePath, model_name + houzhui)
+        self.save_model(voting_clf, model_save_name)
+
+        # 计算精度等评价指标
+        r, _ = self.score_model(voting_clf, model_name, X, y)
+
+        # 集成结束，初始化集成set
+        self.init_ensemble_set()
+
+        return r
+
+    def score_model(self, model, model_name, X, y):
+        """计算分数"""
+        eval = MyModel().score_model(model, X, y)
+        r = [model_name] + list(eval.values())
+        return r, eval
+
+    def fill_ensemble_set(self, model_name, savepath_name, emsemble_names=None):
+        if emsemble_names is None:
+            emsemble_names = self.ensemble_name
+
+        if model_name in emsemble_names:
+            self.ensemble_set.append((model_name, joblib.load(savepath_name)))
 
     def evaluate(self, X, y):
         """

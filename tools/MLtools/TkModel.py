@@ -243,15 +243,16 @@ class TkModel():
         self.root.mainloop()
 
     def data_seperate(self):
-        """用于分离data中的X和y"""
-        if self.xy_sep_time == 0:
-            if self.data is None:
-                self.info('-x->【警告】你还没有传入数据！错误代码：【code_4】', focus_words='auto')
-            else:
-                self.y = self.data[self.column_names[-1]].tolist()
-                self.X = self.data.drop(columns=self.column_names[-1])
-
-                self.xy_sep_time += 1
+        """
+        用于分离data中的X和y
+        可以重复更新X，y
+        :return:
+        """
+        if self.data is None:
+            self.info('-x->【警告】你还没有传入数据！错误代码：【code_4】', focus_words='auto')
+        else:
+            self.y = self.data[self.column_names[-1]].tolist()
+            self.X = self.data.drop(columns=self.column_names[-1])
 
     def build_path(self):
         """根据保存路径建立文件系统"""

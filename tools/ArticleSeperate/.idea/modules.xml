@@ -6,7 +6,10 @@
       <module fileurl="file://$PROJECT_DIR$/../Caltools/.idea/Caltools.iml" filepath="$PROJECT_DIR$/../Caltools/.idea/Caltools.iml" />
       <module fileurl="file://$PROJECT_DIR$/../ExcelDeal/.idea/ExcelDeal.iml" filepath="$PROJECT_DIR$/../ExcelDeal/.idea/ExcelDeal.iml" />
       <module fileurl="file://$PROJECT_DIR$/../ExcelSplit/.idea/ExcelSplit.iml" filepath="$PROJECT_DIR$/../ExcelSplit/.idea/ExcelSplit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ImporvedAdaboost/.idea/ImporvedAdaboost.iml" filepath="$PROJECT_DIR$/../ImporvedAdaboost/.idea/ImporvedAdaboost.iml" />
       <module fileurl="file://$PROJECT_DIR$/../MLtools/.idea/MLtools.iml" filepath="$PROJECT_DIR$/../MLtools/.idea/MLtools.iml" />
+      <module fileurl="file://$USER_HOME$/Desktop/未套损井数据/WorkSpaceSDC/.idea/WorkSpaceSDC.iml" filepath="$USER_HOME$/Desktop/未套损井数据/WorkSpaceSDC/.idea/WorkSpaceSDC.iml" />
+      <module fileurl="file://$USER_HOME$/Desktop/李添材料清单/5. 测试材料验收/源码/.idea/源码.iml" filepath="$USER_HOME$/Desktop/李添材料清单/5. 测试材料验收/源码/.idea/源码.iml" />
     </modules>
   </component>
 </project>

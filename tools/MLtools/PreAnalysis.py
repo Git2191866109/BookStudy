@@ -26,6 +26,9 @@
 
         3. 数据转换
 
+        4. 其他
+            [pandas.insert, pop](https://blog.csdn.net/yj1556492839/article/details/79807241?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase)
+
 """
 import os
 import pandas as pd
@@ -67,19 +70,39 @@ class DataTransfer(Tools):
             # 最大最小值标准化
             self.myMaxMinScaler(self.X, self.y)
 
-    def myMaxMinScaler(self, X, y=None):
+    def myMaxMinScaler(self, X, y=None, predict_X=None, is_save=True):
+        """
+        最大最小值标准化
+        !!!!!!!!!!!!!!!!!!!!!!!!!!待修改，如果有预测集则需要放在一起标准化
+        :param X:
+        :param y:
+        :param predict_X: 是否有需要预测的转换X
+        :return:
+        """
         name = '最大最小值标准化'
+
         scaler = MinMaxScaler()
         new_X = scaler.fit_transform(X)
         df = pd.DataFrame(new_X, columns=X.columns)
 
+        if predict_X is not None:
+            px = scaler.fit(predict_X).transform(predict_X)
+            pxx = pd.DataFrame(px, columns=predict_X.columns)
+            excel_name2 = '[' + name + ']-预测集' + TimeTool().getCurrentTime() + '.xls'
+            p2 = os.path.join(self.save_path, excel_name2)
+            pxx.to_excel(p2, index=False)
+        else:
+            pxx = None
+
         if y is not None:
             df['label'] = y
 
-        excel_name = '[' + name + ']-' + TimeTool().getCurrentTime() + '.xls'
-        file_savePath = os.path.join(self.save_path, excel_name)
+        if is_save:
+            excel_name = '[' + name + ']-' + TimeTool().getCurrentTime() + '.xls'
+            file_savePath = os.path.join(self.save_path, excel_name)
 
-        df.to_excel(file_savePath, index=False)
+            df.to_excel(file_savePath, index=False)
+        return df
 
 
 class PreAnalysis(Tools):
@@ -249,3 +272,47 @@ class MyPCA(DimensionReduction):
                 df['label'] = y
 
             df.to_excel(file_savePath, index=False)
+
+    def pca_patial(self, X, aim_columns, y=None, n_components=1, predict_X=None):
+        """
+        对多列分别降维后合并
+        :param X:
+        :param y:
+        :param aim_columns: 多维数组[[], []]，内部[]放置了要进行标准化的列名
+        :return:
+        """
+        # 遍历每一组列名，进行降维，暂时降至保留1个特征的信息
+        df = X
+        df_pre = predict_X
+        n = 1
+        keep_ratio = []
+        for column in aim_columns:
+            df_temp = df[column]
+            df = df.drop(columns=column)
+
+            df_pre_temp = df_pre[column]
+            df_pre = df_pre.drop(columns=column)
+
+            model = PCA(n_components=n_components)
+            new_feature = model.fit_transform(df_temp)
+            feature_keep = len(new_feature[0])
+            new_column_name = ['新特征_' + str(i) for i in range(n, feature_keep + n, 1)]
+            df = pd.concat([df, pd.DataFrame(new_feature, columns=new_column_name)], axis=1)
+            keep_ratio.append(str(list(model.explained_variance_ratio_)))
+
+            if predict_X is not None:
+                px = model.transform(df_pre_temp)
+                df_pre = pd.concat([df_pre, pd.DataFrame(px, columns=new_column_name)], axis=1)
+
+            n += feature_keep
+
+        if y is not None:
+            df['label'] = y
+
+        ratio_name = '-'.join(keep_ratio)
+        excel_name = '[对多列分别降维后合并]-' + ratio_name + '-' + TimeTool().getCurrentTime() + '.xls'
+        excel_name2 = '[对多列分别降维后合并]-预测集-' + ratio_name + '-' + TimeTool().getCurrentTime() + '.xls'
+        file_savePath = os.path.join(self.save_path, excel_name)
+        file_savePath2 = os.path.join(self.save_path, excel_name2)
+        df.to_excel(file_savePath, index=False)
+        df_pre.to_excel(file_savePath2, index=False)

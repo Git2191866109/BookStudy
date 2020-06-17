@@ -43,7 +43,9 @@ class MyModel:
         # 默认调参参数取值
         self.parameters = None
         # 随机种子
-        self.random_state = 42
+        self.random_state = 150
+        # 分步调参字典：参数名：[参数取值list，参数得分list，最优参数取值]
+        self.step_params_results = OrderedDict()
 
         # 子类初始化
         try:
@@ -113,7 +115,7 @@ class MyModel:
         else:
             return model, mean_score
 
-    def paramsAdjustment_byStep(self, X, y, params, cv=3, scoring=None):
+    def paramsAdjustment_byStep(self, X, y, params=None, cv=3, scoring=None, is_plot=False):
         """
         分步调参
         :param X: 数据集
@@ -123,6 +125,9 @@ class MyModel:
         :param scoring: 评分方式
         :return: 最优模型
         """
+
+        if params is None:
+            params = self.parameters
 
         f_name = "分布调参"
         model = copy.deepcopy(self.model)
@@ -158,14 +163,16 @@ class MyModel:
             # print(params_values)
             # print(scores)
             # print(better_value)
+            self.step_params_results[name] = [list(params_values), scores, better_value]
         best_model.set_params(**better_params)
 
         # 绘制调参图
-        self.plot2list(params, params_scores, better_params)
+        if is_plot:
+            self.plot2list(params, params_scores, better_params)
         return best_model
 
     def plot2list(self, params, params_scores, better_params):
-        pp = MyMatplotlib("./test/")
+        pp = MyMatplotlib("myTest/")
         for name in params.keys():
             values = params[name]
             scores = params_scores[name]
@@ -196,6 +203,7 @@ class MyModel:
         if params is None:
             params = self.parameters
 
+        # 上面已经对params是否为空进行处理了，如果模型自带的也为空，那就算了
         if params is None:
             return self.model
 
@@ -215,8 +223,6 @@ class MyModel:
         f_name = "模型评价"
         if not scoring:
             scoring = self.evaluate
-        else:
-            self.evaluate = scoring
 
         scores = OrderedDict()
         for e in scoring:
