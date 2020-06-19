@@ -272,7 +272,7 @@
   
     1. 确定要被删除的Cookie：ATGUIHU_BOOK_开头的Cookiue数量大于或等于5，若从books.jsp页面传入的book不在ATGUIGU_BOOK_的Cookie中，则删除较早的Cookie（数组的第一个Cookie），若在其中，则删除该Cookie
   2. 把从books.jsp传入的book作为一个Cookie返回
-    
+  
   ```jsp
     <%@ page import="java.util.ArrayList" %>
     <%@ page import="java.util.List" %><%--
@@ -342,7 +342,7 @@
     
     </body>
     </html>
-    ```
+  ```
 
 ### 7.3 设置Cookie的作用路径
 
@@ -429,3 +429,30 @@
 ## 8. HttpSession
 
 - session在不同环境下的不同含义
+
+  - session，中文经常翻译为会话，其本来的含义是指有始有终的一系列动作/消息，比如打电话是从拿起电话拨号到挂断电话这中间的一系列过程可以称之为一个session。
+  - session在Web开发环境下的语义又有了新的扩展，它的含义是指 **一类用来在客户端与服务器端之间保持状态的解决方案。有时候Session也用来指这种解决方案的存储结构。**
+
+- Session机制
+
+  - session机制采用的是在**服务器端**保持http状态信息的方案。
+
+  - 服务器使用一种类似于散列表的结构（也可能就是使用散列表）来保存信息。
+
+  - 当程序需要为某个客户端的请求创建一个session时，服务器首先检查这个 **客户端的请求里**是否包含了一个session标识（即sessoinId），如果已经包含一个sessionId则说明以前已经为此客户端创建过session，服务器就按照sessionid把这个session检索出来使用（如果检索不到，可能会新建一个，这种情况可能出现在服务器已经删除了改用户对应的session对象，但用户认为的在请求的URl后面附加上了一个Jsession的参数）。如果客户请求不包含sessionId，则为此客户创建一个session并且生成一个与此session相关联的sessionId， **这个session id 将在本次响应中返回给客户端保存**。
+
+    ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200619180801568.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70)
+
+- 保存session id的几种方式
+
+  - 保存session id的方式可以采用**cookie**，这样在交互过程中浏览器可以**自动的**按照规则把这个标识发送给服务器。
+  - 由于cookie可以被人为的禁用，必须有其他的机制以便在cookie被禁用时仍然能够把session id传递回服务器，经常采用的一种技术叫做**URL重写，就是把session id附加在URL路径的后面**，附加的方式也有两种，一种是作为URL路径的附加信息，另一种是作为查询字符串附加在URL后面。网络在整个交互过程中始终保持状态，就必须在每个客户端可能请求的路径后面都包含这个session id。
+
+- session cookie
+
+  - session通过sessionID来区分不同的客户，session是以cookie或URL重写作为基础的，**默认使用cookie来实现，系统会创造一个名为JSESSIONID的输出cookie**，这称之为 **session cookie**，以区别 **persistent cookies**（也就是我们通常所说的cookie），**session cookie是存储于浏览器内存中的，并不是写道硬盘上的**，通常看不到JSESSIONID，但是当把浏览器的cookie禁止后，web服务器会采用URL重写的方式传递SessionID，这时地址栏可以看到
+  - session cookie针对某一次会话而言，会话结束session cookie也就随着消失了，而persistent cookie只是存在于客户端硬盘上的一段文本。
+  - 关闭浏览器，指挥使浏览器端内存里的session cookie小时，但不会使保存在服务器端的session对象消失，同样也不会使已经保存到硬盘上的持久化cookie消失。
+
+### 8.1 HttpSession的生命周期
+
