@@ -456,3 +456,229 @@
 
 ### 8.1 HttpSession的生命周期
 
+- **什么时候创建HttpSession对象**
+
+  - 对于JSP而言：是否浏览器访问服务端的任何一个JSP或Servlet，服务器就会立即创建一个HttpSession对象呢？
+
+    不一定！
+
+    1. 若当前的JSP是客户端访问的当前WEB应用的第一个资源，且JSP的page指定的session属性值为false，则服务器就不会为jsp创建一个HttpSession对象。
+    2. 若当前的JSP不是客户端访问的当前WEB应用的第一个资源，且其他页面已经创建了一个HttpSession对象，则服务器也不会为当前JSP页面创建一个HttpSession对象，而会为当前JSP页面返回一个和当前会话关联的HttpSession对象。
+
+  - jsp中设置session=false表示：当前jsp页面禁用session隐含变量，但可以使用其他的显式的HttpSession对象。
+
+  - 对于Servlet而言：若Servlet是客户端访问的第一个WEB应用的资源，则只有调用了request.getSession()或request.getSession(true)才会创建HttpSession对象。
+
+  - 在Servlet中如何获取HttpSession对象？
+
+    - request.getSession(boolean create)：若create为false，则若没有和当前jsp页面关联的HttpSession对象，则返回null；若有则返回true。
+
+      ```
+      HttpSession session = request.getSession(false);
+      ```
+
+    - 若create为true，一定返回一个HttpSession对象。若没有和当前jsp页面关联的HttpSession对象，则服务器创建一个新的HttpSession对象返回，若有，直接返回关联的对象。
+
+    - request.getSession()：等同于设置create为true。
+
+- **什么时候销毁HttpSession对象**
+
+  - 直接调用HttpSession的invalidate()方法。该方法使HttpSession失效。
+
+  - 服务器卸载了当前WEB应用。
+
+  - 超出HttpSession的过期时间。
+
+    ```
+    session.getMaxInactiveInterval()
+    session.setMaxInactiveInterval()
+    ```
+
+    - 设置HttpSession的过期时间：单位为秒
+
+    - 在web.xml文件中设置HttpSession的过期时间（Tomcat路径下的，单位为分钟）
+
+      ```xml
+      <session-config>
+      	<session-timeout>30</session-timeout>
+      </session-config>
+      ```
+
+  - 并不是关闭了浏览器就销毁了HttpSession。
+
+    - 持久化cookie
+    - URL重写
+
+### 8.2 HttpSession常用方法示例
+
+- session原理
+
+  ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200620175501573.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70)
+
+- session代表了浏览器跟服务器的一次会话，其特点是，只要浏览器不关，至始至终都是一个session
+
+- 例子：制作一个登录，重新登录，注销的界面
+
+  ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200620175649519.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70)
+
+- 代码
+
+  - login.jsp
+
+    ```jsp
+    <%--
+      Created by IntelliJ IDEA.
+      User: Administrator
+      Date: 2020/6/20
+      Time: 17:29
+      To change this template use File | Settings | File Templates.
+    --%>
+    <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+    <html>
+    <head>
+        <title>登录</title>
+    </head>
+    <body>
+    Session ID: <%= session.getId() %>
+    <br><br>
+    isNew: <%= session.isNew() %>
+    <br><br>
+    MaxInactiveInternal: <%= session.getMaxInactiveInterval() %>
+    <br><br>
+    CreateTime: <%= session.getCreationTime() %>
+    <br><br>
+    LastAccessTime: <%= session.getLastAccessedTime() %>
+    <br><br>
+    
+    <%
+        Object username = session.getAttribute("username");
+        if (username == null) {
+            username = "";
+        }
+    %>
+    
+    <form action="hello.jsp" method="post">
+        username: <input type="text" name="username" value="<%= username %>"/>
+        <input type="submit" value="Submit"/>
+    </form>
+    </body>
+    </html>
+    ```
+
+  - hello.jsp
+
+    ```jsp
+    <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+    <html>
+    <head>
+        <title>欢迎界面</title>
+    </head>
+    <body>
+    Session ID: <%= session.getId() %>
+    <br><br>
+    isNew: <%= session.isNew() %>
+    <br><br>
+    MaxInactiveInternal: <%= session.getMaxInactiveInterval() %>
+    <br><br>
+    CreateTime: <%= session.getCreationTime() %>
+    <br><br>
+    LastAccessTime: <%= session.getLastAccessedTime() %>
+    <br><br>
+    Hello: <%= request.getParameter("username") %>
+    <br><br>
+    
+    <%-- 如果不用session的方式的话，怎么使得重新登录的时候回传用户名 --%>
+    <%--<a href="login.jsp?username=<%=request.getParameter("username")%>">重新登录</a>--%>
+    
+    <%-- 这里用session做的话,就不需要在后面添加?username等 --%>
+    <%
+        session.setAttribute("username", request.getParameter("username"));
+    %>
+    <a href="login.jsp">重新登录</a>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="logout.jsp">注销</a>
+    
+    </body>
+    </html>
+    ```
+
+  - logout.jsp
+
+    ```jsp
+    <%--
+      Created by IntelliJ IDEA.
+      User: Administrator
+      Date: 2020/6/20
+      Time: 17:50
+      To change this template use File | Settings | File Templates.
+    --%>
+    <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+    <html>
+    <head>
+        <title>注销</title>
+    </head>
+    <body>
+    Session ID: <%= session.getId() %>
+    <br><br>
+    isNew: <%= session.isNew() %>
+    <br><br>
+    MaxInactiveInternal: <%= session.getMaxInactiveInterval() %>
+    <br><br>
+    CreateTime: <%= session.getCreationTime() %>
+    <br><br>
+    LastAccessTime: <%= session.getLastAccessedTime() %>
+    <br><br>
+    Bye: <%= session.getAttribute("username") %>
+    <br><br>
+    
+    <a href="login.jsp">重新登录</a>
+    
+    <%
+        session.invalidate();
+    %>
+    
+    </body>
+    </html>
+    ```
+
+### 8.3 利用URL重写实现Session跟踪
+
+- Servlet规范中引入了一种补充的会话管理机制，**它允许不支持Cookie的浏览器也可以与WEB服务器保持连续的会话**。这种补充机制要求在响应消息的实体内容中必须包含下一次请求的超链接，并将会话标识号作为超链接的URL地址的一个特殊参数。
+
+- **将会话标识号以参数形式附加在超链接的URL地址后面的技术成为URL重写**。如果在浏览器不支持Cookie或者关闭了Cookie功能的情况下，WEB服务器还要能够与浏览器实现有状态的会话，就必须对所有可能被客户端访问的请求路径（包括超链接、form表单的action属性设置和重定向的URL）进行URL重写。
+
+- HttpServletResponse接口中定义了两个用于完成URL重写的方法：
+
+  - encodeURL方法
+  - encodeRedirectURL方法
+
+- 实验
+
+  - 如果禁止了cookie，每次刷新的时候sessionid都会变
+
+    ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200620195237597.gif)
+
+  - 怎么解决？
+
+    - 在login.jsp中，注释的为解决前的代码，后面的为解决后的代码
+
+      ```jsp
+      <%--<form action="hello.jsp" method="post">--%>
+      <form action="<%= response.encodeURL("hello.jsp") %>" method="post">
+      ```
+
+    - hello.jsp中
+
+      ```jsp
+      <%--<a href="login.jsp">重新登录</a>--%>
+      <a href="<%= response.encodeURL("login.jsp") %>">重新登录</a>
+      
+      <%--<a href="logout.jsp">注销</a>--%>
+      <a href="<%= response.encodeURL("logout.jsp") %>">注销</a>
+      ```
+
+    - 利用URL重写实现后，在原来的url后面增加了`;jsessionid=`，就可以实现禁止cookie的情况下，找到服务器的session对象。
+
+      ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200620200753405.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70)
+
+### 8.4 简易购物车
