@@ -485,9 +485,9 @@
 
   - 直接调用HttpSession的invalidate()方法。该方法使HttpSession失效。
 
-  - 服务器卸载了当前WEB应用。
+  - 服务器卸载了当前WEB应用。（服务器进程被停止）
 
-  - 超出HttpSession的过期时间。
+  - 超出HttpSession的过期时间。（超过了session的最大有效时间）
 
     ```
     session.getMaxInactiveInterval()
@@ -508,6 +508,13 @@
 
     - 持久化cookie
     - URL重写
+  
+- **HttpSession的相关的API**
+
+  1. 获取Session的对象：request.getSession()、request.getSession(boolean create)
+  2. 属性相关的：setAttribute、getAttribute、removeAttribute
+  3. 使HttpSession失效的：invalidate()方法
+  4. 设置其最大时效的setMaxInactiveInterval
 
 ### 8.2 HttpSession常用方法示例
 
@@ -681,4 +688,11 @@
 
       ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200620200753405.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70)
 
-### 8.4 简易购物车
+### 8.4 实现简易购物车
+
+- 练习框架
+
+  ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200621180958554.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70)
+
+- 
+
