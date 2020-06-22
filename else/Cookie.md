@@ -694,5 +694,300 @@
 
   ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200621180958554.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNTc5MDQ1,size_16,color_FFFFFF,t_70)
 
-- 
+- 代码
+
+  - step1.jsp：选择要购买的图书界面
+
+    ```jsp
+    <%--
+      Created by IntelliJ IDEA.
+      User: Administrator
+      Date: 2020/6/21
+      Time: 18:12
+      To change this template use File | Settings | File Templates.
+    --%>
+    <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+    <html>
+    <head>
+        <title>选择要购买的书籍</title>
+    </head>
+    <body>
+    <h4>第一步：选择要购买的图书：</h4>
+    <form action="<%= request.getContextPath() %>/processStep1" method="post">
+        <table border="1" cellpadding="10" cellspacing="0">
+            <tr>
+                <td>书名</td>
+                <td>购买</td>
+            </tr>
+            <tr>
+                <td>Java</td>
+                <td><input type="checkbox" name="book" value="Java"></td>
+            </tr>
+            <tr>
+                <td>Oracle</td>
+                <td><input type="checkbox" name="book" value="Oracle"></td>
+            </tr>
+            <tr>
+                <td>Struts</td>
+                <td><input type="checkbox" name="book" value="Struts"></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="Submit">
+                </td>
+            </tr>
+        </table>
+    </form>
+    
+    </body>
+    </html>
+    ```
+
+  - step1Setvlet.java：在step1.jsp中选择书了之后，跳转的Servlet进行处理，最终转发到step2.jsp中。
+
+    ```java
+    package com.litian.javaweb;
+    
+    import javax.servlet.ServletException;
+    import javax.servlet.annotation.WebServlet;
+    import javax.servlet.http.HttpServlet;
+    import javax.servlet.http.HttpServletRequest;
+    import javax.servlet.http.HttpServletResponse;
+    import java.io.IOException;
+    
+    @WebServlet(name = "s1", urlPatterns = "/processStep1")
+    public class ProcessStep1Servlet extends HttpServlet {
+        protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            // 1. 获取选中的图书的信息
+            String [] books = request.getParameterValues("book");
+            // 2. 把图书信息放入到HttpSession中
+            request.getSession().setAttribute("books", books);
+            // 3. 重定向页面到shoppingcart/step2.jsp
+            System.out.println(request.getContextPath() + "/shoppingcart/step2.jsp");
+            response.sendRedirect(request.getContextPath() + "/shoppingcart/step2.jsp");
+        }
+    }
+    ```
+
+  - step2.jsp：确认收货地址等信息的页面
+
+    ```jsp
+    <%--
+      Created by IntelliJ IDEA.
+      User: Administrator
+      Date: 2020/6/21
+      Time: 18:26
+      To change this template use File | Settings | File Templates.
+    --%>
+    <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+    <html>
+    <head>
+        <title>确认收货地址和信用卡信息</title>
+    </head>
+    <body>
+    <h4>第二步：请输入收货地址和信用卡信息：</h4>
+    <form action="<%= request.getContextPath() %>/processStep2", method="post">
+        <table cellpadding="10" cellspacing="0" border="1">
+            <tr>
+                <td colspan="2">寄送信息</td>
+            </tr>
+            <tr>
+                <td>姓名：</td>
+                <td><input type="text" name="name"></td>
+            </tr>
+            <tr>
+                <td>地址：</td>
+                <td><input type="text" name="address"></td>
+            </tr>
+            <tr>
+                <td colspan="2">信用卡信息</td>
+            </tr>
+            <tr>
+                <td>种类：</td>
+                <td>
+                    <input type="radio" name="cardType" value="Visa"/>Visa
+                    <input type="radio" name="cardType" value="Master"/>Master
+                </td>
+            </tr>
+            <tr>
+                <td>卡号：</td>
+                <td><input type="text" name="card"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" value="Submit"/></td>
+            </tr>
+        </table>
+    </form>
+    </body>
+    </html>
+    ```
+
+  - step2Servlet.java：在step2.jsp页面中的信息传到这里来进行处理，然后重定向到确认页面。
+
+    ```java
+    package com.litian.javaweb;
+    
+    import javax.servlet.ServletException;
+    import javax.servlet.annotation.WebServlet;
+    import javax.servlet.http.HttpServlet;
+    import javax.servlet.http.HttpServletRequest;
+    import javax.servlet.http.HttpServletResponse;
+    import javax.servlet.http.HttpSession;
+    import java.io.IOException;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: ${NAME}.java
+     * @time: 2020/6/22 10:18
+     * @desc: |
+     */
+    
+    @WebServlet(name = "ProcessStep2Servlet", urlPatterns = "/processStep2")
+    public class ProcessStep2Servlet extends HttpServlet {
+        protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            // 1. 获取请求参数：name，address，cardType，card
+            String name = request.getParameter("name");
+            String address = request.getParameter("address");
+            String cardType = request.getParameter("cardType");
+            String card = request.getParameter("card");
+    
+            // 把客户信息封装到customer对象中
+            Customer customer = new Customer(name, address, cardType, card);
+    
+            // 2. 把请求信息存入到HttpSession中
+            HttpSession session = request.getSession();
+            session.setAttribute("customer", customer);
+    
+            // 3. 重定向页面到confirm.jsp
+            response.sendRedirect(request.getContextPath() + "/shoppingcart/confirm.jsp");
+        }
+    }
+    ```
+
+  - confirm.jsp：确认页面，确认你的书、个人信息等。
+
+    ```jsp
+    <%@ page import="com.litian.javaweb.Customer" %><%--
+      Created by IntelliJ IDEA.
+      User: Administrator
+      Date: 2020/6/22
+      Time: 10:24
+      To change this template use File | Settings | File Templates.
+    --%>
+    <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+    <html>
+    <head>
+        <title>确认信息</title>
+    </head>
+    <body>
+    
+    <%
+        Customer customer = (Customer) session.getAttribute("customer");
+        String[] books = (String[]) session.getAttribute("books");
+    %>
+    
+    <table>
+        <tr>
+            <td>顾客姓名：</td>
+            <td><%= customer.getName() %></td>
+        </tr>
+        <tr>
+            <td>地址：</td>
+            <td><%= customer.getAddress() %></td>
+        </tr>
+        <tr>
+            <td>卡号：</td>
+            <td><%= customer.getCard() %></td>
+        </tr>
+        <tr>
+            <td>卡的类型：</td>
+            <td><%= customer.getCardType() %></td>
+        </tr>
+        <tr>
+            <td>Books: </td>
+            <td>
+                <%
+                    for(String book: books){
+                        out.print(book);
+                        out.print("<br>");
+                    }
+                %>
+            </td>
+        </tr>
+    </table>
+    </body>
+    </html>
+    ```
+
+  - Customer.java：用来封装客户的个人信息，这样方便将step2中表单的信息传递到confirm.jsp中。
+
+    ```java
+    package com.litian.javaweb;
+    
+    /**
+     * @author: Li Tian
+     * @contact: litian_cup@163.com
+     * @software: IntelliJ IDEA
+     * @file: Customer.java
+     * @time: 2020/6/22 10:21
+     * @desc: |
+     */
+    
+    public class Customer {
+        private String name;
+        private String address;
+        private String cardType;
+        private String card;
+    
+        public Customer() {
+        }
+    
+        public Customer(String name, String address, String cardType, String card) {
+            this.name = name;
+            this.address = address;
+            this.cardType = cardType;
+            this.card = card;
+        }
+    
+        public String getName() {
+            return name;
+        }
+    
+        public void setName(String name) {
+            this.name = name;
+        }
+    
+        public String getAddress() {
+            return address;
+        }
+    
+        public void setAddress(String address) {
+            this.address = address;
+        }
+    
+        public String getCardType() {
+            return cardType;
+        }
+    
+        public void setCardType(String cardType) {
+            this.cardType = cardType;
+        }
+    
+        public String getCard() {
+            return card;
+        }
+    
+        public void setCard(String card) {
+            this.card = card;
+        }
+    }
+    ```
+
+### 8.5 JavaWEB中的相对路径和绝对路径
+
+1. 绝对路径的问题：
+   1. 开发时建议编写 **绝对路径**：写绝对路径肯定没有问题，但是写相对路径却可能会有问题。
+   2. 
 
