@@ -987,7 +987,217 @@
 
 ### 8.5 JavaWEB中的相对路径和绝对路径
 
-1. 绝对路径的问题：
-   1. 开发时建议编写 **绝对路径**：写绝对路径肯定没有问题，但是写相对路径却可能会有问题。
-   2. 
+1. 开发时建议编写 **绝对路径**：写绝对路径肯定没有问题，但是写相对路径却可能会有问题。
+   在由Servlet转发到JSP页面时，此时浏览器地址栏上显示的时Servlet的路径，而若JSP页面的超链接还是相对于该JSP页面的地址，则可能会出现路径混乱的问题。
+
+   ```
+   -a.jsp
+   	-path
+   		/b.jsp
+   		/c.jsp
+   a.jsp -> /Servlet -转发-> b.jsp（有一个超链接：和b.jsp在同一路径下的c.jsp） -> 无法得到页面
+   ```
+
+2. 编写绝对路径可以避免上述问题：
+
+   1. 在JavaWEB中什么时绝对路径：相对于当前WEB应用的根路径的路径。即任何路径都必须带上ContextPath
+
+   2. 如何完成编写：若 / 代表的是站点的根目录，在其漆面加上contextPath就可以了。而contextPath可以由request或application的getContextPath()方法来获取。
+
+      ```
+      <a href="/TestServlet"> To B Page</a>
+      <a href="<%= request.getContextPath() %>/TestServlet"> To B Page</a>
+      ```
+
+3. JavaWEB开发中的 / 到底代表什么
+
+   1. 当前WEB应用的根路径，如http://localhost:8989/contextPath/
+
+      - 请求转发时：`request.getRequestDispatcher("/path/b.jsp").forward(request, response);`
+
+      - web.xlm文件中映射Servlet访问路径的时候：
+
+        ```xml
+        <servlet-mapping>
+        	<servlet-name>TestServlet</servlet-name>
+        	<url-pattern>/TestServlet</url-pattern>
+        </servlet-mapping>
+        ```
+
+      - 各种定制标签中的 / 
+
+   2. WEB站点的根路径，如http://localhost:8989/
+
+      - 超链接：`<a href="/TestServlet"> To B Page </a>`
+      - 表单中的action：`<form action="/login.jsp">`
+      - 做请求重定向的时候：`response.sendRedirect("/a.jsp")`
+
+   3. 总结：
+
+      1. 若 / 需交由Servlet容器来处理，则代表的是app的路径
+      2. 若 / 需交由浏览器来处理，则代表的是站点的路径
+
+### 8.6 表单的重复提交
+
+- 避免表单的重复提交
+
+  - 调用RequestDispatcher.forward()方法，浏览器所保留的URL是先前的表单提交的URL，此时点击刷新，浏览器将再次提交用户先前输入的数据，引起重复提交。
+  - 如果采用HttpServletResponse.sendRedirect()方法将客户端重定向到成功页面，将不会出现重复提交的问题。
+
+- 如何避免表单的重复提交：在表单中做一个标记，提交到Servlet时，检查标记是否存在且是否和预定义的标记一致，若一致，则受理请求，并销毁标记，若不一致或没有标记，则直接相应提示信息：“重复提交”。
+
+  1. ~~仅提供一个隐藏域~~（行不通，没有办法清除固定的请求参数）
+
+     ```jsp
+     <input type="hidden" value="litian" name="token"/>
+     ```
+
+  2. ~~把标记放在request中~~（行不通，因为表单页面刷新后，request已经被销毁，再提交表单时一个新的request）
+
+  3. 把标记放在session中
+
+     - 在原表单页面，生成一个随机值token
+     - 在原表单页面，把token值放入session属性中
+     - 在原表单页面，把token值放入到隐藏域中
+     - 在目标的Servlet中：获取session和隐藏域中的token值
+     - 比较两个值是否一致：若一致，受理请求，且把session域中的token属性清除
+     - 若不一致，则直接响应提示页面：“表单请勿重复提交”
+
+- 代码实现
+
+  - index.jsp：首页，输入信息，提交表单
+
+    ```jsp
+    <%@ page import="java.util.Date" %><%--
+      Created by IntelliJ IDEA.
+      User: Administrator
+      Date: 2020/6/23
+      Time: 17:53
+      To change this template use File | Settings | File Templates.
+    --%>
+    <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+    <html>
+    <head>
+        <title>首页</title>
+    </head>
+    <body>
+    
+    <%
+        String tokenValue = new Date().getTime() + "";
+        session.setAttribute("token", tokenValue);
+    %>
+    
+    <form action="<%= request.getContextPath() %>/tokenServlet" method="post">
+    
+        <input type="hidden" name="token" value="<%=tokenValue%>"/>
+        <%
+            // request.setAttribute("token", "tokenValue");
+            System.out.println(session.getAttribute("token"));
+        %>
+    
+    
+        name: <input type="text" name="name"/>
+        <input type="submit" name="Submit"/>
+    </form>
+    </body>
+    </html>
+    ```
+
+  - TokenServlet.java：处理提交的表单
+
+    ```java
+    package com.litian.javaweb;
+    
+    import javax.servlet.ServletException;
+    import javax.servlet.annotation.WebServlet;
+    import javax.servlet.http.HttpServlet;
+    import javax.servlet.http.HttpServletRequest;
+    import javax.servlet.http.HttpServletResponse;
+    import javax.servlet.http.HttpSession;
+    import java.io.IOException;
+    
+    
+    @WebServlet(name = "tokenServlet", urlPatterns = "/tokenServlet")
+    public class TokenServlet extends HttpServlet {
+        protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+    
+            /*
+            String token = request.getParameter("token");
+            if("litian".equals(token)){
+                // 清除标记：没有方法清除固定的请求参数
+            }
+            */
+    
+            HttpSession session = request.getSession();
+            // Object token = request.getAttribute("token");
+            Object token = session.getAttribute("token");
+            String tokenValue = request.getParameter("token");
+            System.out.println("token -> " + token);
+            System.out.println("tokenValue -> " + tokenValue);
+    
+            if (token != null && token.equals(tokenValue)) {
+                // request.removeAttribute("token");
+                session.removeAttribute("token");
+            } else {
+                response.sendRedirect(request.getContextPath() + "/token/token.jsp");
+                return;
+            }
+    
+            String name = request.getParameter("name");
+            // 访问数据库服务器...
+            System.out.println("name: " + name);
+    
+            response.sendRedirect(request.getContextPath() + "/token/success.jsp");
+        }
+    }
+    ```
+
+  - token.jsp：失败的页面
+
+    ```jsp
+    <%--
+      Created by IntelliJ IDEA.
+      User: Administrator
+      Date: 2020/6/23
+      Time: 18:15
+      To change this template use File | Settings | File Templates.
+    --%>
+    <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+    <html>
+    <head>
+        <title>Token</title>
+    </head>
+    <body>
+    <h4>对不起！您已经提交过了！</h4>
+    </body>
+    </html>
+    ```
+
+  - success.jsp：成功的页面
+
+    ```jsp
+    <%--
+      Created by IntelliJ IDEA.
+      User: Administrator
+      Date: 2020/6/23
+      Time: 17:59
+      To change this template use File | Settings | File Templates.
+    --%>
+    <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+    <html>
+    <head>
+        <title>成功界面</title>
+    </head>
+    <body>
+    成功！
+    </body>
+    </html>
+    ```
+
+- 
 
