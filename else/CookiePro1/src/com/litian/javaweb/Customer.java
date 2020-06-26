@@ -16,6 +16,7 @@ public class Customer {
     private String card;
 
     public Customer() {
+        System.out.println("客户已创建！");
     }
 
     public Customer(String name, String address, String cardType, String card) {

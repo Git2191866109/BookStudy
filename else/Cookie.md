@@ -1199,5 +1199,381 @@
     </html>
     ```
 
-- 
+- Struts测试这里就不写了
+
+### 8.7 验证码
+
+- 利用HttpSession实现一次性验证码
+
+  1. 基本原理：和表单重复提交一致。
+  2. 步骤
+     1. 在原表单页面，生成一个随机验证码的图片，生成图片的同时，需要把该图片中的字符串放入到session中。
+     2. 在原表单页面，定义一个文本域，用于输入验证码。
+     3. 在目标的Servlet中：获取session和表单域中验证码的值。
+     4. 比较两个值是否一致：若一致，则受理请求，且把session域中的验证码属性清除；若不一致，则直接通过重定向的方式返回原表单页面，并提示用户“验证码错误”。
+
+- 代码
+
+  - index.jsp：首页，显示表单
+
+    ```jsp
+    <%@ page import="java.util.Date" %><%--
+      Created by IntelliJ IDEA.
+      User: Administrator
+      Date: 2020/6/23
+      Time: 17:53
+      To change this template use File | Settings | File Templates.
+    --%>
+    <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+    <html>
+    <head>
+        <title>首页</title>
+    </head>
+    <body>
+    
+    <span style="color: red; ">
+    <%= session.getAttribute("message") == null ? "" : session.getAttribute("message")%>
+    </span>
+    
+    <form action="<%= request.getContextPath() %>/checkCodeServlet" method="post">
+        name: <input type="text" name="name"/>
+        checkCode: <input type="text" name="CHECK_CODE_PARAM_NAME"/>
+        <img alt="" src="<%= request.getContextPath() %>/validateColorServlet">
+        <input type="submit" name="Submit"/>
+    </form>
+    </body>
+    </html>
+    ```
+
+  - ValidateColorServlet.java：获取验证码，回传验证码图像，保存验证码信息在session的Attribute中
+
+    ```java
+    package com.litian.javaweb;
+    
+    import java.awt.Color;
+    import java.awt.Font;
+    import java.awt.Graphics2D;
+    import java.awt.image.BufferedImage;
+    import java.io.IOException;
+    import java.util.Random;
+    
+    import javax.imageio.ImageIO;
+    import javax.servlet.ServletException;
+    import javax.servlet.ServletOutputStream;
+    import javax.servlet.annotation.WebServlet;
+    import javax.servlet.http.HttpServlet;
+    import javax.servlet.http.HttpServletRequest;
+    import javax.servlet.http.HttpServletResponse;
+    
+    
+    @WebServlet("/validateColorServlet")
+    public class ValidateColorServlet extends HttpServlet {
+    
+    	public static final String CHECK_CODE_KEY = "CHECK_CODE_KEY";
+    
+        private static final long serialVersionUID = 1L;
+    
+        //设置验证图片的宽度, 高度, 验证码的个数
+        private int width = 152;
+        private int height = 40;
+        private int codeCount = 4;
+    
+        //验证码字体的高度
+        private int fontHeight = 4;
+    
+        //验证码中的单个字符基线. 即：验证码中的单个字符位于验证码图形左上角的 (codeX, codeY) 位置处
+        private int codeX = 0;
+        private int codeY = 0;
+    
+        //验证码由哪些字符组成
+        char [] codeSequence = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz23456789".toCharArray();
+    
+        //初始化验证码图形属性
+        public void init(){
+            fontHeight = height - 2;
+            codeX = width / (codeCount + 2);
+            codeY = height - 4;
+        }
+    
+        public void service(HttpServletRequest request, HttpServletResponse response)
+                throws ServletException, IOException {
+            //定义一个类型为 BufferedImage.TYPE_INT_BGR 类型的图像缓存
+            BufferedImage buffImg = null;
+            buffImg = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
+    
+            //在 buffImg 中创建一个 Graphics2D 图像
+            Graphics2D graphics = null;
+            graphics = buffImg.createGraphics();
+    
+            //设置一个颜色, 使 Graphics2D 对象的后续图形使用这个颜色
+            graphics.setColor(Color.WHITE);
+    
+            //填充一个指定的矩形: x - 要填充矩形的 x 坐标; y - 要填充矩形的 y 坐标; width - 要填充矩形的宽度; height - 要填充矩形的高度
+            graphics.fillRect(0, 0, width, height);
+    
+            //创建一个 Font 对象: name - 字体名称; style - Font 的样式常量; size - Font 的点大小
+            Font font = null;
+            font = new Font("", Font.BOLD, fontHeight);
+            //使 Graphics2D 对象的后续图形使用此字体
+            graphics.setFont(font);
+    
+            graphics.setColor(Color.BLACK);
+    
+            //绘制指定矩形的边框, 绘制出的矩形将比构件宽一个也高一个像素
+            graphics.drawRect(0, 0, width - 1, height - 1);
+    
+            //随机产生 15 条干扰线, 使图像中的认证码不易被其它程序探测到
+            Random random = null;
+            random = new Random();
+            graphics.setColor(Color.GREEN);
+            for(int i = 0; i < 55; i++){
+                int x = random.nextInt(width);
+                int y = random.nextInt(height);
+                int x1 = random.nextInt(20);
+                int y1 = random.nextInt(20);
+                graphics.drawLine(x, y, x + x1, y + y1);
+            }
+    
+            //创建 randomCode 对象, 用于保存随机产生的验证码, 以便用户登录后进行验证
+            StringBuffer randomCode;
+            randomCode = new StringBuffer();
+    
+            for(int i = 0; i < codeCount; i++){
+                //得到随机产生的验证码数字
+                String strRand = null;
+                strRand = String.valueOf(codeSequence[random.nextInt(36)]);
+    
+                //把正在产生的随机字符放入到 StringBuffer 中
+                randomCode.append(strRand);
+    
+                //用随机产生的颜色将验证码绘制到图像中
+                graphics.setColor(Color.BLUE);
+                graphics.drawString(strRand, (i + 1)* codeX, codeY);
+            }
+    
+            //再把存放有所有随机字符的 StringBuffer 对应的字符串放入到 HttpSession 中
+            request.getSession().setAttribute(CHECK_CODE_KEY, randomCode.toString());
+    
+            //禁止图像缓存
+            response.setHeader("Pragma", "no-cache");
+            response.setHeader("Cache-Control", "no-cache");
+            response.setDateHeader("Expires", 0);
+    
+            //将图像输出到输出流中
+            ServletOutputStream sos = null;
+            sos = response.getOutputStream();
+            ImageIO.write(buffImg, "jpeg", sos);
+            sos.close();
+        }
+    }
+    ```
+
+  - CheckCodeServlet.java：对比输入的验证码和实际验证码是否一致
+
+    ```java
+    package com.litian.javaweb;
+    
+    import javax.servlet.ServletException;
+    import javax.servlet.annotation.WebServlet;
+    import javax.servlet.http.HttpServlet;
+    import javax.servlet.http.HttpServletRequest;
+    import javax.servlet.http.HttpServletResponse;
+    import java.io.IOException;
+    
+    
+    @WebServlet("/checkCodeServlet")
+    public class CheckCodeServlet extends HttpServlet {
+        protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            // 1. 获取请求参数：CHECK_CODE_PARAM_NAME
+            String paramCode = request.getParameter("CHECK_CODE_PARAM_NAME");
+            // 2. 获取session中的CHECK_CODE_KEY属性值
+            String sessionCode = (String) request.getSession().getAttribute("CHECK_CODE_KEY");
+            System.out.println(paramCode);
+            System.out.println(sessionCode);
+    
+            // 3. 比对，看是否一致，若一致则说明验证码正确，若不一致说明验证码错误
+            if(!(paramCode != null && paramCode.equals(sessionCode))){
+                request.getSession().setAttribute("message", "验证码不一致！");
+                response.sendRedirect(request.getContextPath() + "/check/index.jsp");
+                return;
+            }
+    
+            System.out.println("受理请求！");
+        }
+    }
+    ```
+
+### 8.8 使用JavaBean
+
+- JavaBean简述
+  - 用作JavaBean的类必须具有一个公共的、无参的构造方法。
+  - JavaBean的属性与普通Java类的属性的概念不一样，**JavaBean的属性是以方法的形式出现的**。
+  - 用于对属性赋值的方法称为属性修改器或setter方法，用于读取属性值的方法称为属性访问器或getter方法。
+  - 属性修改器必须以小写的set前缀开始，后跟属性名，且属性名的第一个字母要改为大写，例如，nickName的属性的修改器名称为setNickName，password属性的修改器名称为setPassword。
+  - 属性访问器通常以小写的get前缀开始，后跟属性名，且属性名的第一个字母要改为大写，如set一致。
+  - JavaBean 的属性名是根据setter方法与getter方法的名称来生成的，setter方法或getter方法中除去前 缀set和get后的部分即为属性名，但属性名的首字母必须小写。
+- JavaBean在JSP中的应用（已过时，了解，开发时基本不用）
+  - `<jsp:useBean>`标签
+  - `<jsp:setProperty>`标签
+  - `<jsp:getProperty>`标签
+- 在JSP中如何使用JavaBean
+  - JSP规范专门定义了上述三个JSP标签，它们分别用于创建和查找JavaBean的实例对象、设置JavaBean对象的属性、读取JavaBean对象的属性。
+  - 对于JSP页面来说，只要一个类具有一个公共的、无参数的构建方法，就可以把这个类当作JavaBean来使用，如果类中有不接受任何参数的getter方法或只接受一个参数的setter方法，就可以把前缀“get”或“set”后面的部分当作一个属性名来引用。
+  - JSP页面可以像调用一个普通Java类的方式去调用JavaBean，即先使用Java代码创建JavaBean的实例对象，然后直接调用JavaBean对象的setter和getter方法。
+
+- `<jsp:useBean>`等标签的用法
+
+  - 该标签用于在某个指定的定义域范围（application、session、request、pageContext等）中查找一个指定名称的JavaBean对象，如果存在则直接返回该JavaBean对象的引用，如果不存在则实例化一个新的JavaBean对象并将它按指定的名称存储在指定的域范围中。
+
+  - 常见语法：
+
+    ```jsp
+    <jsp:useBean id="beanInstanceName" class="package.class" scope="page|request|session|application"/>
+    ```
+
+    - class属性用于指定JavaBean的完整类名（必须带有包名）
+    - id属性用于指定JavaBean实例对象的引用名称和其存储在域范围中的名称。
+    - scope属性用于指定JavaBean实例对象所存储的域范围，其取值只能是page、request、session和application等四个值中的一个，其默认值为page
+
+  - 代码：
+
+    - Customer.java：沿用了之前写过的客户类
+
+      ```java
+      package com.litian.javaweb;
+      
+      /**
+       * @author: Li Tian
+       * @contact: litian_cup@163.com
+       * @software: IntelliJ IDEA
+       * @file: Customer.java
+       * @time: 2020/6/22 10:21
+       * @desc: |
+       */
+      
+      public class Customer {
+          private String name;
+          private String address;
+          private String cardType;
+          private String card;
+      
+          public Customer() {
+              System.out.println("客户已创建！");
+          }
+      
+          public Customer(String name, String address, String cardType, String card) {
+              this.name = name;
+              this.address = address;
+              this.cardType = cardType;
+              this.card = card;
+          }
+      
+          public String getName() {
+              return name;
+          }
+      
+          public void setName(String name) {
+              this.name = name;
+          }
+      
+          public String getAddress() {
+              return address;
+          }
+      
+          public void setAddress(String address) {
+              this.address = address;
+          }
+      
+          public String getCardType() {
+              return cardType;
+          }
+      
+          public void setCardType(String cardType) {
+              this.cardType = cardType;
+          }
+      
+          public String getCard() {
+              return card;
+          }
+      
+          public void setCard(String card) {
+              this.card = card;
+          }
+      }
+      ```
+
+    - bean.jsp：测试标签的使用：新建类，设置值，获取值
+
+      ```jsp
+      <%@ page import="com.litian.javaweb.Customer" %><%--
+        Created by IntelliJ IDEA.
+        User: Administrator
+        Date: 2020/6/26
+        Time: 14:27
+        To change this template use File | Settings | File Templates.
+      --%>
+      <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+      <html>
+      <head>
+          <title>JavaBean测试</title>
+      </head>
+      <body>
+      <%-- 创建Customer对象给customer --%>
+      <jsp:useBean id="customer" class="com.litian.javaweb.Customer" scope="session"></jsp:useBean>
+      <%-- 给属性赋值 --%>
+      <jsp:setProperty name="customer" property="name" value="LiTian"/>
+      <%-- 打印效果 --%>
+      name: <jsp:getProperty name="customer" property="name"/>
+      <br>
+      
+      <%-- 根据请求参数的值，为所有属性赋值，省略value --%>
+      <jsp:setProperty name="customer" property="*"/>
+      name: <jsp:getProperty name="customer" property="name"/>
+      <br>
+      address: <jsp:getProperty name="customer" property="address"/>
+      <br>
+      cardType: <jsp:getProperty name="customer" property="cardType"/>
+      <br>
+      card: <jsp:getProperty name="customer" property="card"/>
+      <br>
+      
+      <%-- 创建Customer对象等同于： --%>
+      
+      <%--<%--%>
+      <%--    // 1. 从scope（session）中获取id（customer）属性值，赋给class（com.litian.javaweb.Customer）类型的id变量--%>
+      <%--    Customer customer2 = (Customer)session.getAttribute("customer");--%>
+      <%--    // 2. 若属性值为空，则利用反射创建一个新的对象，把该对象赋给id（customer），并以id为属性名放入到scope（session）中。--%>
+      <%--    if(customer2 == null){--%>
+      <%--        customer2 = (Customer) Class.forName("com.litian.javaweb.Customer").newInstance();--%>
+      <%--        session.setAttribute("customer", customer2);--%>
+      <%--    }--%>
+      <%--%>--%>
+      
+      <%-- 赋值操作等同于： --%>
+      <%--<%--%>
+      <%--    customer.setName("LiTian");--%>
+      <%--%>--%>
+      
+      <%-- 打印操作相当于： --%>
+      <%--<%= customer.getName() %>--%>
+      
+      <%-- 第二种用法 --%>
+      <jsp:useBean id="customer3" beanName="com.litian.javaweb.Customer" type="java.lang.Object" scope="request"></jsp:useBean>
+      
+      <%-- 等价于： --%>
+      <%--<%--%>
+      <%--    Object customer4 = request.getAttribute("customer3");--%>
+      <%--    if(customer4 == null){--%>
+      <%--        customer4 = Class.forName("com.litian.javaweb.Customer").newInstance();--%>
+      <%--        request.setAttribute("customer3", customer4);--%>
+      <%--    }--%>
+      <%--%>--%>
+      
+      </body>
+      </html>
+      ```
+
+## 9. Expression Language
+
+### 9.1 EL语法
 
