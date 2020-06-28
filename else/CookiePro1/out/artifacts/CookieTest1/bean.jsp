@@ -50,5 +50,17 @@ card: <jsp:getProperty name="customer" property="card"/>
 <%-- 打印操作相当于： --%>
 <%--<%= customer.getName() %>--%>
 
+<%-- 第二种用法 --%>
+<jsp:useBean id="customer3" beanName="com.litian.javaweb.Customer" type="java.lang.Object" scope="request"></jsp:useBean>
+
+<%-- 等价于： --%>
+<%--<%--%>
+<%--    Object customer4 = request.getAttribute("customer3");--%>
+<%--    if(customer4 == null){--%>
+<%--        customer4 = Class.forName("com.litian.javaweb.Customer").newInstance();--%>
+<%--        request.setAttribute("customer3", customer4);--%>
+<%--    }--%>
+<%--%>--%>
+
 </body>
 </html>

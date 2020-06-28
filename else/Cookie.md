@@ -1577,3 +1577,133 @@
 
 ### 9.1 EL语法
 
+- EL全称为Expression Language。其语法为
+
+  ```jsp
+  ${sessionScope.user.sex}
+  ```
+
+- EL主要运算符为`.`和`[]`
+
+  - 上述语法等价于，中括号的作用是：有些时候，比如属性名中间带有`.`，则需要用中括号来表示
+
+    如果域对象中的属性名中带有特殊字符，则使用`[]`运算符会很方便
+
+    ```
+    ${sessionScope.user["sex"]}
+    ```
+
+  - `.`和`[]`可以混合使用
+
+    ```
+    // 第一项物品的价格
+    ${sessionScope.shoppingCart[0].price}
+    ```
+
+- EL变量
+
+  - EL存取变量数据的方法很简单
+  - 例如：`${username}`，它的意思是取出某一范围中名称为username的变量。因为我们并没有指定哪一个范围的username，所以它的默认值会先从Page范围找，假如找不到，再依序到Request、Session、Application范围。假如途中找到username，就直接回传，不再继续找下去，但是假如全部的范围都没有找到时，就回传null。
+
+- 自动转变类型
+
+- 代码：
+
+  - el.jsp：利用EL替代JavaBean的复杂操作，直接获取对象
+
+    ```jsp
+    <%@ page import="com.litian.javaweb.Customer" %><%--
+      Created by IntelliJ IDEA.
+      User: Administrator
+      Date: 2020/6/28
+      Time: 11:50
+      To change this template use File | Settings | File Templates.
+    --%>
+    <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+    <html>
+    <head>
+        <title>EL测试</title>
+    </head>
+    <body>
+    <form action="el.jsp" method="post">
+        <br>
+        用以前的方式写：
+        <br>
+        username: <input type="text" name="username" value="<%= request.getParameter("username") == null ? "" : request.getParameter("username") %>"/>
+        <br>
+        用EL写：
+        <br>
+        username: <input type="text" name="username" value="${param.username}"/>
+        <input type="submit" value="Submit"/>
+    </form>
+    
+    username: <%= request.getParameter("username") == null ? "" : request.getParameter("username") %>
+    <br>
+    
+    <jsp:useBean id="customer" class="com.litian.javaweb.Customer" scope="session"/>
+    <jsp:setProperty name="customer" property="name" value="憨批"/>
+    
+    name:
+    <%
+        Customer customer3 = (Customer) session.getAttribute("customer");
+        out.print(customer3.getName());
+    %>
+    <br>
+    name: <jsp:getProperty name="customer" property="name"/>
+    <br>
+    <%--<a href="el2.jsp">To EL2 Page</a>--%>
+    <br>
+    <a href="el2.jsp?score=89">To EL2 Page</a>
+    
+    </body>
+    </html>
+    ```
+
+  - el2.jsp：获取el传来的各种参数
+
+    ```jsp
+    <%@ page import="com.litian.javaweb.Customer" %><%--
+      Created by IntelliJ IDEA.
+      User: Administrator
+      Date: 2020/6/28
+      Time: 12:13
+      To change this template use File | Settings | File Templates.
+    --%>
+    <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+    <html>
+    <head>
+        <title>EL测试2</title>
+    </head>
+    <body>
+    
+    <%-- 3. EL可以进行自动的类型转换 --%>
+    score: ${param.score + 11}
+    <br>
+    score: <%= request.getParameter("score") + 11 %>
+    <br>
+    
+    <%-- 2. EL中的隐含对象 --%>
+    <%
+        Customer cust2 = new Customer();
+        cust2.setName("嘻嘻");
+        request.setAttribute("customer", cust2);
+    %>
+    
+    <%--age: <jsp:getProperty name="customer" property="name"/>--%>
+    <%--name: ${sessionScope.customer.name}--%>
+    <%-- 1. EL的 . 或 [] 运算符 --%>
+    name: ${customer.name}
+    <br>
+    name: ${sessionScope.customer["name"]}
+    </body>
+    </html>
+    ```
+
+### 9.2 EL详解
+
+
+
+
+
+
+
